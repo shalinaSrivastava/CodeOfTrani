@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ConcoPhilips.RegisterPSI">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/custom_page_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tool_bar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="20pt"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_calendar_today" />
+
+                    <EditText
+                        android:id="@+id/edt_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:focusable="false"
+                        android:hint="Date"
+                        android:textSize="9pt" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ll_date"
+                    android:background="#DDDDDD" />
+
+                <LinearLayout
+                    android:id="@+id/ll_place_platform"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/view1"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/img_place_platform" />
+
+                    <TextView
+                        android:id="@+id/txt_place"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:dropDownHorizontalOffset="5dp"
+                        android:text="@string/placeplatform"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ll_place_platform"
+                    android:background="#DDDDDD" />
+
+                <LinearLayout
+                    android:id="@+id/ll_department"
+                    android:layout_width="match_parent"
+                    android:layout_height="20pt"
+                    android:layout_below="@+id/view2"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/img_department" />
+
+                    <TextView
+                        android:id="@+id/txt_department"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:dropDownHorizontalOffset="5dp"
+                        android:text="@string/department"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ll_department"
+                    android:background="#DDDDDD" />
+
+                <LinearLayout
+                    android:id="@+id/ll_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="20pt"
+                    android:layout_below="@+id/view3"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/img_person_name" />
+
+                    <TextView
+                        android:id="@+id/txt_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:focusable="false"
+                        android:hint="Name"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ll_name"
+                    android:background="#DDDDDD" />
+
+                <LinearLayout
+                    android:id="@+id/ll_topic_discussed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view4"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/img_communication" />
+
+                    <EditText
+                        android:id="@+id/edt_topic_discussed"
+                        android:layout_width="0dp"
+                        android:layout_height="130dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÆØÅæøå!@#$%^();:.,/+-_~={}[]?|£$€*§\' "
+                        android:gravity="start"
+                        android:hint="@string/topic_discussed"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="-15dp"
+                        android:textSize="9pt" />
+                </LinearLayout>
+
+               <!-- <ImageView
+                    android:id="@+id/img_edt_logo"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/ll_topic_discussed"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-5dp"
+                    android:src="@drawable/edt_logo" />-->
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ll_topic_discussed"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_risk_identification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view5"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_stop"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/img_stop" />
+
+                    <!-- <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_alignParentEnd="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginLeft="15dp"
+                         android:layout_toEndOf="@+id/img_stop"
+                         android:orientation="vertical">-->
+
+                    <TextView
+                        android:id="@+id/txt_hav_new_hazard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/img_stop"
+                        android:text="@string/risk_been_identified"
+                        android:textSize="9pt"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginStart="15dp"
+                        android:textStyle="bold"
+                        android:layout_centerVertical="true"/>
+
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/btn_risk_indentified"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:checked="false"
+                        android:theme="@style/MySwitch"
+                        android:layout_centerVertical="true"/>
+
+                    <!--<Button
+                        android:id="@+id/btn_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/shadow_register"                                android:layout_weight="1"
+                        android:text="@string/yes"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="15dp" />-->
+
+                    <!-- <Button
+                         android:id="@+id/btn_no"
+                         android:layout_width="0dp"
+                         android:layout_height="60dp"
+                         android:layout_weight="1"
+                         android:background="@drawable/shadow_register"
+                         android:text="@string/no"
+                         android:textAllCaps="false"
+                         android:textColor="@android:color/white"
+                         android:textSize="15dp" />-->
+                </RelativeLayout>
+                <!--</LinearLayout>-->
+                <!-- </LinearLayout>-->
+
+                <LinearLayout
+                    android:id="@+id/ll_panned_follow_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_risk_identification"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/img_planned_follow_up" />
+
+                    <EditText
+                        android:id="@+id/edt_planned_folow_up"
+                        android:layout_width="0dp"
+                        android:layout_height="130dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="2dp"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÆØÅæøå!@#$%^();:.,/+-_~={}[]?|£$€*§\' "
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="start"
+                        android:hint="@string/planned_follow_up"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="-15dp"
+                        android:textSize="9pt" />
+                </LinearLayout>
+
+               <!-- <ImageView
+                    android:id="@+id/img_edt_logo1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/ll_panned_follow_up"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-5dp"
+                    android:src="@drawable/edt_logo" />-->
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ll_panned_follow_up"
+                    android:background="#DDDDDD" />
+
+                <TextView
+                    android:id="@+id/txt_obervation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/view6"
+                    android:paddingTop="15dp"
+                    android:text="@string/observation_handling" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_up"
+                android:orientation="vertical"
+                android:paddingStart="15dp"
+                android:paddingEnd="3dp"
+                android:theme="@style/MySwitch">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_heat_cold"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/heat_cold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_heat_cold"
+                        android:text="@string/heat_cold"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_heat_cold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_pressure"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/pressure" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_pressure"
+                        android:text="@string/pressure"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_pressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_chemical"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/chemical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_chemical"
+                        android:text="@string/chemical"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_chemical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_electrical"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/electrical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_electrical"
+                        android:text="@string/electrical"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_electrical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_gravity"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/gravity" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_gravity"
+                        android:text="@string/gravity"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_gravity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_radiation"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/radiation" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_radiation"
+                        android:text="@string/radiation"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_radiation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_noise"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/noise" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_noise"
+                        android:text="@string/noise"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_noise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_biological"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/biological_stor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_biological"
+                        android:text="@string/biological"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_biological"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <ImageView
+                        android:id="@+id/img_energy_movement"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/movement" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_energy_movement"
+                        android:text="@string/energy_movement"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_energy_movement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DDDDDD" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="0dp">
+
+                    <ImageView
+                        android:id="@+id/img_chk_self_energy"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/selfproduced" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_toRightOf="@+id/img_chk_self_energy"
+                        android:text="@string/chk_self_energy"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="9dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/present_in_moment"
+                        android:textSize="9pt"
+                        android:textColor="@color/color_black"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_present_in_moment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:checked="false" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#DDDDDD" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_below="@+id/ll_down"
+                android:layout_marginStart="33dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginBottom="25dp"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ÆØÅæøå!@#$%^();:.,/+-_~={}[]?|£$€*§\' "
+                android:background="@drawable/shadow_register"
+                android:text="@string/register_psi_card"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="9pt" />
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

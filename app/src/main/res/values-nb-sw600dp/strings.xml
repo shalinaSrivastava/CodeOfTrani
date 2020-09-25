@@ -1,0 +1,8 @@
+<resources>
+
+     <string name="observation_handling"><html><font size="19">Observasjon og håndtering av energier</font></html>
+        \n\n<html><font size="19"><font color="red">Ri</font>siko<font color="red">B</font>asert <font color="red">O</font>bservasjonsteknikk - <font color="red">RIBO</font></font></html>
+        \n\n<html><font size="19"><font color="red">O</font>VERBLIKK:</font></html> Før du setter i gang arbeidet, stopp opp og dann deg et overblikk rundt og i området du skal arbeide.
+        \n<html><font size="19"><font color="red">B</font>EGRENS:</font></html> Del arbeidsområdet inn i mindre områder for å gi deg nødvendig oversikt.
+        \n<html><font size="19"><font color="red">S</font>E ETTER ENERGI:</font></html> Finn de energityper i og rundt arbeidsområdet som kan utgjøre en risiko. Fokuser på en energitype om gangen.</string>
+</resources>

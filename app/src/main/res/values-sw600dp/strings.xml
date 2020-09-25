@@ -1,0 +1,8 @@
+<resources>
+
+     <string name="observation_handling"><html><font size="19" color="black">Observation and handling of energies</font></html>
+        \n\n<html><font size="19"><font color="red">Ri</font><font color="black">sk</font> <font color="red">B</font><font color="black">ased </font><font color="red">O</font><font color="black">bservation technique - </font> <font color="red">RIBO</font></font></html>
+        \n\n<html><font size="19"><font color="red">O</font><font color="black">VERSIGHT:</font></font></html> <font color="black" size="17">Before starting a job, stop and get an overview of the area in which you are about to work.</font>
+        \n<html><font size="19"><font color="red">L</font><font color="black">IMIT THE AREA:</font></font></html> <font color="black" size="17">Split the working area into smaller segments to give you the required overview.</font>
+        \n<html><font size="19"><font color="red">S</font><font color="black">POT ENERGY:</font></font></html> <font color="black" size="17">Identify those types of energies in and around your work area that can represent a risk. Implement and note eventual measures to be taken to secure safe job execution.</font></string>
+</resources>

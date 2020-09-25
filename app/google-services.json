@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "248034318140",
+    "firebase_url": "https://trainorapp.firebaseio.com",
+    "project_id": "trainorapp",
+    "storage_bucket": "trainorapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248034318140:android:7ba9314ef17932b1",
+        "android_client_info": {
+          "package_name": "com.elearn.trainor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248034318140-lat0tsrtefioo8ek058v133d14nmeb9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFZVMnl5X0FrpBcq8rDbQYz3aTxf-zMd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248034318140-lat0tsrtefioo8ek058v133d14nmeb9n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "248034318140-lt5g4fpdiatbheiadq89bcehqqemad96.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Trainor.Trainors",
+                "app_store_id": "1330902637"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

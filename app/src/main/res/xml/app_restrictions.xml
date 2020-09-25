@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<restrictions xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- String restriction -->
+    <restriction
+        android:key="user_email"
+        android:restrictionType="string"
+        android:title="User Email"/>
+
+    <!-- String restriction -->
+    <restriction
+        android:key="unique_id"
+        android:restrictionType="string"
+        android:title="Unique Id"/>
+
+</restrictions>

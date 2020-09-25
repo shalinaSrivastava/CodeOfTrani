@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.elearn.trainor.SafetyCards.VerifyInfo">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/custom_page_header" />
+
+    <ScrollView
+        android:layout_below="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/verify_info_des1"
+                    android:textColor="#373a3c"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/verify_info_des2"
+                    android:textColor="#373a3c"
+                    android:textSize="8pt" />
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_unveified"
+                android:layout_below="@+id/ll_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_unverified"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Unverified contact info"
+                    android:textColor="#373a3c" />
+                <View
+                    android:id="@+id/line_view1"
+                    android:layout_below="@+id/txt_unverified"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#c7c7c7" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_unverified"
+                    android:layout_below="@+id/line_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_frequently_asked_qus"
+                android:layout_below="@+id/rl_unveified"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/rounded_search">
+
+                <TextView
+                    android:id="@+id/txt_add_more_cards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Frequently asked questions"
+                    android:textSize="8pt" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_veified"
+                android:layout_below="@+id/rl_frequently_asked_qus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_verified_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Verified contact info"
+                    android:textColor="#373a3c" />
+                <View
+                    android:id="@+id/verified_line_view4"
+                    android:layout_below="@+id/txt_verified_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#c7c7c7" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_verified"
+                    android:layout_below="@+id/verified_line_view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

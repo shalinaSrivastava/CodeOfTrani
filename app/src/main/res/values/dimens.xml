@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="tab_font_size">11pt</dimen>
+    <dimen name="home_icon_height_width">93dp</dimen>
+
+</resources>

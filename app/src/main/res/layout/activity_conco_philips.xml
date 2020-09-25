@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConcoPhilips.ConcoPhilips">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/custom_page_header" />
+
+    <LinearLayout
+        android:id="@+id/firstTimeView"
+        android:layout_below="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="22dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="64dp"
+                android:text="@string/psi_course_not_taken"
+                android:textSize="8.5pt"
+                android:textColor="@color/color_black"
+                android:hyphenationFrequency="none"/>
+
+            <ImageView
+                android:id="@+id/first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_no_psi_course_taken" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="-4dp"
+            android:background="@drawable/shadow_scard">
+
+            <Button
+                android:id="@+id/btn_start_psi_course"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rippel"
+                android:backgroundTint="#27ae60"
+                android:text="@string/start_psi_course"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_when_psi_course_taken"
+        android:layout_below="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+        <LinearLayout
+            android:id="@+id/ll_register_psi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rippel"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <TextView
+                android:id="@+id/tv_register_psi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/register_psi"
+                android:textColor="@android:color/black"
+                android:textSize="7pt" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_forward" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line_view"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_below="@+id/ll_register_psi"
+            android:background="@color/color_gray" />
+
+        <TextView
+            android:id="@+id/tv_psi_not_uploaded"
+            android:layout_below="@+id/line_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/psi_card_not_uploaded"
+            android:textSize="7.5pt"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_try_again"
+            android:layout_below="@+id/tv_psi_not_uploaded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/click_here_to_try_again"
+            android:textSize="7.5pt"
+            android:textColor="@color/colorPageHeader"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/iv_psi_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/psi_logo_register_page"
+            android:layout_centerInParent="true"
+            android:layout_margin="100dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_trainor_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_homepage_line" />
+
+        <LinearLayout
+            android:id="@+id/ll_go_to_help"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8.5dp"
+                android:src="@mipmap/splash_logo" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

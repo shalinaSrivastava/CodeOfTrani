@@ -1,0 +1,444 @@
+<resources>
+    <string name="app_name">Trainor</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+    <string name="register">Register</string>
+    <string name="toolbox">Toolbox</string>
+    <string name="save">Save</string>
+    <string name="home">Home</string>
+
+    <!--Loading Page-->
+    <string name="sync_courses">Synchronizing courses</string>
+    <string name="logging_in">Logging in</string>
+    <string name="welcome_loading">Welcome!</string>
+    <string name="sync_safety_card">Synchronizing safetycard</string>
+    <string name="sync_diploma">Downloading  diplomas</string>
+    <string name="ready">Soon ready!</string>
+
+    <!--HomePage Page-->
+    <string name="courses">Courses</string>
+    <string name="diploma">Diplomas</string>
+    <string name="saftey_cards">Safety Cards</string>
+    <!-- <string name="my_company">My Company</string>-->
+    <string name="my_company">Documents</string>
+    <string name="tools">Tools</string>
+    <string name="setting">Settings</string>
+    <string name="please_wait">Please wait...</string>
+
+    <!-- Forgot Password-->
+    <string name="forgot_pwd_header_text">Forgot Password</string>
+    <string name="found_you">Found You!</string>
+    <string name="hmm">Hmmm...</string>
+    <string name="discription_found">We have sent you an e-mail with instructions on how to reset your password. If you do not receive an e-mail within next few minutes, please contact us.</string>
+    <string name="edit_text_hint">Your username</string>
+    <string name="not_found_msg">We could not find anyone with username or email</string>
+    <string name="need_help_contact">If you need help logging in, do not hesitate to contact us.</string>
+    <string name="forget_pwd">Forgot password?</string>
+    <string name="forget_pwd_des">Please fill in your trainor.no username.</string>
+    <string name="pwd_rest_link">Send password reset link</string>
+    <string name="need_support">Need support?</string>
+    <string name="back_to_login">Back to login screen</string>
+    <string name="back_to_forget_pwd">Back to forgot password</string>
+
+    <!--Settings Page-->
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="dob">Birth day</string>
+    <string name="contact_no">Phone number</string>
+    <string name="email_id">E-mail</string>
+    <string name="english">English</string>
+    <string name="norwegian">Norwegian</string>
+    <string name="polish">Polish</string>
+    <string name="korean">Korean</string>
+    <string name="swedish">Swedish</string>
+    <string name="logout">Log out</string>
+    <string name="change_pwd">Change Password</string>
+    <string name="download_courses">Downloads</string>
+    <string name="change_photo">Change Photo</string>
+
+    <!--Alert Dialog message-->
+    <string name="alertMsgFirstName">Please enter a valid firstname</string>
+    <string name="alertMsgEmail">Please enter a valid email</string>
+    <string name="alertMsgLasttName">Please enter a valid lastname</string>
+    <string name="alertMsgPhone">Please enter a valid phone number</string>
+
+    <!--Login Page-->
+    <string name="username_hint">Please type your username</string>
+    <string name="password_hint">Please type your password</string>
+    <!--New Add Login Page-->
+    <string name="invalid_uname_pwd">Invalid username or password.</string>
+
+    <!--Change Password-->
+    <string name="change_password">Change password</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="repeate_new_pwd">Repeat new password</string>
+    <string name="or">OR</string>
+    <string name="send_pwd_reset_link">Send me a password reset link by e-mail</string>
+    <string name="enter_old_pwd">Please enter old password</string>
+    <string name="enter_new_pwd">Please enter new password</string>
+    <string name="enter_repeate_new_pwd">Please repeat new password</string>
+    <string name="password_not_matched">New password does not match with repeat new password.</string>
+
+    <!--Change Profile-->
+    <string name="set_pro_photo">Set profile photo</string>
+    <string name="use_camera">Use camera</string>
+    <string name="pick_from_gallery">Pick from gallery</string>
+    <string name="remove_pro_photo">Remove profile photo</string>
+    <string name="view_pro_photo">View profile photo</string>
+
+    <!-- Notification Page-->
+    <string name="notifications">Notifications</string>
+    <string name="notification_headline">Which notifications do you wish to receive?</string>
+    <string name="notification_new_courses">New course</string>
+    <string name="notification_new_diploma">New diploma</string>
+    <string name="notification_courses_expired">Course expired</string>
+    <string name="notification_safety_card">New safety card</string>
+    <string name="notification_expired_safety_card">Safety card expired</string>
+
+    <!--Downloads -->
+    <string name="text_header_download">Downloads</string>
+    <string name="download_over_wifi">Only download over Wifi</string>
+    <string name="no_course_dwnloaded">No course downloaded</string>
+    <string name="no_tools_dwnloaded">No tools downloaded</string>
+    <string name="downloaded_tools">Downloaded tools</string>
+    <string name="downloaded_courses">Downloaded courses</string>
+    <string name="dev_button_text">DEVBUTTON: Clear all files</string>
+    <string name="delete">Delete</string>
+    <string name="deleted_sucessfully">Deleted Sucessfully</string>
+    <string name="delete_offline">Delete offline file</string>
+    <string name="keep_courses">Keep</string>
+    <string name="delete_courses">Delete</string>
+    <string name="delete_offline_des">This will remove the course from this device. You will still retain the license, but can not continue where you left off if the course is not yet completed.</string>
+
+    <!--Need Support-->
+    <string name="need_support1">Need Support</string>
+    <string name="we_are_happy_hlp">We are happy to help</string>
+    <string name="choose_option">Choose one of the options below and we will do what we can to solve your problem.</string>
+    <!--New Added Need Support-->
+    <string name="device_not_support_call_fun">Your device does not support this functionality.</string>
+    <!--Call Permission Error-->
+    <string name="call_permission_error">Call permission error</string>
+
+    <!--Safety Cards-->
+    <string name="card_no">Card number</string>
+    <string name="card_code">Card code</string>
+    <string name="add_card">Add card</string>
+    <string name="register_saftey_cards">Register safety card</string>
+    <string name="alertMsgCardNo">Please enter a valid card number</string>
+    <string name="alertMsgCardCode">Please enter a valid card code</string>
+    <string name="safety_card_des_1">Safety cards show what work approvals you have for specific companies and installations</string>
+    <string name="valid_to">Valid to</string>
+    <string name="compny_name">Company name</string>
+    <!--new Added Safety Cards-->
+
+    <!--My Company-->
+    <string name="documents">Documents</string>
+    <!--New added My Company-->
+    <string name="size">Size: </string>
+
+    <!--Courses Page-->
+    <string name="elearn_course_heading">E-learning courses</string>
+    <string name="classroom_course_heading">Classroom courses</string>
+    <string name="other_courses_heading">Your other courses</string>
+    <!-- <string name="get_course_heading">Get courses at trainor.no</string>-->
+    <string name="get_course_heading">Purchase courses </string>
+    <string name="bad_file_format">Bad file format</string>
+    <string name="no_available_diploma_show">No diploma is available to show.</string>
+    <string name="no_any_supported_application">You do not have a pdf viewer installed</string>
+    <string name="download_error">Download error</string>
+    <string name="no_diploma_available_downloaded">No diploma is available to download.</string>
+
+    <!-- New Added Courses Page-->
+    <string name="no_elearn_course_des1">You do not currently have any planned or active course.</string>
+    <string name="no_elearn_course_des2">Any e-learning or classroom course will be added here as soon as they are ordered.</string>
+    <string name="when_no_diploma1">When you complete a Trainor course, your diplomas will be shown here.</string>
+    <string name="when_no_diploma2">It does not appear you have any active diplomas right now.</string>
+    <!--<string name="offline_diploma_popup">Next time the app is able to connect with internet your connection will be registered at trainor and  you will get your diploma.\n\nConguratulations!</string>-->
+    <string name="back_to_courses">Back to courses</string>
+    <string name="start_courses">Start course</string>
+    <string name="expired">Expired</string>
+    <string name="kontinue">Continue</string>
+    <string name="completed">completed</string>
+    <string name="completed_capital">Completed</string>
+    <string name="language">Language: </string>
+    <string name="duration">Duration: </string>
+    <string name="mb"> MB</string>
+    <string name="this_will_take"> This will take up to </string>
+    <string name="of_space_you_have">  of space. You have </string>
+    <string name="mb_available_space">  MB available space. </string>
+    <string name="navigate">Show on map</string>
+    <string name="loading_course_pls_wait">Loading Course Please Wait..</string>
+    <string name="hundered_percent">100 % of</string>
+    <string name="percent_of">% of</string>
+    <string name="downloads_completed">Downloads completed</string>
+    <string name="profile">Profile</string>
+    <string name="course_loading_msg">If you cancel the download, you can still take the course online</string>
+    <string name="crop">Crop</string>
+    <string name="setting_saved">Settings saved</string>
+    <string name="all_dwnld_file_deleted">All Downloaded Files deleted</string>
+    <string name="save_course_offline">Save course offline</string>
+    <string name="not_enough_space">Not enough space on device</string>
+
+    <!--New added Diploma -->
+    <string name="expires">Expires</string>
+    <string name="active_diploma">Active diplomas</string>
+    <string name="expired_diploma">History</string>
+    <string name="get_more_at_trainor_no">Get more courses at Trainor.no</string>
+
+    <!--New added full_image -->
+    <string name="profile_image">Profile image</string>
+
+    <!--Common Messages-->
+    <string name="change_pwd_success">The password was successfully updated.</string>
+    <string name="change_pwd_faliure">Old password incorrect. Please try again.</string>
+    <string name="networkError">Network error</string>
+    <string name="internalServerError">Internal server error, please try again later.</string>
+    <string name="internetErrorTitle">Internet connection error</string>
+    <string name="internetErrorMessage">Internet connection not available. Please enable connection and try again.</string>
+    <string name="waitMsg">Please wait ...</string>
+    <string name="permissionTitle">Permission denied</string>
+    <string name="writePermissionMessage">Without this permission, the app will not be able to save any file into the device storage. Are you sure you want to deny this permission?</string>
+    <!--New Added Common message-->
+    <string name="server_error_title">Server error</string>
+    <string name="wifi_not_not_ebabled_tools">Wifi is not enabled. Tools files can not be downloaded over Wifi, Please enable connection and try again.</string>
+    <string name="safety_card_exception">Safety card exception</string>
+    <string name="try_after_some_time">Please try again later.</string>
+    <string name="card_added_successfully">Card added successfully</string>
+    <string name="invalid_card_titile">Invalid card</string>
+    <string name="invalid_card_msg">The card details you entered are not valid. Please enter a valid card.</string>
+    <string name="already_exists">Already exists.</string>
+    <string name="image_compression_error">Image compression error</string>
+    <string name="image_not_supported">Image format not supported</string>
+    <string name="image_crop_exception">Image crop exception</string>
+    <string name="file_error">File error</string>
+    <string name="pic_loading_error">Could not load this photo, please try again.</string>
+    <string name="file_not_found">File not found</string>
+    <string name="course_file_not_exist">Course file does not exist.</string>
+
+    <!--New Added 25-09-2017-->
+    <string name="wifi_not_not_ebabled_course">Wifi is not enabled. Courses files can not be downloaded over Wifi, Please enable connection and try again.</string>
+    <string name="address_not_found">Address not found</string>
+    <string name="diploma_not_found">Diploma not found</string>
+    <string name="loading">Loading</string>
+    <string name="download">Download</string>
+
+    <!--New Added Volley message-->
+    <string name="server_error_msg">Server error, please try again later</string>
+
+    <!--Map-->
+    <!--<string name="google_maps_key">AIzaSyDEz3g76J6TE1RXS5OqEaxwiysThPE9yV0</string>-->
+    <string name="google_maps_key">AIzaSyBtI3avY8gxHkxLA6JNwlBCnpsEt8ZzFzA</string>
+    <string name="title_activity_google_map">Map</string>
+
+    <!-- Alert Dialog -->
+    <string name="Retry">Retry</string>
+    <string name="deny">Deny</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="day">day</string>
+    <string name="days">days</string>
+    <string name="hour">hour</string>
+    <string name="hours">hours</string>
+    <string name="minute">minute</string>
+    <string name="minutes">minutes</string>
+    <!--<string name="offline_diploma_popup">Next time the app is able to connect with internet your completion will be registered on Trainor and you will get your diploma.\n\nCongratulations!</string>-->
+    <string name="target_group">Target group</string>
+    <string name="course_subject">Course subject</string>
+    <string name="goal">Goal</string>
+    <string name="course_info">Course info</string>
+    <string name="view_diploma">View diploma</string>
+
+    <!--New Added 27-10-2017-->
+    <string name="image_not_loaded">Image not loaded successfully.</string>
+    <string name="image_updated">Image updated successfully.</string>
+    <string name="image_removed">Profile image removed successfully.</string>
+    <string name="logout_alert">Are you sure you want to log out?</string>
+    <string name="pwd_reset_link_sent">Password reset link sent to your e-mail</string>
+    <!--<string name="internal_server_download_error">Internal server error, please try again later.</string>-->
+
+    <!-- New Added 10-11-2017 -->
+    <string name="android_mail_subject">Feedback from Android app</string>
+    <string name="picture_not_taken">Picture was not taken</string>
+
+    <!-- New Added 16-11-2017 -->
+    <string name="not_started">Not started</string>
+    <string name="start_offline">Start offline</string>
+
+    <!-- New Added 27-11-2017 -->
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
+
+    <!-- New Added 12-12-2017 -->
+    <string name="when_no_cmpny_list">Your company administrator has not uploaded any files for you yet.</string>
+    <string name="course_download_failed_header">Ooops.</string>
+    <string name="course_download_failed_message">We could not connect to trainor.no. Please try again.</string>
+
+    <!-- New Added 28-12-2017 -->
+    <string name="no_app_to_handle_activity"> No application found which can open this file</string>
+
+    <!-- New Added 25-01-2018 -->
+    <string name="no_safety_card">Safety card currently unavailable</string>
+    <string name="completed_offline">Completed offline</string>
+    <string name="approved">Approved</string>
+
+    <!-- New Added  22-03-2018 -->
+    <string name="hello">Hello</string>
+    <string name="offline_dwnld_description">Would you like us to automatically keep your documents available offline for you?</string>
+    <string name="Company_documents">Company documents</string>
+    <string name="done">I am done!</string>
+    <string name="SyncDiplomas">Sync diplomas</string>
+    <string name="SyncSafetycard">Sync safety cards</string>
+    <string name="SyncTools">Sync tools</string>
+    <string name="SyncDocument">Sync company documents</string>
+    <string name="sync_incomplete">Sync Incomplete</string>
+
+    <string name="syncronizing_tools">Synchronizing tools</string>
+    <string name="downloading_tools">Downloading tools</string>
+    <string name="downloading_safetyCard">Downloading safetycard</string>
+    <string name="syncronizing_diploma">Synchronizing diplomas</string>
+    <string name="downloading_documents">Downloading documents</string>
+    <string name="syncronizing_documents">Synchronizing documents</string>
+    <string name="storing">Storing </string>
+    <string name="storingDiploma">diplomas offline please wait...</string>
+    <string name="storingtools">tools offline please wait...</string>
+    <string name="storingDocuments">documents offline please wait...</string>
+
+    <!-- New Added  23-03-2018 -->
+    <string name="of">of</string>
+    <string name="getting_diploma">Getting diploma</string>
+    <string name="getting_tools">Getting tools</string>
+    <string name="getting_safetycard">Getting safety card</string>
+    <string name="getting_document">Getting document</string>
+
+    <!-- New Added  30-05-2018 -->
+    <string name="search_hint">What course are you looking for?</string>
+    <string name="search">Search</string>
+    <string name="select_language">Select language </string>
+    <string name="no_course_available">Currently, no courses available for this language!</string>
+    <string name="e_learnng">E-Learning</string>
+    <string name="buy_now">Buy now</string>
+    <string name="course_information"> COURSE INFORMATION</string>
+    <string name="course_name">Course name: </string>
+    <string name="course_duration">Duration: </string>
+    <string name="course_language">Language: </string>
+    <string name="description">Description: </string>
+    <string name="target_group_ordercourse">Target group:</string>
+    <string name="goal_ordercourse">Goal:</string>
+    <string name="order_courses">Order courses</string>
+    <string name="choose_company">Select company</string>
+    <string name="cmpny_choose_des">The company you choose can see your order, and will be updated on course status.</string>
+    <string name="dsb_pulish">Published by DSB</string>
+    <string name="payment_need_support">The payment was completed, but there was an error in retrieving the course.\n Please contact Trainor by e-mail or phone and we will help you.</string>
+    <string name="course_undelivered_mail_subject">Unable to deliver course</string>
+    <string name="course_undelivered_mail_body">Hi,\n\nI bought a course through the app, but there was a technical error and the course was unable to be delivered.\n\nTechnical info:\n\n</string>
+    <string name="payment_user_id">User ID:</string>
+    <string name="payment_order_id">Order ID:</string>
+    <string name="payment_course_id">Course ID:</string>
+    <string name="time_of_purchase">Time of purchase:</string>
+
+    <string name="popup_des1">When buying course via app. your receipt will be from Google Play store.</string>
+    <string name="popup_des2">You will not receive a receipt from trainor.no.</string>
+    <string name="popup_des3">Please be aware that discounts are not available on in-app purchases and prices may differ from www.trainor.no.</string>
+    <string name="btn_i_understand">   I understand   </string>
+    <string name="below_search_text">All prices includes VAT. Discounts are not available on in-app purchases.</string>
+    <string name="offline_notification_course_text">You are not connected to the internet. The Course will be available as soon as you are connected to a network.</string>
+    <string name="offline_notification_safetycard_text">You are not connected to the internet. Safetycard will be available as soon as you are connected to a network.</string>
+    <string name="offline_notification_diploma_text">You are not connected to the internet. Diploma will be available as soon as you are connected to a network.</string>
+    <string name="offline_notification_document_text">You are not connected to the internet. New documents will be available as soon as you are connected to a network.</string>
+
+    <!-- New Added  09-08-2018 -->
+    <string name="portuguese">Portuguese</string>
+    <string name="important_info">Important information</string>
+    <string name="new_documents">New documents</string>
+    <string name="no_unread_notification">No new notifications</string>
+    <string name="clear_list">Clear List</string>
+    <string name="new_notification_header">New notifications</string>
+    <string name="new_singular">new</string>
+    <string name="new_plural">new</string>
+
+    <string name="completed_date">Completed date</string>>
+    <string name="server_not_responding">Looks like the server is not responding at the moment, please try again in sometime.</string>
+    <string name="stattnet_login_api_error">You are not registered as a Trainor user. Please book a Trainor course in Saba and you will be automatically created as a user.</string>
+    <string name="mdm_value_error_message">Your device is not setup correctly to use this app. Please contact your IT-department.</string>
+    <string name="internet_error_message_mdm"> Internet connection not available. Pressing Ok will automatically quit the app. Please enable connection and try again. </string>
+    <string name="internetErrorTitle_mdm"> Internet connection error </string>
+    <string name="quit_app"> Pressing Ok will automatically quit the app. </string>
+    <string name="tool_delete_des"> Are you sure you want Delete this tool? </string>
+
+    <!-- New Added  11-09-2019 -->
+    <string name="conco_philips_header">ConocoPhilips</string>
+    <string name="register_psi">Register PSI</string>
+    <string name="psi_card_not_uploaded"> card not uploaded. Connect to the internet to upload.</string>
+    <string name="psi_cards_not_uploaded"> cards not uploaded. Connect to the internet to upload.</string>
+    <string name="click_here_to_try_again">Click here to try again</string>
+    <string name="psi_course_not_taken">Your company is eligible for PSI-cards. Before filling out <font color='black'>PSI cards</font>  please complete the PSI course.</string>
+    <string name="start_psi_course">Start PSI course</string>
+
+    <string name="file_provider_authority" translatable="false">com.elearn.trainor.provider</string>
+    <string name="asset_statements" translatable="false">[{ \"include\": \"https://www.trainor.no/.well-known/assetlinks.json\" }]</string>
+
+    <string name="risk_been_identified">Have new hazards / risks been identified during the conversation?</string>
+    <string name="planned_follow_up">Planned follow-up</string>
+    <string name="topic_discussed">Topic Discussed</string>
+
+    <string name="observation_handling"><html><font color="black" size="16">Observation and handling of energies</font></html>
+        \n\n<html><font size="16"><font color="red">Ri</font><font color="black">sk</font> <font color="red">B</font><font color="black">ased </font><font color="red">O</font><font color="black">bservation technique - </font> <font color="red">RIBO</font></font></html>
+        \n\n<html><font size="16"><font color="red">O</font><font color="black">VERSIGHT:</font></font></html> <font color="black">Before starting a job, stop and get an overview of the area in which you are about to work.</font>
+        \n<html><font size="16"><font color="red">L</font><font color="black">IMIT THE AREA:</font></font></html> <font color="black">Split the working area into smaller segments to give you the required overview.</font>
+        \n<html><font size="16"><font color="red">S</font><font color="black">POT ENERGY:</font></font></html> <font color="black">Identify those types of energies in and around your work area that can represent a risk. Implement and note eventual measures to be taken to secure safe job execution.</font></string>
+    <string name="heat_cold">Heat / cold</string>
+    <string name="pressure">Pressure</string>
+    <string name="chemical">Chemical</string>
+    <string name="electrical">Electrical</string>
+    <string name="gravity">Gravity</string>
+    <string name="radiation">Radiation</string>
+    <string name="noise">Noise</string>
+    <string name="biological">Biological</string>
+    <string name="energy_movement">Energy in movement</string>
+    <string name="chk_self_energy"> Check of self produced energies and activities:</string>
+    <string name="present_in_moment">Are you \"PRESENT IN THE MOMENT\" ?</string>
+    <string name="placeplatform"> Place/Platform </string>
+    <string name="department">Department</string>
+    <string name="conocophillips">ConocoPhillips </string>
+
+    <string name="select_valid_dept">Please select a Department for the selected place/platform</string>
+    <string name="select_valid_place_platform">Please select valid place/platform.</string>
+    <string name="saved_offline_msg">Card is saved locally. Please try uploading when connected to the internet.</string>
+    <string name="something_went_wrong">Something went wrong. Please try again</string>
+    <string name="not_assocaiated_dept">No department is associated with above platfom.</string>
+    <string name="select_place_platform_first">Please select Place/Platform first</string>
+    <string name="registered_successfully">Your conversations has been saved. Thank you for your contribution to increased security!</string>
+    <string name="course_sync_error">Please connect to internet for course syncing.</string>
+    <string name="resume_courses">Resume Course</string>
+    <string name="select_valid_regd_date">Please select valid registration date.</string>
+    <string name="blank_topic_discussed">Topic discussed cannot be blank.</string>
+
+    <string name="not_connected_internet_title">Not connected to internet</string>
+    <string name="not_connected_internet_msg">Please connect to the internet and try again.</string>
+    <string name="register_psi_card">Register PSI card</string>
+    <string name="date_documents">Date:</string>
+    <string name="no_place_platform_associated">No place/platform is associated with this user.</string>
+
+    <!--new added for Facility safetycard-->
+    <string name="safety_card_des_2">If the company you work for use sikkerhetskort.no you can add your card here by confirming your contact details and it will stay up to date</string>
+    <string name="register_card">Verify phone or e-mail</string>
+    <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to app by validating your e-mail or phone number</string>
+    <string name="verify_info_des2">Click the email or phone number you would like to verify.</string>
+    <string name="planned_work_in_hours">Planned work in hours</string>
+    <string name="remember_n_check"><html><font color="black" size="18">Did you remember?</font></html>
+        \n<html> <font color="black" size="18">\t&#9679;  To bring all your things?</font></html>
+        \n<html> <font color="black" size="18">\t&#9679;  To clean up after yourself?</font></html>
+        \n<html> <font color="black" size="18">\t&#9679;  To lock all doors?</font></html></string>
+    <string name="frequently_asked_questions" translatable="false"><html><font color="black" size="18">Frequently asked questions</font></html>
+        \n\n<html> <font size="15">The e-mail or phone number has to be registered on your card on sikkerhetskort.no By verifying the cards connected to the contact point will automatically be syncronized to your Trainor account. In addition your competence will be syncronized to sikkerhetskort.no</font></html>
+        \n\n<html> <font color="black" size="16">I have verified all my e-mails and phone numbers but am still missingone or more safety cards.</font></html>
+        \n<html> <font size="15">Ask your closest leader or responsible for safety cards in your company what e-mail address or phone number you are registered with on Sikkerhetskort.no. This information needs to be filled in and correct before you can syncronize your safety cards.</font></html>
+        \n\n<html> <font color="black" size="16">Why do I have to confirm my e-mail or phone number to see my safety card?</font></html>
+        \n<html> <font size="15">To be sure that no one is pretending to be you when you enter a facility, we must confirm that the card issued is intended for you.</font></html>
+        \n<html> <font size="15">Because we do not know which email is connected to a security card, you may want to confirm everyone.</font></html>
+    </string>
+
+
+</resources>

@@ -1,0 +1,427 @@
+package com.elearn.trainor.SafetyCards;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.elearn.trainor.BaseAdapters.MyCompanyListRecyclerViewAdapter;
+import com.elearn.trainor.DBHandler.DataBaseHandlerDelete;
+import com.elearn.trainor.DBHandler.DataBaseHandlerInsert;
+import com.elearn.trainor.DBHandler.DataBaseHandlerSelect;
+import com.elearn.trainor.DashboardClasses.LoadingPageActivity;
+import com.elearn.trainor.HelperClasses.AlertDialogManager;
+import com.elearn.trainor.HelperClasses.ConnectionDetector;
+import com.elearn.trainor.HelperClasses.IClickListener;
+import com.elearn.trainor.HelperClasses.SharedPreferenceManager;
+import com.elearn.trainor.HelperClasses.VolleyErrorHandler;
+import com.elearn.trainor.HelperClasses.WebServicesURL;
+import com.elearn.trainor.HomePage;
+import com.elearn.trainor.Login;
+import com.elearn.trainor.MyCompany.CompanyList;
+import com.elearn.trainor.PropertyClasses.CustomerDetailsProperty;
+import com.elearn.trainor.R;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.perf.FirebasePerformance;
+import com.google.firebase.perf.metrics.Trace;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClickListener {
+    LinearLayout ll_back, llhome;
+    TextView text_header, txt_verify_email_des1, txt_verify_phone_des1;
+    ConnectionDetector connectionDetector;
+    SharedPreferenceManager spManager;
+    DataBaseHandlerSelect dbSelect;
+    DataBaseHandlerInsert dataBaseHandlerInsert;
+    DataBaseHandlerDelete dataBaseHandlerDelete;
+    ProgressDialog pDialog;
+    public boolean isActivityLive = false;
+    FirebaseAnalytics analytics;
+    Trace myTrace;
+    String type, customerId, typeName, requestId, userEmailVerified,userPhoneVerified;
+    RelativeLayout rl_frequently_asked_qus, rl_verify_phone_view, rl_verify_email_view, rl_verify_more_contacts;
+    EditText edit_code;
+    Button btn_submit_code;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_process_verify_info);
+        isActivityLive = true;
+        getControls();
+    }
+
+    public void getControls() {
+        analytics = FirebaseAnalytics.getInstance(ProcessVerifyInfo.this);
+        myTrace = FirebasePerformance.getInstance().newTrace("Register_SafetyCard_trace");
+        myTrace.start();
+
+        dbSelect = new DataBaseHandlerSelect(ProcessVerifyInfo.this);
+        dataBaseHandlerInsert = new DataBaseHandlerInsert(ProcessVerifyInfo.this);
+        dataBaseHandlerDelete = new DataBaseHandlerDelete(ProcessVerifyInfo.this);
+        connectionDetector = new ConnectionDetector(ProcessVerifyInfo.this);
+        spManager = new SharedPreferenceManager(ProcessVerifyInfo.this);
+
+        ll_back = (LinearLayout) findViewById(R.id.ll_back);
+        llhome = (LinearLayout) findViewById(R.id.llhome);
+        text_header = (TextView) findViewById(R.id.text_header);
+        text_header.setText("Verify info");
+        rl_frequently_asked_qus = findViewById(R.id.rl_frequently_asked_qus);
+        rl_verify_phone_view = findViewById(R.id.rl_verify_phone_view);
+        rl_verify_email_view = findViewById(R.id.rl_verify_email_view);
+        txt_verify_email_des1 = findViewById(R.id.txt_verify_email_des1);
+        txt_verify_phone_des1 = findViewById(R.id.txt_verify_phone_des1);
+        rl_verify_more_contacts = findViewById(R.id.rl_verify_more_contacts);
+        btn_submit_code = findViewById(R.id.btn_submit_code);
+        edit_code = findViewById(R.id.edit_code);
+
+        ll_back.setOnClickListener(this);
+        llhome.setOnClickListener(this);
+        rl_verify_more_contacts.setOnClickListener(this);
+        btn_submit_code.setOnClickListener(this);
+
+        if (getIntent().getStringExtra("Type") != null && !Objects.equals(getIntent().getStringExtra("Type"), "")) {
+            type = getIntent().getStringExtra("Type");
+        }
+        if (getIntent().getStringExtra("CustomerId") != null && !Objects.equals(getIntent().getStringExtra("CustomerId"), "")) {
+            customerId = getIntent().getStringExtra("CustomerId");
+        }
+        if (getIntent().getStringExtra("TypeName") != null && !Objects.equals(getIntent().getStringExtra("TypeName"), "")) {
+            typeName = getIntent().getStringExtra("TypeName");
+        }
+        if (type.equals("FrequentlyAsked")) {
+            rl_frequently_asked_qus.setVisibility(View.VISIBLE);
+            rl_verify_phone_view.setVisibility(View.GONE);
+            rl_verify_email_view.setVisibility(View.GONE);
+        } else if (type.equals("E-mail")) {
+            showWaitDialog();
+            getCode(WebServicesURL.VerificationOTPEmail + "?customerId=" + customerId);
+        }else if(type.equals("Phone")){
+            showWaitDialog();
+            getCode(WebServicesURL.VerificationOTPPhone + "?customerId=" + customerId);
+        }
+    }
+
+    public void getCode(String URL) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    if (response != null && !response.equals("")) {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject != null) {
+                            if (jsonObject.has("requestId")) {
+                                requestId = jsonObject.getString("requestId");
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    dismissWaitDialog();
+                    e.printStackTrace();
+                } finally {
+                    dismissWaitDialog();
+                    if (!requestId.equals("")) {
+                        if (type.equals("E-mail")) {
+                            rl_frequently_asked_qus.setVisibility(View.GONE);
+                            rl_verify_phone_view.setVisibility(View.VISIBLE);
+                            rl_verify_email_view.setVisibility(View.GONE);
+                            txt_verify_phone_des1.setText("An e-mail has been sent to " + typeName + ". Please click the link in the e-mail to verify your e-mail.");
+                        } else if (type.equals("Phone")) {
+                            rl_frequently_asked_qus.setVisibility(View.GONE);
+                            rl_verify_phone_view.setVisibility(View.VISIBLE);
+                            rl_verify_email_view.setVisibility(View.GONE);
+                            txt_verify_phone_des1.setText("A text message has been sent to " + typeName + ".");
+                        }
+                    } else {
+                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Something went wrong. Please try again later", false, new IClickListener() {
+                            @Override
+                            public void onClick() {
+                                Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissWaitDialog();
+               /* if (error == null || error.networkResponse == null) {
+                    return;
+                }*/
+                final String status_Code = String.valueOf(error.networkResponse.statusCode);
+                Log.d("Satus Code= ", status_Code);
+                AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "User does not have an valid email address/phone associated", false, new IClickListener() {
+                    @Override
+                    public void onClick() {
+                        Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + spManager.getToken());
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue11 = Volley.newRequestQueue(this);
+        stringRequest.setShouldCache(false);
+        requestQueue11.add(stringRequest);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_back:
+                onBackPressed();
+                break;
+            case R.id.llhome:
+                commonIntentMethod(HomePage.class);
+                break;
+            case R.id.rl_verify_more_contacts:
+                commonIntentMethod(VerifyInfo.class);
+                break;
+            case R.id.btn_submit_code:
+                if(connectionDetector.isConnectingToInternet()){
+                    String code = edit_code.getText().toString().trim();
+                    if(!code.equals("")){
+                        showWaitDialog();
+                        callSubmitCodeApi(code);
+                    }else {
+                        AlertDialogManager.showDialog(this, "", "Please input valid code.", false, null);
+                    }
+                }else{
+                    AlertDialogManager.showDialog(this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, null);
+                }
+
+                break;
+        }
+    }
+
+    public void callSubmitCodeApi(String code){
+        String url = WebServicesURL.VerifiyCode + "?requestId=" + requestId+"&code="+code;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    if (response != null && !response.equals("")) {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject != null) {
+                            if (jsonObject.has("userEmailVerified")) {
+                                userEmailVerified = jsonObject.getString("userEmailVerified");
+                            }
+                            if (jsonObject.has("userPhoneVerified")) {
+                                userPhoneVerified = jsonObject.getString("userPhoneVerified");
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    dismissWaitDialog();
+                    e.printStackTrace();
+                } finally {
+                    dismissWaitDialog();
+                    if ((!userEmailVerified.equals("")|| !userPhoneVerified.equals(""))&& (userEmailVerified.equals("true")||userPhoneVerified.equals("true"))) {
+                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Verified", false, new IClickListener() {
+                            @Override
+                            public void onClick() {
+                                Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    } else {
+                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Not verified. Try again after some time.", false, new IClickListener() {
+                            @Override
+                            public void onClick() {
+                                Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissWaitDialog();
+               /* if (error == null || error.networkResponse == null) {
+                    return;
+                }*/
+                final String status_Code = String.valueOf(error.networkResponse.statusCode);
+                Log.d("Satus Code= ", status_Code);
+                AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Request id or code is invalid. Please try again!", false, null);
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + spManager.getToken());
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue11 = Volley.newRequestQueue(this);
+        stringRequest.setShouldCache(false);
+        requestQueue11.add(stringRequest);
+    }
+
+    public void saveCustomerDetails(final String userID) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.CUSTOMERS_DETAIL_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    if (jsonArray != null && jsonArray.length() > 0) {
+                        dataBaseHandlerDelete.deleteTableByName("CustomerDetails", userID);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            CustomerDetailsProperty info = new CustomerDetailsProperty();
+                            info.customer_id = jsonObject.getString("customerId") == null ? "" : jsonObject.getString("customerId").equals("") ? "" : jsonObject.getString("customerId");
+                            info.customerName = jsonObject.getString("customerName") == null ? "" : jsonObject.getString("customerName").equals("") ? "" : jsonObject.getString("customerName");
+                            info.workEmailAddress = jsonObject.getString("workEmailAddress") == null ? "" : jsonObject.getString("workEmailAddress").equals("") ? "" : jsonObject.getString("workEmailAddress");
+                            info.departmentName = jsonObject.getString("departmentName") == null ? "" : jsonObject.getString("departmentName").equals("") ? "" : jsonObject.getString("departmentName");
+                            info.employeeNumber = jsonObject.getString("employeeNumber") == null ? "" : jsonObject.getString("employeeNumber").equals("") ? "" : jsonObject.getString("employeeNumber");
+                            info.title = jsonObject.getString("title") == null ? "" : jsonObject.getString("title").equals("") ? "" : jsonObject.getString("title");
+                            info.workPhone = jsonObject.getString("workPhone") == null ? "" : jsonObject.getString("workPhone").equals("") ? "" : jsonObject.getString("workPhone");
+                            info.hasCopAccess = jsonObject.getString("hasCopAccess") == null ? "" : jsonObject.getString("hasCopAccess").equals("") ? "" : jsonObject.getString("hasCopAccess");
+                            //added 3 field 03-09-2020
+                            info.emailVerified = jsonObject.getString("emailVerified") == null ? "" : jsonObject.getString("emailVerified").equals("") ? "" : jsonObject.getString("emailVerified");
+                            info.phoneVerified = jsonObject.getString("phoneVerified") == null ? "" : jsonObject.getString("phoneVerified").equals("") ? "" : jsonObject.getString("phoneVerified");
+                            info.isPrivate = jsonObject.getString("isPrivate") == null ? "" : jsonObject.getString("isPrivate").equals("") ? "" : jsonObject.getString("isPrivate");
+
+                            dataBaseHandlerInsert.addDataIntoCustomerDetailsTable(info);
+                        }
+                    }
+                } catch (Exception ex) {
+                    dismissWaitDialog();
+                } finally {
+                    commonIntentMethod(VerifyInfo.class);
+                    //dismissWaitDialog();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissWaitDialog();
+                String errorMsg = error.getMessage().toString();
+                if (errorMsg.equals("com.android.volley.AuthFailureError")) {
+                    AlertDialogManager.showCustomDialog(ProcessVerifyInfo.this, "Error", "Authicatiion Error.", false, null, null, "Ok", "", null);
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Bearer " + spManager.getToken());
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue11 = Volley.newRequestQueue(ProcessVerifyInfo.this);
+        requestQueue11.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+       /* if (connectionDetector.isConnectingToInternet()) {
+            saveCustomerDetails(spManager.getUserID());
+        } else {
+            commonIntentMethod(VerifyInfo.class);
+        }*/
+        commonIntentMethod(VerifyInfo.class);
+    }
+
+
+    public void commonIntentMethod(Class activity) {
+        myTrace.stop();
+        Intent intent = new Intent(ProcessVerifyInfo.this, activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+    }
+
+    @Override
+    protected void onStart() {
+        isActivityLive = true;
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        isActivityLive = true;
+        super.onResume();
+        analytics.setCurrentScreen(this, "RegisterSafetyCard", this.getClass().getSimpleName());
+    }
+
+    @Override
+    protected void onStop() {
+        myTrace.stop();
+        isActivityLive = false;
+        dismissWaitDialog();
+        super.onStop();
+    }
+
+    public void showWaitDialog() {
+        if (isActivityLive) {
+            if (pDialog == null) {
+                pDialog = new ProgressDialog(ProcessVerifyInfo.this);
+                pDialog.setMessage(getString(R.string.please_wait));
+                pDialog.setCancelable(false);
+                if (!pDialog.isShowing()) {
+                    pDialog.show();
+                }
+            } else {
+                if (!pDialog.isShowing()) {
+                    pDialog.show();
+                }
+            }
+        }
+    }
+
+    public void dismissWaitDialog() {
+        if (pDialog != null && pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
+    }
+}

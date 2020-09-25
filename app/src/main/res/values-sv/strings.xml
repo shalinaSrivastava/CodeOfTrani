@@ -1,0 +1,421 @@
+<resources>
+    <string name="app_name">Trainor</string>
+    <string name="user_name">Brukernavn</string>
+    <string name="password">Passord</string>
+    <string name="login">Logg inn</string>
+    <string name="register">Registrer deg</string>
+    <string name="toolbox">Verktøy</string>
+    <string name="cancel">Avbryt</string>
+    <string name="save">Lagre</string>
+    <string name="home">Hjem</string>
+    <!-- Loading Page -->
+    <string name="sync_courses">Synkroniserer kurs</string>
+    <string name="logging_in">Logger inn</string>
+    <string name="welcome_loading">Velkommen!</string>
+    <string name="sync_safety_card">Leter etter sikkerhetskort</string>
+    <string name="sync_diploma">Leter etter kursbevis</string>
+    <string name="ready">Straks klart..</string>
+    <!-- HomePage Page -->
+    <string name="courses">Mine kurs</string>
+    <string name="diploma">Kursbevis</string>
+    <string name="saftey_cards">Sikkerhetskort</string>
+    <!--<string name="my_company">Mitt firma</string>-->
+    <string name="my_company">Dokumenter</string>
+    <string name="tools">Verktøy</string>
+    <string name="setting">Innstillinger</string>
+    <string name="please_wait">Vennligst vent...</string>
+    <!--  Forgot Password -->
+    <string name="forgot_pwd_header_text">Glemt passord</string>
+    <string name="found_you">Vi fant deg!</string>
+    <string name="hmm">Hmmm...</string>
+    <string name="discription_found">Vi har sent deg en e-post med instruksjoner om hvordan du kan tilbakestille passordet ditt. Dersom du ikke mottar en e-post innen noen minutter kan du ta kontakt med oss.</string>
+    <string name="edit_text_hint">Ditt brukernavn</string>
+    <string name="not_found_msg">Vi fant ingen med brukere med valgt e-post/brukernavn</string>
+    <string name="need_help_contact">Ikke nøl med å kontakte oss om du trenger hjelp med å logge inn.</string>
+    <string name="forget_pwd">Glemt passord?</string>
+    <string name="forget_pwd_des">Skriv inn ditt brukernavn på trainor.no.</string>
+    <string name="pwd_rest_link">Tilbakestill passord</string>
+    <string name="need_support">Trenger du hjelp?</string>
+    <string name="back_to_login">Tilbake til innlogging</string>
+    <string name="back_to_forget_pwd">Tilbake til glemt passord</string>
+    <!-- Settings Page -->
+    <string name="first_name">Fornavn</string>
+    <string name="last_name">Etternavn</string>
+    <string name="dob">Fødselsdato</string>
+    <string name="contact_no">Telefon</string>
+    <string name="email_id">E-post</string>
+    <string name="english">English</string>
+    <string name="norwegian">Norsk</string>
+    <string name="polish">Polish</string>
+    <string name="korean">Korean</string>
+    <string name="swedish">Svenska</string>
+    <string name="logout">Logg ut</string>
+    <string name="change_pwd">Bytt passord</string>
+    <string name="download_courses">Nedlastinger</string>
+    <string name="change_photo">Bytt bilde</string>
+    <!-- Alert Dialog message -->
+    <string name="alertMsgFirstName">Vennligst fyll inn fornavn</string>
+    <string name="alertMsgEmail">Vennligst fyll inn en gyldig e-post</string>
+    <string name="alertMsgLasttName">Vennligst fyll inn etternavn</string>
+    <string name="alertMsgPhone">Vennligst fyll inn et gyldig telefonnummer</string>
+    <!-- Login Page -->
+    <string name="username_hint">Skriv inn brukernavn</string>
+    <string name="password_hint">Skriv inn passord</string>
+    <!-- New Add Login Page -->
+    <string name="invalid_uname_pwd">Ugyldig brukernavn eller passord</string>
+    <!-- Change Password -->
+    <string name="change_password">Bytt passord</string>
+    <string name="old_password">Gammelt passord</string>
+    <string name="new_password">Nytt passord</string>
+    <string name="repeate_new_pwd">Gjenta nytt passord</string>
+    <string name="or">ELLER</string>
+    <string name="send_pwd_reset_link">Send meg en reset passord-link på e-post.</string>
+    <string name="enter_old_pwd">Skriv inn gammelt passord</string>
+    <string name="enter_new_pwd">Skriv inn nytt passord</string>
+    <string name="enter_repeate_new_pwd">Gjenta nytt passord.</string>
+    <string name="password_not_matched">Nytt passord og gjenta nytt passord er ikke identiske.</string>
+    <!-- Change Profile -->
+    <string name="set_pro_photo">Endre profilbilde</string>
+    <string name="use_camera">Ta bilde med kamera</string>
+    <string name="pick_from_gallery">Velg bilde fra telefonen</string>
+    <string name="remove_pro_photo">Fjern profilbilde</string>
+    <string name="view_pro_photo">Se profilbilde</string>
+    <!--  Notification Page -->
+    <string name="notifications">Varsler</string>
+    <string name="notification_headline">Her kan du velge hvilke varsler appen skal gi deg.</string>
+    <string name="notification_new_courses">Nytt kurs</string>
+    <string name="notification_new_diploma">Nytt kursbevis</string>
+    <string name="notification_courses_expired">Kurs utløpt</string>
+    <string name="notification_safety_card">Nytt sikkerhetskort</string>
+    <string name="notification_expired_safety_card">Utgått sikkerhetskort</string>
+    <!-- Downloads  -->
+    <string name="text_header_download">Nedlastinger</string>
+    <string name="download_over_wifi">Last kun ned over Wifi</string>
+    <string name="no_course_dwnloaded">Ingen nedlastede kurs</string>
+    <string name="no_tools_dwnloaded">Ingen nedlastede verktøy</string>
+    <string name="downloaded_tools">Nedlastede verktøy</string>
+    <string name="downloaded_courses">Nedlastede kurs</string>
+    <string name="dev_button_text">DEV: Fjern alle filer</string>
+    <string name="delete">Slett</string>
+    <string name="deleted_sucessfully">Slettet</string>
+    <string name="delete_offline">Slett nedlastet fil</string>
+    <string name="keep_courses">Behold </string>
+    <string name="delete_courses">Slett </string>
+    <string name="delete_offline_des">Dette vil slette de lagrede kursfilene fra denne enheten. Dersom du skal ta kurset, må du gjøre det online.</string>
+    <!-- Need Support -->
+    <string name="need_support1">Trenger du hjelp?</string>
+    <string name="we_are_happy_hlp">Vi hjelper deg gjerne</string>
+    <string name="choose_option">Velg hvordan du vil kontakte oss under, så skal vi gjøre det vi kan for å løse problemet ditt.</string>
+    <!-- New Added Need Support -->
+    <string name="device_not_support_call_fun">Din enhet støtter ikke denne funksjonaliteten.</string>
+    <string name="call_permission_error">Feil. Vi har ikke tilgang til å ringe.</string>
+    <!-- Safety Cards -->
+    <string name="card_no">Kortnummer</string>
+    <string name="card_code">Kortkode</string>
+    <string name="add_card">Legg til kort</string>
+    <string name="register_saftey_cards">Registrer sikkerhetskort</string>
+    <string name="alertMsgCardNo">Skriv inn et gyldig kortnummer</string>
+    <string name="alertMsgCardCode">Skriv inn en gyldig kortkode</string>
+    <string name="safety_card_des_1">Sikkerhetskort viser hvilke arbeidstillatelser du har for spesifikke selskaper og lokasjoner.</string>
+    <string name="valid_to">Gyldig til</string>
+    <string name="compny_name">Bedriftsnavn</string>
+    <!-- new Added Safety Cards -->
+    <!-- My Company -->
+    <!-- <string name="messsage">Meldinger</string>-->
+    <string name="documents">Dokumenter</string>
+    <!-- New added My Company -->
+    <string name="size">Størrelse:</string>
+    <!-- Courses Page -->
+    <string name="elearn_course_heading">E-læringskurs</string>
+    <string name="classroom_course_heading">Klasseromskurs</string>
+    <string name="other_courses_heading">Nylig fullførte kurs</string>
+    <string name="get_course_heading">Kjøp kurs</string>
+    <!-- <string name="no_other_courses_found">Ingen andre kurs funnet</string>-->
+    <!-- <string name="no_elearn_courses_found">Ingen e-læringskurs funnet</string>-->
+    <!--  <string name="no_classroon_courses_found">Ingen klasseromskurs funnet</string>-->
+    <string name="bad_file_format">Feil filformat</string>
+    <string name="no_available_diploma_show">Ingen aktive kursbevis</string>
+    <string name="no_any_supported_application">Finner ingen apper for å lese PDF</string>
+    <string name="download_error">Feil ved nedlastning</string>
+    <string name="no_diploma_available_downloaded">Ingen kursbevis er tilgjengelig for nedlastning</string>
+    <!--  New Added Courses Page -->
+    <string name="no_elearn_course_des1">Du har ingen planlagte eller kommende kurs</string>
+    <string name="no_elearn_course_des2">E-læringskurs og klasseromskurs vil dukke opp her når de er bestilt</string>
+    <!--
+     <string name="when_no_diploma1">Når du fullfører et kurs, vil dine kursbevis dukke opp her.</string>
+         <string name="when_no_diploma2">Du har ingen aktive kursbevis.</string>
+    -->
+    <string name="back_to_courses">Ok</string>
+    <string name="start_courses">Start kurs</string>
+    <string name="expired">Utgått</string>
+    <string name="kontinue">Fortsett</string>
+    <string name="completed">fullført</string>
+    <string name="completed_capital">Fullført</string>
+    <!-- <string name="course_finished">Kurset er fullført</string>-->
+    <string name="language">Språk:</string>
+    <string name="duration">Varighet:</string>
+    <string name="mb">MB</string>
+    <string name="this_will_take">Dette vil bruke</string>
+    <string name="of_space_you_have">av din diskplass. Du har</string>
+    <string name="mb_available_space">MB tilgjengelig diskplass.</string>
+    <string name="navigate">Vis på kart</string>
+    <string name="loading_course_pls_wait">Laster ned kurset. Vennligst vent..</string>
+    <string name="hundered_percent">100 % av</string>
+    <string name="percent_of">% av</string>
+    <!-- <string name="downloading_failed">Nedlasting feilet</string>-->
+    <string name="downloads_completed">Nedlasting fullført</string>
+    <string name="profile">Min profil</string>
+    <string name="course_loading_msg">Selv om du stopper nedlastingen, kan du fortsatt ta kurset online.</string>
+    <string name="crop">Lagre bilde</string>
+    <string name="setting_saved">Innstillinger lagret</string>
+    <string name="all_dwnld_file_deleted">Alle nedlastede filer er slettet.</string>
+    <string name="save_course_offline">Vil du lagre offline?</string>
+    <string name="not_enough_space">Ikke nok diskplass på din enhet</string>
+    <!-- <string name="target">Målgruppe:</string>-->
+    <!-- New added full_image  -->
+    <string name="profile_image">Profilbilde</string>
+    <!-- Diploma -->
+    <string name="when_no_diploma1">Her vil dine kursbevis vises når du fullfører et Trainor-kurs.</string>
+    <string name="when_no_diploma2">Det ser ikke ut som du har noen aktive kursbevis akkurat nå.</string>
+    <!-- New added Diploma  -->
+    <string name="expires">Utløper</string>
+    <string name="active_diploma">Aktive kursbevis</string>
+    <string name="expired_diploma">Kurshistorikk</string>
+    <string name="get_more_at_trainor_no">Bestill flere kurs på Trainor.no</string>
+    <!-- Common Messages -->
+    <string name="change_pwd_success">Passordet er oppdatert.</string>
+    <string name="change_pwd_faliure">Feil gammelt passord. Vennligst forsøk igjen.</string>
+    <string name="networkError">Nettverksfeil</string>
+    <string name="internalServerError"> Intern serverfeil, vennligst prøv igjen senere.</string>
+    <string name="internetErrorTitle">Feil med internett-tilkobling</string>
+    <string name="internetErrorMessage">Finner ingen internettilkobling. Sørg for at du er koblet til internett og prøv igjen.</string>
+    <string name="waitMsg">Vennligst vent...</string>
+    <string name="permissionTitle">Vi mangler tillatelser</string>
+    <string name="writePermissionMessage">Uten denne tillatelsen vil ikke appen klare å lagre filer på mobilen din. Er du sikker på at du ikke vil gi denne tillatelsen?</string>
+    <!-- New Added Common message -->
+    <string name="server_error_title">En teknisk feil oppstod</string>
+    <!--   <string name="host_server_msg">Kan ikke koble til server. Vennligst forsøk igjen</string>-->
+    <string name="wifi_not_not_ebabled_tools">Wifi er ikke tilgjengelig. I dine innstillinger har du definert at verktøy kun skal lastes ned over wifi. Koble til, og forsøk igjen.</string>
+    <!--<string name="diploma_exception">Kursbevis feil</string>-->
+    <string name="safety_card_exception">Feil i kobling mot Sikkerhetskort.no</string>
+    <string name="try_after_some_time">Vennligst forsøk igjen om en liten stund</string>
+    <!--
+    <string name="card_added_successfully">Sikkerhetskortet ble funnet ble lagt til!</string>
+    -->
+    <string name="card_added_successfully">Sikkerhetskortet er lagt til.</string>
+    <string name="invalid_card_titile">Fant ikke kortet</string>
+    <string name="invalid_card_msg">Vi kunne ikke finne noen kort med dataene du tastet inn. Se over dataene og forsøk igjen.</string>
+    <string name="already_exists">Finnes fra før</string>
+    <string name="image_compression_error">Feil i bildekomprimeringen</string>
+    <string name="image_not_supported">Dette bildeformatet er dessverre ikke støttet.</string>
+    <!-- <string name="this_file_doesnot_exist">Denne filen eksisterer ikke.</string>-->
+    <string name="image_crop_exception">Feil i cropping av bilde</string>
+    <string name="file_error">Feil i fil</string>
+    <string name="pic_loading_error">Kunne ikke laste inn bildet. Vennligst forsøk igjen.</string>
+    <string name="file_not_found">Fil ikke funnet</string>
+    <string name="course_file_not_exist">Fant ikke kursfilene</string>
+    <!-- New Added 25-09-2017 -->
+    <string name="wifi_not_not_ebabled_course">Wifi er ikke tilgjengelig. I dine innstillinger har du definert at kurs kun skal lastes ned over wifi. Koble til, og forsøk igjen</string>
+    <string name="address_not_found">Beklager, vi kunne ikke finne adressen på kartet</string>
+    <string name="diploma_not_found">Beklager, vi fant ikke kursbeviset. Vennligst prøv igjen-</string>
+    <string name="loading">Laster</string>
+    <string name="download">Last ned</string>
+    <!-- New Added Volley message -->
+    <!--  <string name="no_connection_error">Mangler internett-tilkobling. Forsøk igjen litt senere.</string>-->
+    <string name="server_error_msg">En teknisk feil oppstod. Vennlist forsøk igjen litt senere.</string>
+    <!-- Map -->
+    <string name="google_maps_key">AIzaSyB9k7poEo7d8wfgAaMrba_IJOUSvErN1-4</string>
+    <string name="title_activity_google_map">Kart</string>
+
+
+    <!-- Alert Dialog -->
+    <string name="Retry">Prøv igjen</string>
+    <string name="deny">Ikke tillat</string>
+    <string name="ok">Ok</string>
+    <string name="day">dag</string>
+    <string name="days">dager</string>
+    <string name="hour">time</string>
+    <string name="hours">timer</string>
+    <string name="minute">minutt</string>
+    <string name="minutes">minutter</string>
+    <!--<string name="offline_diploma_popup">Du må koble til internett for å synkronisere kursdeltakelsen med trainor.no før du kan motta ditt kursbevis.\n\nGratulerer!</string>-->
+    <string name="target_group">Målgruppe</string>
+    <string name="course_subject">Emnner</string>
+    <string name="goal">Målsetning</string>
+    <string name="course_info">Kursinformasjon</string>
+    <string name="view_diploma">Vis kursbevis</string>
+
+    <!-- New Added 27-10-2017 -->
+    <string name="logout_alert">Er du sikker på at du vil logge ut?</string>
+    <string name="image_not_loaded">Bildet kunne ikke lastes inn</string>
+    <string name="image_updated">Bildet er oppdatert</string>
+    <string name="image_removed">Profilbildet er fjernet</string>
+    <string name="pwd_reset_link_sent">En lenke er sendt til din e-postadresse</string>
+
+    <!-- New Added 10-11-2017 -->
+    <string name="android_mail_subject">Tilbakemelding fra Android-appen</string>
+    <string name="picture_not_taken">Bildet ble ikke tatt</string>
+
+    <!-- New Added 16-11-2017 -->
+    <string name="not_started">Ikke påbegynt</string>
+    <string name="start_offline">Start offline</string>
+
+    <!-- New Added 27-11-2017 -->
+    <string name="no">Nei</string>
+    <string name="yes">Ja</string>
+
+    <!-- New Added 12-12-2017 -->
+    <string name="when_no_cmpny_list">Din firmaadministrator har ikke lastet opp noen dokumenter ennå.</string>
+    <!-- New Added 19-12-2017 -->
+    <string name="course_download_failed_header">Ooops.</string>
+    <string name="course_download_failed_message">Vi beklager! Det ser dessverre ut som kurset er utilgjengelig akkurat nå. Vennligst forsøk igjen.</string>
+
+    <!-- New Added 28-12-2017 -->
+    <string name="no_app_to_handle_activity">Din telefon kunne ikke åpne denne filtypen</string>
+
+    <!-- New Added 25-01-2018 -->
+    <string name="no_safety_card">Vi beklager. Sikkerhetskort.no er midlertidig utilgjengelig. </string>
+    <string name="completed_offline">Fullført offline </string>
+    <string name="approved">Godkjent </string>
+
+    <!-- New Added  22-03-2018-->
+    <string name="offline_dwnld_description">Vil du at vi skal lagre kursbevis og dokumenter offline for deg?</string>
+    <string name="hello">Hei</string>
+    <string name="Company_documents">Firmadokumenter</string>
+
+    <string name="SyncDiplomas">Hent kursbevis</string>
+    <string name="SyncSafetycard">Hent sikkerhetskort</string>
+    <string name="SyncTools">Hent verktøy</string>
+    <string name="SyncDocument">Hent firmadokumenter</string>
+    <string name="sync_incomplete">Nedlasting avbrutt</string>
+    <string name="syncronizing_tools">Laster ned verktøy</string>
+    <string name="downloading_tools">Laster ned verktøy</string>
+    <string name="downloading_safetyCard">Laster ned sikkerhetskort</string>sikkerhetskort
+    <string name="syncronizing_diploma">Laster ned kursbevis</string>
+    <string name="downloading_documents">Laster ned dokumenter</string>
+    <string name="syncronizing_documents">Laster ned dokumenter</string>
+    <string name="storing">Lagrer</string>
+    <string name="storingDiploma">kursbevis offline. Vennligst vent...</string>
+    <string name="storingtools">verktøy offline. Vennligst vent...</string>
+    <string name="storingDocuments">dokumenter offline. Vennligst vent...</string>
+
+    <string name="done"> Ok, gå videre! </string>
+    <string name="of"> av </string>
+    <string name="getting_diploma"> Henter kursbevis </string>
+    <string name="getting_tools"> Henter verktøy </string>
+    <string name="getting_safetycard"> Henter sikkerhetskort </string>
+    <string name="getting_document"> Henter firmadokument </string>
+
+    <!-- New Added  30-05-2018 -->
+    <string name="search_hint">Hvilket kurs leter du etter?</string>
+    <string name="search">Søk</string>
+    <string name="select_language">Velg kursspråk</string>
+    <string name="no_course_available">Ingen kurs tilgjengelig på dette språket.</string>
+    <string name="e_learnng">E-læringskurs</string>
+    <string name="buy_now">Kjøp nå</string>
+    <string name="course_information"> Kursinformasjon</string>
+    <string name="course_name">Kursnavn: </string>
+    <string name="course_duration">Varighet: </string>
+    <string name="course_language">Språk: </string>
+    <string name="description">Beskrivelse: </string>
+    <string name="target_group_ordercourse">Målgruppe:</string>
+    <string name="goal_ordercourse">Mål:</string>
+    <string name="order_courses">Kjøp kurs</string>
+    <string name="choose_company">Velg firma</string>
+    <string name="cmpny_choose_des">Firmaet du velger vil kunne se din kursprogesjon.</string>
+    <string name="dsb_pulish">Utgitt av DSB</string>
+    <string name="payment_need_support">Betalingen ble gjennomført, men det skjedde en feil ved henting av kurs.\nVennligst kontakt Trainor på e-post eller telefon så skal vi hjelpe deg.</string>
+    <string name="course_undelivered_mail_subject">Feil ved tildeling av lisens</string>
+    <string name="course_undelivered_mail_body">Hei,\n\nJeg kjøpte et kurs i appen, men grunnet en teknisk feil ble det ikke tildelt en kurslisens.\n\nTeknisk info:\n\n</string>
+    <string name="payment_user_id">Bruker-ID:</string>
+    <string name="payment_course_id">Kurs-ID:</string>
+    <string name="payment_order_id">Ordre-ID:</string>
+    <string name="time_of_purchase">Kjøpstidspunkt:</string>
+
+    <string name="popup_des1">Kurs kjøpt via app vil kun gi kvittering fra Google Play </string>
+    <string name="popup_des2">Du vil ikke motta kvittering fra trainor.no.</string>
+    <string name="popup_des3">Rammeavtalepriser er ikke tilgjengelig ved app-kjøp, og priser kan variere fra priser på www.trainor.no.</string>
+    <string name="btn_i_understand">Jeg forstår</string>
+    <string name="below_search_text">Priser inkl. MVA. Rammeavtalepriser er ikke tilgjengelig ved app-kjøp.</string>
+    <string name="offline_notification_course_text">Du er ikke koblet til internett. Kurs vil bli tilgjengelig neste gang du går er koblet til et nettverk.</string>
+    <string name="offline_notification_safetycard_text">Du er ikke koblet til internett. Sikkerhetskort vil bli tilgjengelig neste gang du går er koblet til et nettverk.</string>
+    <string name="offline_notification_diploma_text">Du er ikke koblet til internett. Kursbevis vil bli tilgjengelig neste gang du går er koblet til et nettverk.</string>
+    <string name="offline_notification_document_text">Du er ikke koblet til internett. Dokumentet vil bli tilgjengelig neste gang du går er koblet til et nettverk.</string>
+
+    <string name="portuguese">Portugisisk</string>
+    <string name="important_info">Viktig informasjon</string>
+    <string name="new_documents">Nye dokumenter</string>
+    <string name="no_unread_notification">Ingen nye varslinger</string>
+    <string name="clear_list">Tøm liste</string>
+    <string name="new_notification_header">Nye varsler</string>
+    <string name="new_singular">ny</string>
+    <string name="new_plural">nye</string>
+    <string name="server_not_responding">Vi beklager! Det ser ut some våre servere ikke er tilgjengelig akkurat nå. Forsøk igjen om en liten stund.</string>
+
+    <string name="stattnet_login_api_error">Du er ikke registrert som Trainor-bruker. Vennligst bestill et Trainor-kurs i Saba, så vil du bli automatisk opprettet som bruker.</string>
+    <string name="mdm_value_error_message">Det ser ikke ut som du har riktig oppsett for å benytte denne appen. Vennligst ta kontakt med din IT-avdeling</string>
+    <string name="internet_error_message_mdm"> Det ser ikke ut som du er tilkoblet internett. Appen vil bli avsluttet. Vennligst koble til internett og forsøk igjen.</string>
+    <string name="internetErrorTitle_mdm">Mangler internettkobling</string>
+    <string name="quit_app"> Appen vil bli avsluttet. </string>
+    <string name="tool_delete_des"> Er du sikker på at du ønsker å slette dette verktøyet? </string>
+    <string name ="completed_date">Fullført dato</string>
+
+    <!-- New Added  11-09-2019 -->
+    <string name="conco_philips_header">ConocoPhilips</string>
+    <string name="register_psi">Registrer PSI</string>
+    <string name="psi_card_not_uploaded"> kort ble ikke lastet opp. Koble til internett for å laste opp.</string>
+    <string name="psi_cards_not_uploaded"> kort ble ikke lastet opp. Koble til internett for å laste opp.</string>
+    <string name="click_here_to_try_again">Klikk her for å prøve igjen</string>
+    <string name="psi_course_not_taken">Ditt firma har tilgang til PSI-kort. Før du fyller ut PSI-kort må du fullføre PSI-kurset.</string>
+    <string name="start_psi_course">Start PSI-kurset</string>
+    <string name="risk_been_identified">Har nye farer / risiko blitt identifisert under samtalen?</string>
+    <string name="planned_follow_up">Planlagt oppfølging</string>
+    <string name="topic_discussed">Vennligst fyll</string>
+    <string name="observation_handling"><html><font size="16">Observasjon og håndtering av energier</font></html>
+        \n\n<html><font size="16"><font color="red">Ri</font>siko<font color="red">B</font>asert <font color="red">O</font>bservasjonsteknikk - <font color="red">RIBO</font></font></html>
+        \n\n<html><font size="16"><font color="red">O</font>VERBLIKK:</font></html> Før du setter i gang arbeidet, stopp opp og dann deg et overblikk rundt og i området du skal arbeide.
+        \n<html><font size="16"><font color="red">B</font>EGRENS:</font></html> Del arbeidsområdet inn i mindre områder for å gi deg nødvendig oversikt.
+        \n<html><font size="16"><font color="red">S</font>E ETTER ENERGI:</font></html> Finn de energityper i og rundt arbeidsområdet som kan utgjøre en risiko. Fokuser på en energitype om gangen.</string>
+    <string name="heat_cold">Varme / kulde</string>
+    <string name="pressure">Trykk</string>
+    <string name="chemical">Kjemisk</string>
+    <string name="electrical">Elektrisk</string>
+    <string name="gravity">Tyngdekraft</string>
+    <string name="radiation">Stråling</string>
+    <string name="noise">Støy</string>
+    <string name="biological">Biologisk</string>
+    <string name="energy_movement">Energi i bevegelse</string>
+    <string name="chk_self_energy"> Sjekk av egenproduserte energier og aktiviteter:</string>
+    <string name="present_in_moment">Er du \"DØNN TILSTEDE\" ?</string>
+    <string name="placeplatform"> Sted/Plattform </string>
+    <string name="department">Avdeling</string>
+    <string name="conocophillips">ConocoPhillips</string>
+    <string name="select_valid_place_platform">Vennligst velg sted/plattform.</string>
+    <string name="saved_offline_msg">PSI-skjema vil bli lagret offline. Vennligst prøv å laste opp på nytt når du er koblet til internett.</string>
+    <string name="something_went_wrong">Noe gikk galt. Vennligst prøv igjen.</string>
+    <string name="not_assocaiated_dept">Sted/plattform har ingen avdelinger.</string>
+    <string name="select_place_platform_first">Vennligst velg sted/plattform først.</string>
+    <string name="registered_successfully">Din samtale er lagret. Takk for ditt bidrag til økt sikkerhet!</string>
+    <string name="course_sync_error">Koble til internett for å synkronisere kurset mot server.</string>
+    <string name="resume_courses">Fortsett kurs</string>
+    <string name="select_valid_regd_date">Vennligst velg en gyldig registreringsdato.</string>
+    <string name="blank_topic_discussed">Vennligst fyll ut hvilke emner som er diskutert.</string>
+
+    <string name="not_connected_internet_title">Ikke koblet til internett</string>
+    <string name="not_connected_internet_msg">Vennligst koble til internett og prøv på nytt.</string>
+    <string name="register_psi_card">Registrer PSI-kort</string>
+    <string name="date_documents">Dato:</string>
+    <string name="select_valid_dept">Du må velge en avdeling</string>
+    <string name="no_place_platform_associated">No place/platform is associated with this user.</string>
+
+    <!--new added for Facility safetycard-->
+    <string name="safety_card_des_2">If the company you work for use sikkerhetskort.no you can add your card here by confirming your contact details and it will stay up to date</string>
+    <string name="register_card">Verify phone or e-mail</string>
+    <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to app by validating your e-mail or phone number</string>
+    <string name="verify_info_des2">Click the email or phone number you would like to verify.</string>
+    <string name="planned_work_in_hours">Planned work in hours</string>
+    <string name="remember_n_check"><html><font color="black" size="18">Did you remember?</font></html>
+        \n<html> <font size="18" color="black">\t&#9679;  To bring all your things?</font></html>
+        \n<html> <font size="18" color="black">\t&#9679;  To clean up after yourself?</font></html>
+        \n<html> <font size="18" color="black">\t&#9679;  To lock all doors?</font></html></string>
+</resources>

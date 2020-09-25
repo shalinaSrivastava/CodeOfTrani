@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/txtViewDiploma"
+        android:title="View Diploma" />
+    <item
+        android:id="@+id/txtCourseInfo"
+        android:title="Course info" />
+</menu>

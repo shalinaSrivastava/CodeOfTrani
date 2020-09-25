@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1565C0</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+    <!--dashboard colours-->
+    <color name="courses">#4caf50</color>
+    <color name="diploma">#673ab7</color>
+    <color name="safety_cards">#ff9800</color>
+    <color name="my_company">#009688</color>
+    <color name="tools">#78909c</color>
+    <color name="settings">#1565C0</color>
+
+    <!--login page-->
+    <color name="login_button">#4CAF50</color>
+
+    <color name="forget_pwd_back_button">#da4f4a</color>
+    <color name="notification_color">#dc143c</color>
+    <color name="forgot_pwd_popup_bkg">#4c4c4c</color>
+    <color name="back_login_button">#5ab75c</color>
+
+    <color name="switch_button_colour">#4caf50</color>
+    <color name="tab_selector_color">#B2DFDB</color>
+    <color name="color_black">#000000</color>
+    <color name="color_gray">#BDBDBD</color>
+    <color name="color_homepage_line">#e8e8e8</color>
+    <color name="colorPageHeader">#1e88e5</color>
+    <color name="color_conco_philips">#da2315</color>
+
+
+</resources>
+

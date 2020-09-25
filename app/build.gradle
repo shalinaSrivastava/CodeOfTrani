@@ -1,0 +1,122 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'io.fabric'
+
+repositories {
+    jcenter()
+    maven {
+        url 'https://maven.fabric.io/public'
+    }
+}
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
+    google()
+}
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        applicationId "com.elearn.trainor"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 19
+        versionName "3.0"
+        multiDexEnabled true
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        maven {
+            url "http://dl.bintray.com/albinmathew/maven"
+        }
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.support:support-v4:27.1.1'
+    }
+}
+
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    apply plugin: 'maven'
+    // Crashlytics Kit0
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
+        transitive = true
+    }
+    implementation files('libs/zip4j_1.3.2.jar')
+    //noinspection GradleCompatible
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.browser:browser:1.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
+    implementation 'com.kogitune:pre-lollipop-activity-transition:1.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.yqritc:android-scalablevideoview:1.0.4'
+    implementation 'it.sephiroth.android.library.picasso:picasso:2.5.2.4b'
+    implementation 'com.github.hotchemi:permissionsdispatcher:3.0.1'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.5.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-perf:19.0.8'
+    implementation 'com.nex3z:notification-badge:0.2.0'
+    implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.5'
+    implementation 'me.leolin:ShortcutBadger:1.1.16'
+    testImplementation 'junit:junit:4.12'
+    implementation("com.github.hotchemi:permissionsdispatcher:3.0.1") {
+        exclude module: "support-v13"
+    }
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
+    implementation 'com.naver.android.helloyako:imagecropview:1.2.0'
+    implementation 'com.github.barteksc:android-pdf-viewer:3.0.0-beta.5'
+    implementation 'com.android.billingclient:billing:1.1'
+    //implementation 'androidx.work:work-runtime:2.2.0'
+}
+apply plugin: 'com.google.gms.google-services'

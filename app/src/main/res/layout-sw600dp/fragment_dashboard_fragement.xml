@@ -1,0 +1,284 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:weightSum="2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:id="@+id/llcourses"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rippel"
+                    android:backgroundTint="@color/colorWhite"
+                    android:clickable="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="135dp"
+                        android:layout_height="135dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:clickable="false"
+                        android:src="@drawable/ic_course_blue" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/imageView4"
+                        android:clickable="false"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/courses"
+                        android:textColor="@android:color/black"
+                        android:textSize="11pt" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:background="@color/color_homepage_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:id="@+id/rl_diploma"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/rippel"
+                    android:backgroundTint="@color/colorWhite"
+                    android:clickable="true"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView5"
+                        android:layout_centerHorizontal="true"
+                        android:clickable="false"
+                        android:gravity="center"
+                        android:text="@string/diploma"
+                        android:textColor="@android:color/black"
+                        android:textSize="11pt" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:clickable="false"
+                        android:src="@drawable/diploma_icon_blue" />
+
+                    <!-- <com.nex3z.notificationbadge.NotificationBadge
+                         android:id="@+id/badge_diploma"
+                         android:layout_width="48dp"
+                         android:layout_height="48dp"
+                         android:layout_alignParentTop="true"
+                         android:layout_marginLeft="-10dp"
+                         android:layout_marginTop="-30dp"
+                         android:layout_toEndOf="@+id/imageView5"
+                         app:nbBackground="@drawable/badge_bg"
+                         app:nbMaxTextLength="5"
+                         app:nbTextSize="14sp" />-->
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp"
+                    android:background="@color/color_homepage_line" />
+
+                <RelativeLayout
+                    android:id="@+id/llsafety_cards"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/rippel"
+                    android:backgroundTint="@color/colorWhite"
+                    android:clickable="true"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView6"
+                        android:layout_centerHorizontal="true"
+                        android:clickable="false"
+                        android:gravity="center"
+                        android:text="@string/saftey_cards"
+                        android:textColor="@android:color/black"
+                        android:textSize="11pt" />
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:clickable="false"
+                        android:src="@drawable/ic_safety_card_blue" />
+
+                    <!--<com.nex3z.notificationbadge.NotificationBadge
+                        android:id="@+id/badge_safetycards"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="-10dp"
+                        android:layout_marginTop="-30dp"
+                        android:layout_toEndOf="@+id/imageView6"
+                        app:nbBackground="@drawable/badge_bg"
+                        app:nbMaxTextLength="5"
+                        app:nbTextSize="14sp" />-->
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:background="@color/color_homepage_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:id="@+id/llmy_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/rippel"
+                    android:backgroundTint="@color/colorWhite"
+                    android:clickable="true"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView7"
+                        android:layout_centerHorizontal="true"
+                        android:clickable="false"
+                        android:gravity="center"
+                        android:text="@string/my_company"
+                        android:textColor="@android:color/black"
+                        android:textSize="11pt" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:clickable="false"
+                        android:src="@drawable/ic_my_company_blue" />
+
+                    <!-- <com.nex3z.notificationbadge.NotificationBadge
+                         android:layout_width="48dp"
+                         android:layout_height="48dp"
+                         android:layout_alignParentTop="true"
+                         android:layout_marginLeft="-10dp"
+                         android:layout_marginTop="-30dp"
+                         android:layout_toEndOf="@+id/imageView7"
+                         app:nbBackground="@drawable/badge_bg"
+                         app:nbMaxTextLength="5"
+                         app:nbTextSize="14sp" />-->
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="13dp"
+                    android:background="@color/color_homepage_line" />
+
+                <LinearLayout
+                    android:id="@+id/lltools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/rippel"
+                    android:backgroundTint="@color/colorWhite"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_tools_blue" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:gravity="center"
+                        android:text="@string/tools"
+                        android:textColor="@android:color/black"
+                        android:textSize="11pt" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:background="@color/color_homepage_line" />
+
+        <LinearLayout
+            android:id="@+id/lltrionor_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="260dp"
+                android:layout_height="55dp"
+                android:src="@drawable/trainor_logo" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

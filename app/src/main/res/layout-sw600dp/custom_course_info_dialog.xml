@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="18dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_marginRight="5dp">
+            <TextView
+                android:id="@+id/txtCourseName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activities near"
+                android:textSize="11pt"
+                android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imgBtnCloseDialog"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_close_courseinfo_dialog" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/CourseType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="E-Learning Course"
+                android:textColor="#757575"
+                android:textSize="9pt" />
+
+            <TextView
+                android:id="@+id/txtDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Duration: 50 minutes"
+                android:textColor="#757575"
+                android:textSize="9pt" />
+
+            <TextView
+                android:id="@+id/txtLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Language: English"
+                android:textColor="#757575"
+                android:textSize="9pt" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/goal_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Goal:"
+            android:textSize="11pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtGoalBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Participants will acquire necessary knowledge and skills to enable them to work safely in the proximity of power lines, reducing the possibility of accidents, injuries and loss of life and avoiding damage to equipment and the power grid."
+            android:textColor="#757575"
+            android:textSize="9pt" />
+
+        <TextView
+            android:id="@+id/target_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Target:"
+            android:textSize="11pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtTargetBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Participants will acquire necessary knowledge and skills to enable them to work safely in the proximity of power lines, reducing the possibility of accidents, injuries and loss of life and avoiding damage to equipment and the power grid."
+            android:textColor="#757575"
+            android:textSize="9pt" />
+
+        <TextView
+            android:id="@+id/course_subject_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Course subjects:"
+            android:textSize="11pt"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtCourseSubjectBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Participants will acquire necessary knowledge and skills to enable them to work safely in the proximity of power lines, reducing the possibility of accidents, injuries and loss of life and avoiding damage to equipment and the power grid."
+            android:textColor="#757575"
+            android:textSize="9pt" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="right"
+            android:background="@drawable/rippel"
+            android:backgroundTint="@android:color/white"
+            android:clickable="true">
+
+            <TextView
+                android:id="@+id/txtBackCourses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Back to courses"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10.5pt"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

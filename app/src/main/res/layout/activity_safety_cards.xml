@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.elearn.trainor.SafetyCards.SafetyCards">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/custom_page_header" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tool_bar">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tool_bar"
+            android:scrollbars="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:nestedScrollingEnabled="false">
+
+                <LinearLayout
+                    android:id="@+id/firstTimeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="25dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="64dp"
+                            android:hyphenationFrequency="none"
+                            android:text="@string/safety_card_des_1"
+                            android:textColor="#373a3c"
+                            android:textSize="8.5pt" />
+
+                        <ImageView
+                            android:id="@+id/first_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="-5dp"
+                            android:src="@drawable/ic_person_black" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="20dp"
+                        android:hyphenationFrequency="none"
+                        android:text="@string/safety_card_des_2"
+                        android:textColor="#373a3c"
+                        android:textSize="6.5pt" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="-4dp"
+                        android:background="@drawable/shadow_scard">
+
+                        <Button
+                            android:id="@+id/btn_register_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/rippel"
+                            android:backgroundTint="#27ae60"
+                            android:text="@string/register_card"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="75dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="75dp"
+                        android:layout_marginBottom="30dp"
+                        android:src="@drawable/safetycard_logo" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_safetyCard_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/safety_cards_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_missing_cards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/safety_cards_recycler_view"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:id="@+id/txt_missing_cards"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Missing cards?"
+                            android:textColor="@color/color_black"
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:id="@+id/txt_missing_cards_des"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txt_missing_cards"
+                            android:text="Confirm all your email and phone numbers to make sure you have all your cards syncronized"
+                            android:textSize="8pt" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_add_more_cards"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/txt_missing_cards_des"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_search">
+
+                            <TextView
+                                android:id="@+id/txt_add_more_cards"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="Add more cards"
+                                android:textSize="8pt" />
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rl_missing_cards"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginTop="-20dp"
+                        android:layout_marginRight="70dp"
+                        android:layout_marginBottom="50dp"
+                        android:src="@drawable/safetycard_logo" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_report_entery"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/rippel"
+        android:backgroundTint="#27ae60"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/iv_report_entery"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_report_entry" />
+
+            <TextView
+                android:id="@+id/txt_report_entery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/iv_report_entery"
+                android:text="Report entry to new facility"
+                android:textColor="@android:color/white"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

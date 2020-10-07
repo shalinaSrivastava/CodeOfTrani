@@ -115,7 +115,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
     RelativeLayout rl_safetyCard_list, rl_report_entery, rl_add_more_cards;
     LinearLayout safetyCardRow;
     SafetyCardProperty safetyCardProperty;
-    String safetycardPDF_FileName = "", safetyCardSwitch_Status, NetworkMode = "", From = "", notificationID = "";
+    String safetycardPDF_FileName = "", safetyCardSwitch_Status, NetworkMode = "", From = "", notificationID = "",fromPage;
     ActionBar actionBar;
     List<DownloadUrlProperty> downloadSafetyCardUrlList = new ArrayList<>(); // new list for offline download
     Long freeSpaceMB;
@@ -123,13 +123,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
     Dialog syncIncompleteDialog;
     FirebaseAnalytics analytics;
     Boolean hasEntery;
-
-
     private boolean isGPS = false;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private double wayLatitude = 0.0, wayLongitude = 0.0;
-    private LocationRequest locationRequest;
-    private LocationCallback locationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,7 +256,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     rl_safetyCard_list.setVisibility(View.VISIBLE);
                     firstTimeView.setVisibility(View.GONE);
                     recyclerView.setLayoutManager(new LinearLayoutManager(SafetyCards.this));
-                    safetycardAdapter = new SafetyCardRecyclerViewAdapter(SafetyCards.this, safetyCardListForRecyclerView);
+                    safetycardAdapter = new SafetyCardRecyclerViewAdapter(SafetyCards.this, safetyCardListForRecyclerView,"");
                     recyclerView.setAdapter(safetycardAdapter);
                 }
             }
@@ -270,7 +264,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
             rl_safetyCard_list.setVisibility(View.VISIBLE);
             firstTimeView.setVisibility(View.GONE);
             recyclerView.setLayoutManager(new LinearLayoutManager(SafetyCards.this));
-            safetycardAdapter = new SafetyCardRecyclerViewAdapter(SafetyCards.this, safetyCardListForRecyclerView);
+            safetycardAdapter = new SafetyCardRecyclerViewAdapter(SafetyCards.this, safetyCardListForRecyclerView,"");
             recyclerView.setAdapter(safetycardAdapter);
         } else {
             if (connectionDetector.isConnectingToInternet()) {
@@ -315,13 +309,13 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.btn_register_card:
             case R.id.rl_add_more_cards:
-               /* if (connectionDetector.isConnectingToInternet()) {
+                if (connectionDetector.isConnectingToInternet()) {
                     commonIntentMethod(VerifyInfo.class);
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 } else {
                     AlertDialogManager.showDialog(SafetyCards.this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, null);
-                }*/
-                getLocation();
+                }
+                //getLocation();
                 break;
 
             case R.id.rl_report_entery:
@@ -410,7 +404,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                         }
                         if (safetyCardListForRecyclerView.size() > 0) {
                             recyclerView.setLayoutManager(new LinearLayoutManager(SafetyCards.this));
-                            safetycardAdapter = new SafetyCardRecyclerViewAdapter(SafetyCards.this, safetyCardListForRecyclerView);
+                            safetycardAdapter = new SafetyCardRecyclerViewAdapter(SafetyCards.this, safetyCardListForRecyclerView,"");
                             recyclerView.setAdapter(safetycardAdapter);
                             rl_safetyCard_list.setVisibility(View.VISIBLE);
                             firstTimeView.setVisibility(View.GONE);
@@ -581,10 +575,11 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    public void startDownloadingWithPermission(SafetyCardProperty SafetyCardInfo, String safetycardPDF_FileName, LinearLayout safetyCradRow) {
+    public void startDownloadingWithPermission(SafetyCardProperty SafetyCardInfo, String safetycardPDF_FileName, LinearLayout safetyCradRow, String from) {
         this.safetyCardProperty = SafetyCardInfo;
         this.safetycardPDF_FileName = safetycardPDF_FileName;
         this.safetyCardRow = safetyCradRow;
+        this.fromPage = from;
         SafetyCardsPermissionsDispatcher.startDownloadingWithPermissionCheck(SafetyCards.this);
     }
 
@@ -658,6 +653,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     Intent intent = new Intent(SafetyCards.this, SafetyCardsDetails.class);
                     intent.putExtra("FileName", file.getAbsolutePath());
                     intent.putExtra("pdfFileURL", safetyCardProperty.card_url);
+                    intent.putExtra("FROM", fromPage);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -911,6 +907,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     if (hasEntery) {
                         rl_report_entery.setVisibility(View.VISIBLE);
                     } else {
+                        //rl_report_entery.setVisibility(View.VISIBLE);
                         rl_report_entery.setVisibility(View.GONE);
                     }
 

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -36,6 +37,7 @@ import com.elearn.trainor.HelperClasses.PicasoImageLoader;
 import com.elearn.trainor.HelperClasses.SharedPreferenceManager;
 import com.elearn.trainor.HelperClasses.WebServicesURL;
 import com.elearn.trainor.PropertyClasses.CustomerDetailsProperty;
+import com.elearn.trainor.PropertyClasses.ReportEntryProperty;
 import com.elearn.trainor.SettingModule.Settings;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kogitune.activity_transition.ActivityTransition;
@@ -50,11 +52,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
     public static HomePage instance;
@@ -564,12 +568,14 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                     }
                 } catch (Exception ex) {
                     ExceptionHandler.getErrorMessage(HomePage.this, ex);
+                }finally {
+                    callgetActiveEntryAPI(); //new added 30-09-2020
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                callgetActiveEntryAPI(); //new added 30-09-2020
             }
         }) {
             @Override
@@ -581,6 +587,69 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue11 = Volley.newRequestQueue(this);
+        requestQueue11.add(stringRequest);
+    }
+
+    public void callgetActiveEntryAPI() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.GetActiveEntries, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    if (response != null && !response.equals("")) {
+                        JSONArray jsonArray = new JSONArray(response);
+                        if (jsonArray != null && jsonArray.length() > 0) {
+                            dbDelete.deleteTableByName("ReportEntry", "");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                ReportEntryProperty property = new ReportEntryProperty();
+                                property.userId = spManager.getUserID();
+                                property.entryId = jsonObject.getString("id");
+                                property.checkOutMessage = jsonObject.getString("checkOutMessage");
+                                property.timestamp = jsonObject.getString("timestamp");
+                                property.state = jsonObject.getString("state");
+                                property.numberOfGuests = jsonObject.getString("numberOfGuests");
+                                property.employeeId = jsonObject.getString("employeeId");
+                                property.securityServicePhone = jsonObject.getString("securityServicePhone");
+                                property.safetycardId = jsonObject.getString("safetycardId");
+                                property.facilityName = jsonObject.getString("facilityName");
+                                property.facilityId = jsonObject.getString("facilityId");
+                                property.estimatedDurationOfVisitInSeconds = jsonObject.getString("estimatedDurationOfVisitInSeconds");
+                                dbInsert.addDataIntoReportEntryTable(property);
+                            }
+                        }
+
+                    }
+                } catch (Exception ex) {
+                    Log.d("Exception", ex.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                int statuscode = error.networkResponse.statusCode;
+                if (statuscode == 403 || statuscode == 404) {
+                    try {
+                        String responseBody = new String(error.networkResponse.data, "utf-8");
+                        JSONObject data = new JSONObject(responseBody);
+                        String message = data.getString("message");
+                    } catch (JSONException | UnsupportedEncodingException e) {
+                        Log.d("Exception: ", Objects.requireNonNull(e.getMessage()));
+                    }
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + spManager.getToken());
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue11 = Volley.newRequestQueue(this);
+        stringRequest.setShouldCache(false);
         requestQueue11.add(stringRequest);
     }
 }

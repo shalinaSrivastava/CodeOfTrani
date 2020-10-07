@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.elearn.trainor.PropertyClasses.SafetyCardProperty;
 import com.elearn.trainor.R;
+import com.elearn.trainor.SafetyCards.CheckedInFacility;
 import com.elearn.trainor.SafetyCards.SafetyCards;
 
 import java.util.List;
@@ -23,10 +24,12 @@ public class SafetyCardRecyclerViewAdapter extends RecyclerView.Adapter<SafetyCa
     private List<SafetyCardProperty> safetyCardList;
     Context context;
     int colour, imageVisibility;
+    String from = "";
 
-    public SafetyCardRecyclerViewAdapter(Context con, List<SafetyCardProperty> safetyCardList) {
+    public SafetyCardRecyclerViewAdapter(Context con, List<SafetyCardProperty> safetyCardList, String from) {
         this.context = con;
         this.safetyCardList = safetyCardList;
+        this.from = from;
     }
 
     @Override
@@ -84,7 +87,11 @@ public class SafetyCardRecyclerViewAdapter extends RecyclerView.Adapter<SafetyCa
                 LinearLayout imgDownloadDiploma = (LinearLayout) view;
                 SafetyCardProperty info = (SafetyCardProperty) imgDownloadDiploma.getTag();
                 String card_id = info.card_id;
-                SafetyCards.getInstance().startDownloadingWithPermission(info, card_id, holder.safetyCard_row);
+                if(from.equals("CheckedInFacility")){
+                    CheckedInFacility.getInstance().startDownloadingWithPermission(info, card_id, holder.safetyCard_row,"CheckedInFacility");
+                }else{
+                    SafetyCards.getInstance().startDownloadingWithPermission(info, card_id, holder.safetyCard_row,"SafetyCards");
+                }
             }
         });
     }

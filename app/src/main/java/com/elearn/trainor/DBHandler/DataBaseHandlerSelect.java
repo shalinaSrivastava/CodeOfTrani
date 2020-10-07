@@ -7,12 +7,15 @@ import android.util.Log;
 
 import com.elearn.trainor.HelperClasses.WebServicesURL;
 import com.elearn.trainor.PropertyClasses.COPProperty;
+import com.elearn.trainor.PropertyClasses.CheckedInFacilityProperty;
 import com.elearn.trainor.PropertyClasses.CustomerDetailsProperty;
 import com.elearn.trainor.PropertyClasses.DSBProperty;
 import com.elearn.trainor.PropertyClasses.DiplomaProperty;
+import com.elearn.trainor.PropertyClasses.FacilityProperty;
 import com.elearn.trainor.PropertyClasses.GetMoreCoursesProperty;
 import com.elearn.trainor.PropertyClasses.MyCompanyProperty;
 import com.elearn.trainor.PropertyClasses.NotificationProperty;
+import com.elearn.trainor.PropertyClasses.ReportEntryProperty;
 import com.elearn.trainor.PropertyClasses.SCORMInfo;
 import com.elearn.trainor.PropertyClasses.SafetyCardProperty;
 import com.elearn.trainor.PropertyClasses.ToolsProperty;
@@ -1408,4 +1411,151 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
         }
         return list;
     }
+
+    // added on 28-09-2020
+    public String getCheckedInStatusFromEntryTable(String userID, String facilityID) {
+        String scorm_status = "", Query ="";
+        SQLiteDatabase db = getReadableDatabase();
+        if(userID.equals("GetEntryId")){
+            Query = "Select id From ReportEntry where facilityId = '" + facilityID + "'";
+        }else{
+           Query = "Select state From ReportEntry where userID='" + userID + "'  And facilityId = '" + facilityID + "'";
+        }
+
+        synchronized ("dbLock") {
+            try {
+                db.beginTransaction();
+                Cursor cursor = db.rawQuery(Query, null);
+                if (cursor.getCount() > 0) {
+                    if (cursor.moveToFirst()) {
+                        do {
+                            scorm_status = cursor.getString(0);
+                        } while (cursor.moveToNext());
+                    }
+                }
+                cursor.close();
+                db.setTransactionSuccessful();
+            } catch (Exception e) {
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return scorm_status;
+    }
+
+    public List<ReportEntryProperty> getFacilityListFromReportEntryTable(String userId, String facilityState) {
+        List<ReportEntryProperty> reportEntryPropertyList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String Query = "Select userId,id,checkOutMessage,timestamp,state,numberOfGuests,employeeId,securityServicePhone,safetycardId,facilityName,facilityId,estimatedDurationOfVisitInSeconds from ReportEntry  where userID = '" + userId + "' AND state = '" +facilityState+ "' ";
+
+        synchronized ("dbLock") {
+            try {
+                db.beginTransaction();
+                Cursor cursor = db.rawQuery(Query, null);
+                if (cursor.getCount() > 0) {
+                    if (cursor.moveToFirst()) {
+                        do {
+                            ReportEntryProperty info = new ReportEntryProperty();
+                            info.userId = cursor.getString(0);
+                            info.entryId = cursor.getString(1);
+                            info.checkOutMessage = cursor.getString(2);
+                            info.timestamp = cursor.getString(3);
+                            info.state = cursor.getString(4);
+                            info.numberOfGuests = cursor.getString(5);
+                            info.employeeId = cursor.getString(6);
+                            info.securityServicePhone = cursor.getString(7);
+                            info.safetycardId = cursor.getString(8);
+                            info.facilityName = cursor.getString(9);
+                            info.facilityId = cursor.getString(10);
+                            info.estimatedDurationOfVisitInSeconds = cursor.getString(11);
+                            reportEntryPropertyList.add(info);
+                        } while (cursor.moveToNext());
+                    }
+                }
+                cursor.close();
+                db.setTransactionSuccessful();
+            } catch (Exception ex) {
+                Log.d("Error", ex.getMessage());
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return reportEntryPropertyList;
+    }
+
+    public List<FacilityProperty> getFacilityListFromFacilityTable(String facilityState) {
+        List<FacilityProperty> facilityPropertyList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String Query = "Select id,name,customerId,customerName,employeeCheckinState,imageUrl,distanceInKm from FacilityTable  where employeeCheckinState <> '" +facilityState+ "' ";
+
+        synchronized ("dbLock") {
+            try {
+                db.beginTransaction();
+                Cursor cursor = db.rawQuery(Query, null);
+                if (cursor.getCount() > 0) {
+                    if (cursor.moveToFirst()) {
+                        do {
+                            FacilityProperty info = new FacilityProperty();
+                            info.id = cursor.getString(0);
+                            info.name = cursor.getString(1);
+                            info.customerId = cursor.getString(2);
+                            info.customerName = cursor.getString(3);
+                            info.employeeCheckInState = cursor.getString(4);
+                            info.imageUrl = cursor.getString(5);
+                            info.distanceInKm = cursor.getString(6);
+
+                            facilityPropertyList.add(info);
+                        } while (cursor.moveToNext());
+                    }
+                }
+                cursor.close();
+                db.setTransactionSuccessful();
+            } catch (Exception ex) {
+                Log.d("Error", ex.getMessage());
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return facilityPropertyList;
+    }
+
+    /*public List<CheckedInFacilityProperty> getFacilityListFromCheckedInFacilityTable(String userId, String facilityState) {
+        List<CheckedInFacilityProperty> checkedInFacilityList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String Query = "Select userId,id,checkOutMessage,timestamp,state,employeeId,facilityName,facilityId,estimatedDurationOfVisitInSeconds from CheckedInFacility  where userID = '" + userId + "' AND state = '" +facilityState+ "' ";
+
+        synchronized ("dbLock") {
+            try {
+                db.beginTransaction();
+                Cursor cursor = db.rawQuery(Query, null);
+                if (cursor.getCount() > 0) {
+                    if (cursor.moveToFirst()) {
+                        do {
+                            CheckedInFacilityProperty info = new CheckedInFacilityProperty();
+                            info.userId = cursor.getString(0);
+                            info.entryId = cursor.getString(1);
+                            info.checkOutMessage = cursor.getString(2);
+                            info.timestamp = cursor.getString(3);
+                            info.state = cursor.getString(4);
+                            info.employeeId = cursor.getString(5);;
+                            info.facilityName = cursor.getString(6);
+                            info.facilityId = cursor.getString(7);
+                            info.estimatedDurationOfVisitInSeconds = cursor.getString(8);
+                        } while (cursor.moveToNext());
+                    }
+                }
+                cursor.close();
+                db.setTransactionSuccessful();
+            } catch (Exception ex) {
+                Log.d("Error", ex.getMessage());
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return checkedInFacilityList;
+    }*/
 }

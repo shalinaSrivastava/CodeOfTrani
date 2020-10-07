@@ -1,7 +1,6 @@
 package com.elearn.trainor.SafetyCards;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,21 +19,18 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.elearn.trainor.BaseAdapters.NearByFacilityAdapter;
 import com.elearn.trainor.DBHandler.DataBaseHandlerInsert;
 import com.elearn.trainor.DBHandler.DataBaseHandlerSelect;
 import com.elearn.trainor.HelperClasses.ConnectionDetector;
 import com.elearn.trainor.HelperClasses.SharedPreferenceManager;
 import com.elearn.trainor.HelperClasses.WebServicesURL;
 import com.elearn.trainor.HomePage;
-import com.elearn.trainor.PropertyClasses.FacilityProperty;
 import com.elearn.trainor.PropertyClasses.ReportEntryProperty;
-import com.elearn.trainor.PropertyClasses.SafetyCardProperty;
 import com.elearn.trainor.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,14 +40,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ReportEntry extends AppCompatActivity implements View.OnClickListener {
+public class UpdateHours extends AppCompatActivity implements View.OnClickListener {
     LinearLayout ll_back, llhome;
-    TextView text_header, txt_hour_count, txt_guest_count, txt_company_name;
+    TextView text_header, txt_hour_count, txt_guest_count, txt_facility_update_entry,txt_facility_update_hours_des;
     private ProgressDialog pDialog;
     SharedPreferenceManager spManager;
-    String companyName, facilityName, facilityId,customerId, facilityStatus, entryId;
-    RelativeLayout rl_remove_guest, rl_add_guest, rl_minus_hour, rl_add_hour, rl_report_entery;
-    int guestCount = 0, hourCount = 1;
+    String spentTime, leftTime, facilityName, entryId;
+    RelativeLayout rl_minus_hour, rl_add_hour, rl_update_work_hr;
+    int guestCount = 0, hourCount = 0;
     int workSeconds;
     ConnectionDetector connectionDetector;
     DataBaseHandlerSelect dbSelect;
@@ -60,50 +56,48 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_entry);
-
-        if (getIntent().getStringExtra("CompanyName") != null && !Objects.equals(getIntent().getStringExtra("CompanyName"), "")) {
-            companyName = getIntent().getStringExtra("CompanyName");
-        }
+        setContentView(R.layout.activity_update_hours);
         if (getIntent().getStringExtra("FacilityName") != null && !Objects.equals(getIntent().getStringExtra("FacilityName"), "")) {
             facilityName = getIntent().getStringExtra("FacilityName");
         }
-        if (getIntent().getStringExtra("FacilityId") != null && !Objects.equals(getIntent().getStringExtra("FacilityId"), "")) {
-            facilityId = getIntent().getStringExtra("FacilityId");
+        if (getIntent().getStringExtra("EntryId") != null && !Objects.equals(getIntent().getStringExtra("EntryId"), "")) {
+            entryId = getIntent().getStringExtra("EntryId");
         }
-        if (getIntent().getStringExtra("FacilityCustomerId") != null && !Objects.equals(getIntent().getStringExtra("FacilityCustomerId"), "")) {
-            customerId = getIntent().getStringExtra("FacilityCustomerId");
+        if (getIntent().getStringExtra("SpentTime") != null && !Objects.equals(getIntent().getStringExtra("SpentTime"), "")) {
+            spentTime = getIntent().getStringExtra("SpentTime");
+        }
+        if (getIntent().getStringExtra("LeftTime") != null && !Objects.equals(getIntent().getStringExtra("LeftTime"), "")) {
+            leftTime = getIntent().getStringExtra("LeftTime");
         }
         getControls();
     }
 
     public void getControls() {
-        spManager = new SharedPreferenceManager(ReportEntry.this);
-        connectionDetector =  new ConnectionDetector(this);
+        spManager = new SharedPreferenceManager(UpdateHours.this);
+        connectionDetector = new ConnectionDetector(this);
         dbSelect = new DataBaseHandlerSelect(this);
         dbInsert = new DataBaseHandlerInsert(this);
         ll_back = findViewById(R.id.ll_back);
         llhome = findViewById(R.id.llhome);
         text_header = findViewById(R.id.text_header);
-        text_header.setText(companyName);
+        text_header.setText(facilityName);
         txt_hour_count = findViewById(R.id.txt_hour_count);
         txt_guest_count = findViewById(R.id.txt_guest_count);
-        txt_company_name = findViewById(R.id.txt_company_name);
-        txt_company_name.setText(facilityName);
-        rl_remove_guest = findViewById(R.id.rl_remove_guest);
-        rl_add_guest = findViewById(R.id.rl_add_guest);
+        txt_facility_update_entry = findViewById(R.id.txt_facility_update_entry);
+        txt_facility_update_entry.setText("Reporting entry into " + facilityName);
         rl_minus_hour = findViewById(R.id.rl_minus_hour);
         rl_add_hour = findViewById(R.id.rl_add_hour);
-        rl_report_entery = findViewById(R.id.rl_report_entery);
+        rl_update_work_hr = findViewById(R.id.rl_update_work_hr);
+        txt_facility_update_hours_des = findViewById(R.id.txt_facility_update_hours_des);
+        String spentNleftTime = "You have been in the facility for "+spentTime+". " +
+                "You have "+leftTime+" left before being notified of exit.";
+        //txt_facility_update_hours_des.setText(spentNleftTime);
 
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
-        rl_remove_guest.setOnClickListener(this);
-        rl_add_guest.setOnClickListener(this);
         rl_minus_hour.setOnClickListener(this);
         rl_add_hour.setOnClickListener(this);
-        rl_report_entery.setOnClickListener(this);
-
+        rl_update_work_hr.setOnClickListener(this);
     }
 
     @Override
@@ -115,16 +109,6 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
             case R.id.llhome:
                 commonIntentMethod(HomePage.class);
                 break;
-            case R.id.rl_remove_guest:
-                if (guestCount > 0) {
-                    guestCount--;
-                }
-                txt_guest_count.setText(guestCount + "");
-                break;
-            case R.id.rl_add_guest:
-                guestCount++;
-                txt_guest_count.setText(guestCount + "");
-                break;
             case R.id.rl_minus_hour:
                 if (hourCount > 1) {
                     hourCount--;
@@ -135,32 +119,26 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
                 hourCount++;
                 txt_hour_count.setText(hourCount + "");
                 break;
-            case R.id.rl_report_entery:
+            case R.id.rl_update_work_hr:
                 if (hourCount > 0) {
                     workSeconds = hourCount * 3600;
                     Log.d("Seconds", workSeconds + "");
-                    if(connectionDetector.isConnectingToInternet()){
-                        List<String> safetyCardIdList = dbSelect.getSafetyCardidByCustId(customerId);
-                        if(safetyCardIdList.size()>0){
-                            showWaitDialog();
-                            callReportEntryAPI(facilityId,safetyCardIdList.get(0),workSeconds,guestCount);
-                        }else{
-                            Toast.makeText(this, "Something went wrong. Please contact administrator!", Toast.LENGTH_SHORT).show();
-                        }
+                    if (connectionDetector.isConnectingToInternet()) {
+                        showWaitDialog();
+                        callUpdateHourApi(entryId, workSeconds + "");
                         //callReportEntryAPI(facilityId,"5fbcf276-48ed-461e-bb20-6f3ce0b92ea5",workSeconds,guestCount);
-                    }else{
+                    } else {
                         Toast.makeText(this, "Not connected to internet", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(this, "Please select valid hours.", Toast.LENGTH_SHORT).show();
                 }
-                //commonIntentMethod(AwaitingApproval.class);
                 break;
         }
     }
 
-    public void callReportEntryAPI(String facilityId, String safetycardId, int time, int gusests) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebServicesURL.EntryFacility, new Response.Listener<String>() {
+    public void callUpdateHourApi(String entryId, String seconds) {
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, WebServicesURL.UpdateVisitDuration, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -168,57 +146,41 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
                     if (response != null && !response.equals("")) {
                         JSONObject jsonObj = new JSONObject(response);
                         if (jsonObj != null) {
-                            ReportEntryProperty property = new ReportEntryProperty();
-                            property.userId = spManager.getUserID();
-                            property.entryId = jsonObj.getString("id");
-                            entryId =  property.entryId;
-                            property.checkOutMessage = jsonObj.getString("checkOutMessage");
-                            property.timestamp = jsonObj.getString("timestamp");
-                            property.state = jsonObj.getString("state");
-                            facilityStatus = property.state;
-                            property.numberOfGuests = jsonObj.getString("numberOfGuests");
-                            property.employeeId = jsonObj.getString("employeeId");
-                            property.securityServicePhone = jsonObj.getString("securityServicePhone");
-                            property.safetycardId = jsonObj.getString("safetycardId");
-                            property.facilityName = jsonObj.getString("facilityName");
-                            property.facilityId = jsonObj.getString("facilityId");
-                            property.estimatedDurationOfVisitInSeconds = jsonObj.getString("estimatedDurationOfVisitInSeconds");
-
-                            dbInsert.addDataIntoReportEntryTable(property);
+                            //String entryId = jsonObj.getString("id");
                         }
                     }
                 } catch (Exception ex) {
                     Log.d("Exception", ex.getMessage());
                 } finally {
-                    if(facilityStatus.equals("awaiting_approval")){
-                        Intent intent = new Intent(ReportEntry.this, AwaitingApproval.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("EntryId",entryId);
-                        startActivity(intent);
-                    }else if(facilityStatus.equals("checked_in")){
-                        commonIntentMethod(CheckedInFacility.class);
-                    }
                     dismissWaitDialog();
+                    if (response.equals("200")) {
+                        Intent intent = new Intent(UpdateHours.this, CheckedInFacility.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               int statuscode =  error.networkResponse.statusCode;
-               if(statuscode == 403 || statuscode == 404){
-                   try {
-                       String responseBody = new String(error.networkResponse.data, "utf-8");
-                       JSONObject data = new JSONObject(responseBody);
-                       //JSONArray errors = data.getJSONArray("errors");
-                       //JSONObject jsonMessage = errors.getJSONObject(0);
-                       String message = data.getString("message");
-                       Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                   } catch (JSONException | UnsupportedEncodingException e) {
-                       Log.d("Exception: ", Objects.requireNonNull(e.getMessage()));
-                   }
-
-                   //Toast.makeText(ReportEntry.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-               }
+                try {
+                    int statuscode = error.networkResponse.statusCode;
+                    if (statuscode == 403 || statuscode == 404 || statuscode == 400) {
+                        String responseBody = new String(error.networkResponse.data, "utf-8");
+                        JSONObject data = new JSONObject(responseBody);
+                        String message = data.getString("message");
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ReportEntry.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (UnsupportedEncodingException ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(UpdateHours.this, "Server error. Please try again", Toast.LENGTH_SHORT).show();
+                    Log.d("Exception: ", Objects.requireNonNull(ex.getMessage()));
+                } catch (JSONException ex) {
+                    Log.d("Exception: ", Objects.requireNonNull(ex.getMessage()));
+                    Toast.makeText(UpdateHours.this, "Server error. Please try again", Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
+                }
                 if (pDialog != null && pDialog.isShowing()) {
                     dismissWaitDialog();
                 }
@@ -236,15 +198,22 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
             public byte[] getBody() throws AuthFailureError {
                 JSONObject jsonBody = new JSONObject();
                 try {
-                    jsonBody.put("facilityId", facilityId);
-                    jsonBody.put("safetycardId", safetycardId);
-                    jsonBody.put("numberOfGuests", gusests);
-                    jsonBody.put("visitDurationSeconds", time);
-
+                    jsonBody.put("entryId", entryId);
+                    jsonBody.put("visitDurationSeconds", seconds);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 return jsonBody.toString().getBytes();
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                    // can get more details such as response.headers
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
             }
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -255,19 +224,19 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        commonIntentMethod(StartCheckInFacility.class);
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        commonIntentMethod(CheckedInFacility.class);
+        super.onBackPressed();
     }
 
     public void commonIntentMethod(Class activity) {
-        Intent intent = new Intent(ReportEntry.this, activity);
+        Intent intent = new Intent(UpdateHours.this, activity);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     public void showWaitDialog() {
         if (pDialog == null) {
-            pDialog = new ProgressDialog(ReportEntry.this);
+            pDialog = new ProgressDialog(UpdateHours.this);
         }
         if (!pDialog.isShowing()) {
             pDialog.setMessage(getString(R.string.please_wait));

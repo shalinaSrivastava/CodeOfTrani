@@ -129,8 +129,6 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
     }
 
     public void showSpecificEntityVerification(ArrayList<CustomerDetailsProperty> customerList){
-
-
         for(int i=0;i<customerList.size();i++){
 
             if((!customerList.get(i).workEmailAddress.equals("") && !customerList.get(i).workEmailAddress.equals("null"))&& customerList.get(i).emailVerified.equals("true")){
@@ -277,7 +275,6 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
             case R.id.rl_frequently_asked_qus:
                 commonIntentMethod(ProcessVerifyInfo.class,"FrequentlyAsked");
                 break;
-
         }
     }
 

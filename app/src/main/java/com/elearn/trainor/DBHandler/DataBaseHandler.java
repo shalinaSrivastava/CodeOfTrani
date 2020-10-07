@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
-    protected static final int DATABASE_VERSION = 34;
+    protected static final int DATABASE_VERSION = 35;
     protected static final String DATABASE_NAME = "TrainorDB.db";
 
     protected static String Table_Profile = "ProfileDetail";
@@ -234,6 +234,44 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     protected static String TblSwitchEnergyMovement = "EnergyMovementStatus";
     protected static String TblSwitchPresentMoment = "PresentMomentStatus";
     protected String CREATE_COP_TABLE;
+
+    protected String CREATE_FACILITY_TABLE;// new table created 28-09-2020
+    protected static String Table_Facility = "FacilityTable";
+    protected static String FACILITY_ID = "id";
+    protected static String FACILITY_Name = "name";
+    protected static String FACILITY_CustomerId = "customerId";
+    protected static String FACILITY_CustomerName = "customerName";
+    protected static String FACILITY_EmployeeCheckinState = "employeeCheckinState";
+    protected static String FACILITY_ImageUrl = "imageUrl";
+    protected static String FACILITY_DistanceInKm = "distanceInKm";
+
+    protected String CREATE_REPORTENTRY_TABLE;// new table created 28-09-2020
+    protected static String Table_ReportEntry = "ReportEntry";
+    protected static String REPORTENTRY_userId = "userId";
+    protected static String REPORTENTRY_EntryId = "id";
+    protected static String REPORTENTRY_checkOutMessage = "checkOutMessage";
+    protected static String REPORTENTRY_timestamp = "timestamp";
+    protected static String REPORTENTRY_state = "state";
+    protected static String REPORTENTRY_numberOfGuests = "numberOfGuests";
+    protected static String REPORTENTRY_employeeId = "employeeId";
+    protected static String REPORTENTRY_securityServicePhone = "securityServicePhone";
+    protected static String REPORTENTRY_safetycardId = "safetycardId";
+    protected static String REPORTENTRY_facilityName = "facilityName";
+    protected static String REPORTENTRY_facilityId = "facilityId";
+    protected static String REPORTENTRY_estimatedDurationOfVisitInSeconds = "estimatedDurationOfVisitInSeconds";
+
+
+   /* protected String CREATE_CHECKEDIN_FACILITY_TABLE;// new table created 06-10-2020
+    protected static String Table_Checked_In_Facility = "CheckedInFacility";
+    protected static String CHECKEDIN_FACILITY_userId = "userId";
+    protected static String CHECKEDIN_FACILITY_EntryId = "id";
+    protected static String CHECKEDIN_FACILITY_checkOutMessage = "checkOutMessage";
+    protected static String CHECKEDIN_FACILITY_timestamp = "timestamp";
+    protected static String CHECKEDIN_FACILITY_state = "state";
+    protected static String CHECKEDIN_FACILITY_employeeId = "employeeId";
+    protected static String CHECKEDIN_FACILITY_facilityName = "facilityName";
+    protected static String CHECKEDIN_FACILITY_facilityId = "facilityId";
+    protected static String CHECKEDIN_FACILITY_estimatedDurationOfVisitInSeconds = "estimatedDurationOfVisitInSeconds";*/
 
     public DataBaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -467,6 +505,40 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + TblSwitchEnergyMovement + " TEXT, "
                     + TblSwitchPresentMoment + " TEXT ) ";
 
+            CREATE_FACILITY_TABLE = "CREATE TABLE IF NOT EXISTS "
+                    + Table_Facility + " ( " + FACILITY_ID + " Text, "
+                    + FACILITY_Name + " TEXT, "
+                    + FACILITY_CustomerId + " TEXT, "
+                    + FACILITY_CustomerName + " TEXT, "
+                    + FACILITY_EmployeeCheckinState + " TEXT, "
+                    + FACILITY_ImageUrl + " TEXT, "
+                    + FACILITY_DistanceInKm + " TEXT ) ";
+
+            CREATE_REPORTENTRY_TABLE = "CREATE TABLE IF NOT EXISTS "
+                    + Table_ReportEntry + " ( " + REPORTENTRY_userId + " Text, "
+                    + REPORTENTRY_EntryId + " TEXT, "
+                    + REPORTENTRY_checkOutMessage + " TEXT, "
+                    + REPORTENTRY_timestamp + " TEXT, "
+                    + REPORTENTRY_state + " TEXT, "
+                    + REPORTENTRY_numberOfGuests + " TEXT, "
+                    + REPORTENTRY_employeeId + " TEXT, "
+                    + REPORTENTRY_securityServicePhone + " TEXT, "
+                    + REPORTENTRY_safetycardId + " TEXT, "
+                    + REPORTENTRY_facilityName + " TEXT, "
+                    + REPORTENTRY_facilityId + " TEXT, "
+                    + REPORTENTRY_estimatedDurationOfVisitInSeconds + " TEXT ) ";
+
+            /*CREATE_CHECKEDIN_FACILITY_TABLE = "CREATE TABLE IF NOT EXISTS "
+                    + Table_Checked_In_Facility + " ( " + CHECKEDIN_FACILITY_userId + " Text, "
+                    + CHECKEDIN_FACILITY_EntryId + " TEXT, "
+                    + CHECKEDIN_FACILITY_checkOutMessage + " TEXT, "
+                    + CHECKEDIN_FACILITY_timestamp + " TEXT, "
+                    + CHECKEDIN_FACILITY_state + " TEXT, "
+                    + CHECKEDIN_FACILITY_employeeId + " TEXT, "
+                    + CHECKEDIN_FACILITY_facilityName + " TEXT, "
+                    + CHECKEDIN_FACILITY_facilityId + " TEXT, "
+                    + CHECKEDIN_FACILITY_estimatedDurationOfVisitInSeconds + " TEXT ) ";*/
+
             db.execSQL(CREATE_PROFILE_TABLE);
             db.execSQL(CREATE_TOOLBOX_TABLE);
             db.execSQL(CREATE_NOTIFICATION_TABLE);
@@ -485,6 +557,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             db.execSQL(CREATE_DSB_TABLE);
             db.execSQL(CREATE_NOTIFICATION_UPDATE_TABLE);
             db.execSQL(CREATE_COP_TABLE);
+            db.execSQL(CREATE_FACILITY_TABLE);
+            db.execSQL(CREATE_REPORTENTRY_TABLE);
+            //db.execSQL(CREATE_CHECKEDIN_FACILITY_TABLE);
 
         } catch (Exception e) {
             Log.d("Error", e.getMessage());
@@ -541,30 +616,30 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 Log.d("Error", ex.getMessage());
             }
 
-            try{
+            try {
                 db.execSQL("Alter Table MyCompanyTable add COLUMN locale Text");
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 Log.d("Error", ex.getMessage());
             }
 
-            try{
+            try {
                 db.execSQL("Alter Table CustomerDetails add COLUMN emailVerified Text");
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 Log.d("Error", ex.getMessage());
             }
-            try{
+            try {
                 db.execSQL("Alter Table CustomerDetails add COLUMN phoneVerified Text");
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 Log.d("Error", ex.getMessage());
             }
-            try{
+            try {
                 db.execSQL("Alter Table CustomerDetails add COLUMN isPrivate Text");
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 Log.d("Error", ex.getMessage());
             }
 
 
-         //new
+            //new
             try {
                 db.execSQL(CREATE_COP_TABLE);
             } catch (Exception ex) {

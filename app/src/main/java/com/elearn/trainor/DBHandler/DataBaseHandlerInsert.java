@@ -6,12 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.elearn.trainor.PropertyClasses.COPProperty;
+import com.elearn.trainor.PropertyClasses.CheckedInFacilityProperty;
 import com.elearn.trainor.PropertyClasses.CustomerDetailsProperty;
 import com.elearn.trainor.PropertyClasses.DSBProperty;
 import com.elearn.trainor.PropertyClasses.DiplomaProperty;
+import com.elearn.trainor.PropertyClasses.FacilityProperty;
 import com.elearn.trainor.PropertyClasses.GetMoreCoursesProperty;
 import com.elearn.trainor.PropertyClasses.MyCompanyProperty;
 import com.elearn.trainor.PropertyClasses.NotificationProperty;
+import com.elearn.trainor.PropertyClasses.ReportEntryProperty;
 import com.elearn.trainor.PropertyClasses.SafetyCardProperty;
 import com.elearn.trainor.PropertyClasses.ToolsProperty;
 
@@ -513,6 +516,93 @@ public class DataBaseHandlerInsert extends DataBaseHandler {
             }
         }
     }
+
+    public long addDataIntoFacilityTable(final FacilityProperty facilityInfo) {
+        long Result = -1;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        synchronized ("dbLock") {
+            try {
+                db.beginTransaction();
+                values.put(FACILITY_ID, facilityInfo.id);
+                values.put(FACILITY_Name, facilityInfo.name);
+                values.put(FACILITY_CustomerId, facilityInfo.customerId);
+                values.put(FACILITY_CustomerName, facilityInfo.customerName);
+                values.put(FACILITY_EmployeeCheckinState, facilityInfo.employeeCheckInState);
+                values.put(FACILITY_ImageUrl, facilityInfo.imageUrl);
+                values.put(FACILITY_DistanceInKm, facilityInfo.distanceInKm);
+                Result = db.insert(Table_Facility, null, values);
+                db.setTransactionSuccessful();
+            } catch (Exception ex) {
+                Log.d("Error",ex.getMessage().toString());
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return Result;
+    }
+
+    public long addDataIntoReportEntryTable(final ReportEntryProperty reportEntryInfo) {
+        long Result = -1;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        synchronized ("dbLock") {
+            try {
+                db.beginTransaction();
+                values.put(REPORTENTRY_userId, reportEntryInfo.userId);
+                values.put(REPORTENTRY_EntryId, reportEntryInfo.entryId);
+                values.put(REPORTENTRY_checkOutMessage, reportEntryInfo.checkOutMessage);
+                values.put(REPORTENTRY_timestamp, reportEntryInfo.timestamp);
+                values.put(REPORTENTRY_state, reportEntryInfo.state);
+                values.put(REPORTENTRY_numberOfGuests, reportEntryInfo.numberOfGuests);
+                values.put(REPORTENTRY_employeeId, reportEntryInfo.employeeId);
+                values.put(REPORTENTRY_securityServicePhone, reportEntryInfo.securityServicePhone);
+                values.put(REPORTENTRY_safetycardId, reportEntryInfo.facilityId);
+                values.put(REPORTENTRY_facilityName, reportEntryInfo.facilityName);
+                values.put(REPORTENTRY_facilityId, reportEntryInfo.facilityId);
+                values.put(REPORTENTRY_estimatedDurationOfVisitInSeconds, reportEntryInfo.estimatedDurationOfVisitInSeconds);
+
+                Result = db.insert(Table_ReportEntry, null, values);
+                db.setTransactionSuccessful();
+            } catch (Exception ex) {
+                Log.d("Error",ex.getMessage().toString());
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return Result;
+    }
+
+    /*public long addDataIntoCheckedInFacilityTable(final CheckedInFacilityProperty checkedInInfo) {
+        long Result = -1;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        synchronized ("dbLock") {
+            try {
+                db.beginTransaction();
+                values.put(CHECKEDIN_FACILITY_userId, checkedInInfo.userId);
+                values.put(CHECKEDIN_FACILITY_EntryId, checkedInInfo.entryId);
+                values.put(CHECKEDIN_FACILITY_checkOutMessage, checkedInInfo.checkOutMessage);
+                values.put(CHECKEDIN_FACILITY_timestamp, checkedInInfo.timestamp);
+                values.put(CHECKEDIN_FACILITY_state, checkedInInfo.state);
+                values.put(CHECKEDIN_FACILITY_employeeId, checkedInInfo.employeeId);
+                values.put(CHECKEDIN_FACILITY_facilityName, checkedInInfo.facilityName);
+                values.put(CHECKEDIN_FACILITY_facilityId, checkedInInfo.facilityId);
+                values.put(CHECKEDIN_FACILITY_estimatedDurationOfVisitInSeconds, checkedInInfo.estimatedDurationOfVisitInSeconds);
+
+                Result = db.insert(Table_Checked_In_Facility, null, values);
+                db.setTransactionSuccessful();
+            } catch (Exception ex) {
+                Log.d("Error",ex.getMessage().toString());
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return Result;
+    }*/
 }
 
 

@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,14 +31,24 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.elearn.trainor.BaseAdapters.NearByFacilityAdapter;
 import com.elearn.trainor.BaseAdapters.SearchFacilityAdapter;
+import com.elearn.trainor.DBHandler.DataBaseHandlerDelete;
+import com.elearn.trainor.DBHandler.DataBaseHandlerInsert;
+import com.elearn.trainor.DBHandler.DataBaseHandlerSelect;
+import com.elearn.trainor.DashboardClasses.LoadingPageActivity;
 import com.elearn.trainor.HelperClasses.AlertDialogManager;
 import com.elearn.trainor.HelperClasses.ConnectionDetector;
+import com.elearn.trainor.HelperClasses.IClickListener;
 import com.elearn.trainor.HelperClasses.SharedPreferenceManager;
 import com.elearn.trainor.HelperClasses.WebServicesURL;
 import com.elearn.trainor.HomePage;
+import com.elearn.trainor.Login;
 import com.elearn.trainor.PropertyClasses.FacilityProperty;
+import com.elearn.trainor.PropertyClasses.ReportEntryProperty;
 import com.elearn.trainor.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,27 +62,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class StartCheckInFacility extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationProviderClient;
     LinearLayout ll_back, llhome;
     TextView text_header, txt_select_near_by, txt_no_facility_found;
     View line_view1, line_view4;
-    SwipeRefreshLayout swipelayout;
+    //SwipeRefreshLayout swipelayout;
     private Location currentLocation;
     private ProgressDialog pDialog;
-    SharedPreferenceManager spManager;
-    List<FacilityProperty> nearByFacilityList, searchFacilityList;
+    List<FacilityProperty> nearByFacilityListToShow, searchFacilityList, offlineFacilityListToShow;
     NearByFacilityAdapter nearByFacilityAdapter;
     SearchFacilityAdapter searchFacilityAdapter;
     RecyclerView rv_facility_nearby, rv_facility_search;
     Button btn_search;
     EditText edit_text_search;
+    SharedPreferenceManager spManager;
     ConnectionDetector connectionDetector;
+    DataBaseHandlerInsert dbInsert;
+    DataBaseHandlerDelete dbDelete;
+    DataBaseHandlerSelect dbSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +98,19 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
 
     public void getControls() {
         spManager = new SharedPreferenceManager(StartCheckInFacility.this);
-        nearByFacilityList = new ArrayList<>();
+        nearByFacilityListToShow = new ArrayList<>();
         searchFacilityList = new ArrayList<>();
+        offlineFacilityListToShow = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         connectionDetector = new ConnectionDetector(this);
+        dbInsert = new DataBaseHandlerInsert(this);
+        dbDelete = new DataBaseHandlerDelete(this);
+        dbSelect = new DataBaseHandlerSelect(this);
         ll_back = findViewById(R.id.ll_back);
         llhome = findViewById(R.id.llhome);
         text_header = findViewById(R.id.text_header);
         text_header.setText("Check in to facility");
-        swipelayout = findViewById(R.id.swiperefresh);
+        //swipelayout = findViewById(R.id.swiperefresh);
         rv_facility_nearby = findViewById(R.id.rv_facility_nearby);
         btn_search = findViewById(R.id.btn_search);
         txt_select_near_by = findViewById(R.id.txt_select_near_by);
@@ -102,10 +124,13 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         llhome.setOnClickListener(this);
         btn_search.setOnClickListener(this);
 
-        swipelayout.setRefreshing(false);
+        //swipelayout.setRefreshing(false);
+
+
         fetchLocation();
     }
 
+    @SuppressLint("MissingPermission")
     private void fetchLocation() {
         @SuppressLint("MissingPermission") Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(homelocation -> {
@@ -114,6 +139,29 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                 SupportMapFragment map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_facility));
                 map.getMapAsync(this);
                 showWaitDialog();
+            }else{
+                SupportMapFragment map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_facility));
+                map.getMapAsync(this);
+                LocationRequest mLocationRequest = LocationRequest.create();
+                mLocationRequest.setInterval(60000);
+                mLocationRequest.setFastestInterval(5000);
+                mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                LocationCallback mLocationCallback = new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        if (locationResult == null) {
+                            return;
+                        }
+                        for (Location location : locationResult.getLocations()) {
+                            if (location != null) {
+                                //TODO: UI updates.
+                                currentLocation = location;
+                                showWaitDialog();
+                            }
+                        }
+                    }
+                };
+                LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
             }
         });
     }
@@ -127,8 +175,33 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         homeMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         homeMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
         homeMap.addMarker(markerOptions);
-        callSearchByLatLong();
-        //saveLocationDataInPref(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+        if(connectionDetector.isConnectingToInternet()){
+            callgetActiveEntryAPI();
+        }else{
+            offlineFacilityListToShow.clear();
+            offlineFacilityListToShow = dbSelect.getFacilityListFromFacilityTable("checked_in");
+            if(offlineFacilityListToShow.size()>0){
+                final LinearLayoutManager layoutManager = new LinearLayoutManager(StartCheckInFacility.this);
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                rv_facility_nearby.setLayoutManager(layoutManager);
+                nearByFacilityAdapter = new NearByFacilityAdapter(StartCheckInFacility.this, offlineFacilityListToShow);
+                rv_facility_nearby.setAdapter(nearByFacilityAdapter);
+                nearByFacilityAdapter.notifyDataSetChanged();
+            }else{
+                AlertDialogManager.showDialog(StartCheckInFacility.this, getResources().getString(R.string.internetErrorTitle), getResources().getString(R.string.internetErrorMessage), false, new IClickListener() {
+                    @Override
+                    public void onClick() {
+                        Intent intent = new Intent(StartCheckInFacility.this, HomePage.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+            dismissWaitDialog();
+
+        }
     }
 
     @Override
@@ -143,6 +216,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
             case R.id.btn_search:
                 String stringToSearch = edit_text_search.getText().toString().trim();
                 if (!stringToSearch.equals("")) {
+                    hideKeyboard(this);
                     if (connectionDetector.isConnectingToInternet()) {
                         showWaitDialog();
                         callSearchByIdentifier(stringToSearch);
@@ -159,7 +233,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        commonIntentMethod(SafetyCards.class);
+        commonIntentMethod(HomePage.class);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
@@ -194,7 +268,8 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     if (jsonArray != null && jsonArray.length() > 0) {
-                        nearByFacilityList.clear();
+                        nearByFacilityListToShow.clear();
+                        dbDelete.deleteTableByName("FacilityTable", "");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             FacilityProperty facility = new FacilityProperty();
@@ -203,10 +278,15 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                             facility.distanceInKm = jsonObject.getString("distanceInKm") == null ? "" : jsonObject.getString("distanceInKm").equals("") ? "" : jsonObject.getString("distanceInKm");
                             facility.customerId = jsonObject.getString("customerId") == null ? "" : jsonObject.getString("customerId").equals("") ? "" : jsonObject.getString("customerId");
                             facility.id = jsonObject.getString("id") == null ? "" : jsonObject.getString("id").equals("") ? "" : jsonObject.getString("id");
-                            //facility.employeeCheckInState = jsonObject.getString("employeeCheckInState") == null ? "" : jsonObject.getString("employeeCheckInState").equals("") ? "" : jsonObject.getString("employeeCheckInState");
+                            facility.employeeCheckInState = jsonObject.getString("employeeCheckinState") == null ? "" : jsonObject.getString("employeeCheckinState").equals("") ? "" : jsonObject.getString("employeeCheckinState");
                             facility.imageUrl = jsonObject.getString("imageUrl") == null ? "" : jsonObject.getString("imageUrl").equals("") ? "" : jsonObject.getString("imageUrl");
 
-                            nearByFacilityList.add(facility);
+                            dbInsert.addDataIntoFacilityTable(facility);
+                            String checkedInStatus = dbSelect.getCheckedInStatusFromEntryTable(spManager.getUserID(),facility.id);
+                            if(!checkedInStatus.equals("checked_in")){
+                                nearByFacilityListToShow.add(facility);
+                            }
+                            //nearByFacilityListToShow.add(facility);
                         }
                     }
                 } catch (Exception ex) {
@@ -214,13 +294,13 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                     txt_select_near_by.setVisibility(View.GONE);
                     Log.d("Exception", ex.getMessage());
                 } finally {
-                    if (nearByFacilityList.size() > 0) {
+                    if (nearByFacilityListToShow.size() > 0) {
                         line_view1.setVisibility(View.VISIBLE);
                         txt_select_near_by.setVisibility(View.VISIBLE);
                         final LinearLayoutManager layoutManager = new LinearLayoutManager(StartCheckInFacility.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                         rv_facility_nearby.setLayoutManager(layoutManager);
-                        nearByFacilityAdapter = new NearByFacilityAdapter(StartCheckInFacility.this, nearByFacilityList);
+                        nearByFacilityAdapter = new NearByFacilityAdapter(StartCheckInFacility.this, nearByFacilityListToShow);
                         rv_facility_nearby.setAdapter(nearByFacilityAdapter);
                         nearByFacilityAdapter.notifyDataSetChanged();
                     } else {
@@ -303,7 +383,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                         searchFacilityAdapter = new SearchFacilityAdapter(StartCheckInFacility.this, searchFacilityList);
                         rv_facility_search.setAdapter(searchFacilityAdapter);
                         searchFacilityAdapter.notifyDataSetChanged();
-                    }else{
+                    } else {
                         line_view4.setVisibility(View.VISIBLE);
                         txt_no_facility_found.setVisibility(View.VISIBLE);
                     }
@@ -343,5 +423,81 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         RequestQueue requestQueue11 = Volley.newRequestQueue(this);
         stringRequest.setShouldCache(false);
         requestQueue11.add(stringRequest);
+    }
+
+    public void callgetActiveEntryAPI() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.GetActiveEntries, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    if (response != null && !response.equals("")) {
+                        JSONArray jsonArray = new JSONArray(response);
+                        if (jsonArray != null && jsonArray.length() > 0) {
+                            dbDelete.deleteTableByName("ReportEntry", "");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                ReportEntryProperty property = new ReportEntryProperty();
+                                property.userId = spManager.getUserID();
+                                property.entryId = jsonObject.getString("id");
+                                property.checkOutMessage = jsonObject.getString("checkOutMessage");
+                                property.timestamp = jsonObject.getString("timestamp");
+                                property.state = jsonObject.getString("state");
+                                property.numberOfGuests = jsonObject.getString("numberOfGuests");
+                                property.employeeId = jsonObject.getString("employeeId");
+                                property.securityServicePhone = jsonObject.getString("securityServicePhone");
+                                property.safetycardId = jsonObject.getString("safetycardId");
+                                property.facilityName = jsonObject.getString("facilityName");
+                                property.facilityId = jsonObject.getString("facilityId");
+                                property.estimatedDurationOfVisitInSeconds = jsonObject.getString("estimatedDurationOfVisitInSeconds");
+                                dbInsert.addDataIntoReportEntryTable(property);
+                            }
+                        }
+
+                    }
+                } catch (Exception ex) {
+                    Log.d("Exception", ex.getMessage());
+                } finally {
+                    callSearchByLatLong();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                int statuscode = error.networkResponse.statusCode;
+                if (statuscode == 403 || statuscode == 404) {
+                    try {
+                        String responseBody = new String(error.networkResponse.data, "utf-8");
+                        JSONObject data = new JSONObject(responseBody);
+                        String message = data.getString("message");
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException | UnsupportedEncodingException e) {
+                        Log.d("Exception: ", Objects.requireNonNull(e.getMessage()));
+                    }
+                }
+                callSearchByLatLong();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + spManager.getToken());
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue11 = Volley.newRequestQueue(this);
+        stringRequest.setShouldCache(false);
+        requestQueue11.add(stringRequest);
+    }
+
+    public static void hideKeyboard(Context mContext) {
+        InputMethodManager imm = (InputMethodManager) mContext
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isAcceptingText()) {
+            imm.hideSoftInputFromWindow(((Activity) mContext).getWindow()
+                    .getCurrentFocus().getWindowToken(), 0);
+        }
     }
 }

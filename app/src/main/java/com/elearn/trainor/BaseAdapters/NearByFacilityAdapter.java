@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,8 @@ import com.elearn.trainor.HelperClasses.ConnectionDetector;
 import com.elearn.trainor.HelperClasses.SharedPreferenceManager;
 import com.elearn.trainor.PropertyClasses.FacilityProperty;
 import com.elearn.trainor.R;
+import com.elearn.trainor.SafetyCards.AwaitingApproval;
+import com.elearn.trainor.SafetyCards.CheckedInFacility;
 import com.elearn.trainor.SafetyCards.ReportEntry;
 
 import java.util.List;
@@ -58,14 +61,30 @@ public class NearByFacilityAdapter extends RecyclerView.Adapter<NearByFacilityAd
             public void onClick(View v) {
                 LinearLayout rl = (LinearLayout) v;
                 FacilityProperty property = (FacilityProperty) rl.getTag();
-                Intent intent = new Intent(context, ReportEntry.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("CompanyName",property.customerName);
-                intent.putExtra("FacilityName",property.name);
-                intent.putExtra("FacilityId", property.id);
-                intent.putExtra("FacilityCustomerId", property.customerId);
+                if(property.employeeCheckInState.equals("checked_in")){
+                    Intent intent = new Intent(context, CheckedInFacility.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(intent);
+                }if(property.employeeCheckInState.equals("awaiting_approval")){
+                    if(connectionDetector.isConnectingToInternet()){
+                        String entryId = dbSelect.getCheckedInStatusFromEntryTable("GetEntryId",property.id);
+                        Intent intent = new Intent(context, AwaitingApproval.class);
+                        intent.putExtra("EntryId",entryId);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        context.startActivity(intent);
+                    }else{
+                        Toast.makeText(context, "Internet error", Toast.LENGTH_SHORT).show();
+                    }
 
-                context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, ReportEntry.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("CompanyName",property.customerName);
+                    intent.putExtra("FacilityName",property.name);
+                    intent.putExtra("FacilityId", property.id);
+                    intent.putExtra("FacilityCustomerId", property.customerId);
+                    context.startActivity(intent);
+                }
             }
         });
     }

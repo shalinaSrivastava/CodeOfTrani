@@ -26,6 +26,7 @@ import com.google.firebase.perf.metrics.Trace;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SafetyCardsDetails extends AppCompatActivity implements View.OnClickListener {
     public static SafetyCardsDetails instance;
@@ -38,7 +39,7 @@ public class SafetyCardsDetails extends AppCompatActivity implements View.OnClic
     ConnectionDetector connectionDetector;
     SharedPreferenceManager spManager;
     PDFView pdfView;
-    String fileName;
+    String fileName, fromPage;
     Trace myTrace;
     FirebaseAnalytics analytics;
 
@@ -48,6 +49,9 @@ public class SafetyCardsDetails extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_safety_cards_details);
         BaseURL = getIntent().getStringExtra("pdfFileURL");
+        if (getIntent().getStringExtra("FROM") != null && !Objects.equals(getIntent().getStringExtra("FROM"), "")) {
+            fromPage = getIntent().getStringExtra("FROM");
+        }
         getControls();
     }
 
@@ -189,11 +193,20 @@ public class SafetyCardsDetails extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        Intent intentback = new Intent(SafetyCardsDetails.this, SafetyCards.class);
-        intentback.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intentback);
-        finish();
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        if(fromPage.equals("CheckedInFacility")){
+            Intent intentback = new Intent(SafetyCardsDetails.this, CheckedInFacility.class);
+            intentback.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentback);
+            finish();
+            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        }else{
+            Intent intentback = new Intent(SafetyCardsDetails.this, SafetyCards.class);
+            intentback.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intentback);
+            finish();
+            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        }
+
     }
 
     public void showWaitDialog() {

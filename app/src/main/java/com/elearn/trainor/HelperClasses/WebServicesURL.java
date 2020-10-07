@@ -58,4 +58,8 @@ public class WebServicesURL {
     public static String VerificationOTPEmail = Base_URL + "verification/request/email";
     public static String VerifiyCode = Base_URL + "verification/process";
     public static String EntryFacility = Base_URL + "facilityEntry/enterFacility";
+    public static String GetActiveEntries = Base_URL + "facilityEntry/getActiveEntries";
+    public static String CheckOut = Base_URL + "facilityEntry/checkOut/";
+    public static String GetFacilityState = Base_URL + "/facilityEntry/state/";
+    public static String UpdateVisitDuration = Base_URL + "facilityEntry/updateVisitDuration";
 }

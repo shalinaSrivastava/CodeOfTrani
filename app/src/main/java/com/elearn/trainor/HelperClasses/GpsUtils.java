@@ -82,7 +82,7 @@ public class GpsUtils {
                                     String errorMessage = "Location settings are inadequate, and cannot be " +
                                             "fixed here. Fix in Settings.";
                                     Log.e(TAG, errorMessage);
-                                    Toast.makeText((Activity) context, errorMessage, Toast.LENGTH_LONG).show();
+                                    Toast.makeText((Activity) context, errorMessage, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

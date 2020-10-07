@@ -420,7 +420,7 @@
     <string name="safety_card_des_2">If the company you work for use sikkerhetskort.no you can add your card here by confirming your contact details and it will stay up to date</string>
     <string name="register_card">Verify phone or e-mail</string>
     <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to app by validating your e-mail or phone number</string>
-    <string name="verify_info_des2">Click the email or phone number you would like to verify.</string>
+    <string name="verify_info_des2">Click the e-mail or phone number you would like to verify.</string>
     <string name="planned_work_in_hours">Planned work in hours</string>
     <string name="remember_n_check"><html><font color="black" size="18">Did you remember?</font></html>
         \n<html> <font size="18" color="black">\t&#9679;  To bring all your things?</font></html>

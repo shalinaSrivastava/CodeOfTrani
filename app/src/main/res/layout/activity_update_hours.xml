@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SafetyCards.UpdateHours">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/custom_page_header" />
+
+    <RelativeLayout
+        android:id="@+id/rl_update_hours_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tool_bar"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:id="@+id/txt_facility_update_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Reporting entry into Høyspenningslab 875643"
+            android:textSize="8pt"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/txt_facility_update_hours_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_facility_update_entry"
+            android:layout_marginTop="20dp"
+            android:text="You have been in the facility for 2 hrs and 31 minutes. You have 29 minutes left before being notified of exit."
+            android:textSize="8pt"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/txt_add_more_hour_des1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_facility_update_hours_des"
+            android:layout_marginTop="0dp"
+            android:text="If you want you can add more hours."
+            android:textSize="8pt"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/txt_add_more_hour_des2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_add_more_hour_des1"
+            android:layout_marginTop="20dp"
+            android:text="How many hours are you planning to work in the facility?"
+            android:textSize="8pt"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/txt_add_more_hour_des3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_add_more_hour_des2"
+            android:layout_marginTop="0dp"
+            android:text="This gives you and the operations center a reminder when the given time has passed." />
+
+        <RelativeLayout
+            android:id="@+id/rl_hour_count"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@+id/txt_add_more_hour_des3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_minus_hour"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_corner_half_left">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_minus" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_text_hour"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/rl_minus_hour"
+                android:background="@drawable/custom_rectangle_shape">
+
+                <TextView
+                    android:id="@+id/txt_hour_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="0"
+                    android:textSize="12pt"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_add_hour"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/rl_text_hour"
+                android:background="@drawable/rounded_corner_half_right">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_add" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_updated_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_hour_count"
+            android:layout_marginTop="15dp"
+            android:text="New time left is 2 hours and 29 minutes."
+            android:textSize="8pt"
+            android:textColor="#333333"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_update_work_hr"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/rippel"
+        android:backgroundTint="#27ae60">
+
+        <TextView
+            android:id="@+id/txt_update_work_hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Update work hours"
+            android:textColor="@android:color/white"
+            android:textSize="8pt" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

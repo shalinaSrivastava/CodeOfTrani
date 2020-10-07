@@ -20,7 +20,7 @@
             android:layout_marginRight="18dp"/>
     <RelativeLayout
         android:id="@+id/rl_loading"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_below="@+id/txt_awaiting_response"
         android:layout_marginLeft="50dp"
@@ -57,5 +57,6 @@
         android:gravity="center"
         android:text="DEV PROTO: SKIP"
         android:textSize="10pt"
-        android:layout_marginTop="45dp"/>
+        android:layout_marginTop="45dp"
+        android:visibility="gone"/>
 </RelativeLayout>

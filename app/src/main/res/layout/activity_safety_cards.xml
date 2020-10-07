@@ -14,7 +14,8 @@
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tool_bar">
+        android:layout_below="@+id/tool_bar"
+        android:layout_above="@+id/rl_report_entery">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -139,7 +140,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txt_missing_cards"
-                            android:text="Confirm all your email and phone numbers to make sure you have all your cards syncronized"
+                            android:text="Confirm all your e-mails and phone numbers to make sure you have all your cards syncronized."
                             android:textSize="8pt" />
 
                         <RelativeLayout
@@ -196,7 +197,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ic_report_entry" />
+                android:background="@drawable/ic_report_entry"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txt_report_entery"

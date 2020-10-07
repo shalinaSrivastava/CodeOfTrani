@@ -425,19 +425,19 @@
     <string name="safety_card_des_2">If the company you work for use sikkerhetskort.no you can add your card here by confirming your contact details and it will stay up to date</string>
     <string name="register_card">Verify phone or e-mail</string>
     <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to app by validating your e-mail or phone number</string>
-    <string name="verify_info_des2">Click the email or phone number you would like to verify.</string>
+    <string name="verify_info_des2">Click the e-mail or phone number you would like to verify.</string>
     <string name="planned_work_in_hours">Planned work in hours</string>
     <string name="remember_n_check"><html><font color="black" size="18">Did you remember?</font></html>
         \n<html> <font color="black" size="18">\t&#9679;  To bring all your things?</font></html>
         \n<html> <font color="black" size="18">\t&#9679;  To clean up after yourself?</font></html>
         \n<html> <font color="black" size="18">\t&#9679;  To lock all doors?</font></html></string>
     <string name="frequently_asked_questions" translatable="false"><html><font color="black" size="18">Frequently asked questions</font></html>
-        \n\n<html> <font size="15">The e-mail or phone number has to be registered on your card on sikkerhetskort.no By verifying the cards connected to the contact point will automatically be syncronized to your Trainor account. In addition your competence will be syncronized to sikkerhetskort.no</font></html>
-        \n\n<html> <font color="black" size="16">I have verified all my e-mails and phone numbers but am still missingone or more safety cards.</font></html>
-        \n<html> <font size="15">Ask your closest leader or responsible for safety cards in your company what e-mail address or phone number you are registered with on Sikkerhetskort.no. This information needs to be filled in and correct before you can syncronize your safety cards.</font></html>
-        \n\n<html> <font color="black" size="16">Why do I have to confirm my e-mail or phone number to see my safety card?</font></html>
-        \n<html> <font size="15">To be sure that no one is pretending to be you when you enter a facility, we must confirm that the card issued is intended for you.</font></html>
-        \n<html> <font size="15">Because we do not know which email is connected to a security card, you may want to confirm everyone.</font></html>
+       <html> <font size="15"> \n\nThe e-mail or phone number has to be registered on your card on sikkerhetskort.no By verifying the cards connected to the contact point will automatically be syncronized to your Trainor account. In addition your competence will be syncronized to sikkerhetskort.no</font></html>
+        <html> <font color="black" size="16">\n\nI have verified all my e-mails and phone numbers but am still missing one or more safety cards.</font></html>
+       <html> <font size="15"> \nAsk your closest leader or responsible for safety cards in your company what e-mail address or phone number you are registered with on Sikkerhetskort.no. This information needs to be filled in and correct before you can syncronize your safety cards.</font></html>
+        <html> <font color="black" size="16">\n\nWhy do I have to confirm my e-mail or phone number to see my safety card?</font></html>
+        <html> <font size="15">\nTo be sure that no one is pretending to be you when you enter a facility, we must confirm that the card issued is intended for you.</font></html>
+        <html> <font size="15">\nBecause we do not know which email is connected to a security card, you may want to confirm everyone.</font></html>
     </string>
 
 

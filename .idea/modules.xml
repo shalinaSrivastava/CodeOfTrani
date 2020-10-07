@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Trainor.iml" filepath="$PROJECT_DIR$/Trainor.iml" group="Trainor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Trinor Android X-Trainor.iml" filepath="$PROJECT_DIR$/.idea/modules/Trinor Android X-Trainor.iml" group="Trainor" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Trainor/app" />
     </modules>
   </component>

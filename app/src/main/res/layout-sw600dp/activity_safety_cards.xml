@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +10,7 @@
         android:id="@+id/tool_bar"
         layout="@layout/custom_page_header" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,36 +19,36 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:layout_below="@+id/tool_bar">
-
+            android:layout_below="@+id/tool_bar"
+            android:scrollbars="vertical">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
                 android:orientation="vertical">
-
 
                 <LinearLayout
                     android:id="@+id/firstTimeView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="35dp"
+                        android:layout_margin="25dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:layout_marginEnd="64dp"
-                            android:src="@drawable/ic_first_name"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="-3dp"
+                            android:layout_marginEnd="70dp"
+                            android:hyphenationFrequency="none"
                             android:text="@string/safety_card_des_1"
                             android:textColor="#373a3c"
                             android:textSize="10pt" />
@@ -58,8 +57,8 @@
                             android:id="@+id/first_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_marginTop="-5dp"
                             android:src="@drawable/ic_person_black" />
                     </RelativeLayout>
@@ -67,244 +66,146 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="27dp"
-                        android:layout_marginLeft="35dp"
-                        android:layout_marginRight="35dp"
+                        android:layout_marginLeft="25dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="20dp"
+                        android:hyphenationFrequency="none"
                         android:text="@string/safety_card_des_2"
                         android:textColor="#373a3c"
-                        android:textSize="8pt" />
+                        android:textSize="8.5pt" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="0dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="-4dp"
                         android:background="@drawable/shadow_scard">
 
                         <Button
                             android:id="@+id/btn_register_card"
                             android:layout_width="match_parent"
-                            android:layout_height="55dp"
+                            android:layout_height="50dp"
                             android:background="@drawable/rippel"
                             android:backgroundTint="#27ae60"
                             android:text="@string/register_card"
                             android:textAllCaps="false"
                             android:textColor="@android:color/white"
-                            android:textSize="10pt" />
+                            android:textSize="9pt" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="70dp"
+                        android:layout_marginLeft="75dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="75dp"
+                        android:layout_marginBottom="30dp"
                         android:src="@drawable/safetycard_logo" />
-
                 </LinearLayout>
-
-
-                <!--    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/swiperefresh"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/tool_bar"
-                        android:visibility="gone">-->
-
 
                 <RelativeLayout
                     android:id="@+id/rl_safetyCard_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/safety_cards_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
-                    <LinearLayout
-                        android:id="@+id/ll_register_card1"
+                    <RelativeLayout
+                        android:id="@+id/rl_missing_cards"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/safety_cards_recycler_view"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/shadow_scard"
-                        android:visibility="visible">
+                        android:layout_margin="20dp">
 
-                        <Button
-                            android:id="@+id/btn_register_card1"
+                        <TextView
+                            android:id="@+id/txt_missing_cards"
                             android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:background="@drawable/rippel"
-                            android:backgroundTint="#27ae60"
-                            android:text="@string/register_card"
-                            android:textAllCaps="false"
-                            android:textColor="@android:color/white"
-                            android:textSize="10pt" />
-                    </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:text="Missing cards?"
+                            android:textColor="@color/color_black"
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:id="@+id/txt_missing_cards_des"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txt_missing_cards"
+                            android:text="Confirm all your e-mails and phone numbers to make sure you have all your cards syncronized."
+                            android:textSize="8pt" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_add_more_cards"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/txt_missing_cards_des"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_search">
+
+                            <TextView
+                                android:id="@+id/txt_add_more_cards"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="Add more cards"
+                                android:textSize="10pt" />
+                        </RelativeLayout>
+
+                    </RelativeLayout>
 
                     <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@id/ll_register_card1"
-                        android:layout_margin="70dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rl_missing_cards"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginTop="-20dp"
+                        android:layout_marginRight="70dp"
+                        android:layout_marginBottom="50dp"
                         android:src="@drawable/safetycard_logo" />
-
                 </RelativeLayout>
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</RelativeLayout>
-
-    <!--
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
+        android:id="@+id/rl_report_entery"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        tools:context="com.elearn.trainor.SafetyCards.SafetyCards">
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/rippel"
+        android:backgroundTint="#27ae60"
+        android:visibility="gone">
 
-        <include
-            android:id="@+id/tool_bar"
-            layout="@layout/custom_page_header" />
-
-
-        <LinearLayout
-            android:id="@+id/firstTimeView"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tool_bar"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="35dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:textColor="#373a3c"
-                    android:textSize="10pt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_first_name"
-                    android:text="@string/safety_card_des_1"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="64dp" />
-
-                <ImageView
-                    android:layout_marginTop="-5dp"
-                    android:id="@+id/first_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/ic_person_black" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="27dp"
-                android:layout_marginRight="35dp"
-                android:layout_marginLeft="35dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/safety_card_des_2"
-                android:textColor="#373a3c"
-                android:textSize="7.5pt"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="0dp"
-                android:background="@drawable/shadow_login">
-
-                <Button
-                    android:id="@+id/btn_register_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:background="@drawable/rippel"
-                    android:backgroundTint="@color/login_button"
-                    android:text="@string/register_card"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="10pt" />
-            </LinearLayout>
+            android:layout_centerInParent="true">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="70dp"
-                android:src="@drawable/safetycard_logo" />
+                android:id="@+id/iv_report_entery"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_report_entry" />
 
-        </LinearLayout>
-
-
-        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swiperefresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tool_bar"
-            android:visibility="visible">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/tool_bar">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/safety_cards_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/main_content" />
-
-                    <LinearLayout
-                        android:id="@+id/ll_register_card1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/safety_cards_recycler_view"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/shadow_login">
-
-                        <Button
-                            android:id="@+id/btn_register_card1"
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:background="@drawable/rippel"
-                            android:backgroundTint="@color/login_button"
-                            android:text="@string/register_card"
-                            android:textAllCaps="false"
-                            android:textColor="@android:color/white"
-                            android:textSize="10pt"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_below="@id/ll_register_card1"
-                        android:layout_marginBottom="0dp"
-                        android:layout_marginLeft="60dp"
-                        android:layout_marginRight="60dp"
-                        android:layout_marginTop="35dp"
-                        android:src="@drawable/safetycard_logo" />
-
-                </RelativeLayout>
-            </ScrollView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+            <TextView
+                android:id="@+id/txt_report_entery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/iv_report_entery"
+                android:text="Report entry to new facility"
+                android:textColor="@android:color/white"
+                android:textSize="9pt" />
+        </RelativeLayout>
 
     </RelativeLayout>
-    -->
+
+</RelativeLayout>

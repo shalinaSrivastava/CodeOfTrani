@@ -62,12 +62,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".SafetyCards.ProcessVerifyInfo"></activity>
-        <activity android:name=".SafetyCards.NotifyExit" />
-        <activity android:name=".SafetyCards.CheckedInFacility" />
-        <activity android:name=".SafetyCards.AwaitingApproval" />
-        <activity android:name=".SafetyCards.ReportEntry" />
-        <activity android:name=".SafetyCards.StartCheckInFacility" />
+        <activity android:screenOrientation="portrait" android:name=".SafetyCards.UpdateHours" />
+        <activity android:screenOrientation="portrait" android:name=".SafetyCards.ProcessVerifyInfo" />
+        <activity android:screenOrientation="portrait" android:name=".SafetyCards.NotifyExit" />
+        <activity android:screenOrientation="portrait" android:name=".SafetyCards.CheckedInFacility" />
+        <activity android:screenOrientation="portrait" android:name=".SafetyCards.AwaitingApproval" />
+        <activity android:screenOrientation="portrait" android:name=".SafetyCards.ReportEntry" />
+        <activity android:screenOrientation="portrait" android:name=".SafetyCards.StartCheckInFacility" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

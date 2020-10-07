@@ -91,7 +91,7 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
         txt_facility_update_hours_des = findViewById(R.id.txt_facility_update_hours_des);
         String spentNleftTime = "You have been in the facility for "+spentTime+". " +
                 "You have "+leftTime+" left before being notified of exit.";
-        //txt_facility_update_hours_des.setText(spentNleftTime);
+        txt_facility_update_hours_des.setText(spentNleftTime);
 
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);

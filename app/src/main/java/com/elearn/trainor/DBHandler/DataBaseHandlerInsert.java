@@ -531,6 +531,9 @@ public class DataBaseHandlerInsert extends DataBaseHandler {
                 values.put(FACILITY_EmployeeCheckinState, facilityInfo.employeeCheckInState);
                 values.put(FACILITY_ImageUrl, facilityInfo.imageUrl);
                 values.put(FACILITY_DistanceInKm, facilityInfo.distanceInKm);
+                values.put(FACILITY_AllowGuests, facilityInfo.allowGuests);
+                values.put(FACILITY_Latitude, facilityInfo.latitude);
+                values.put(FACILITY_Longitude, facilityInfo.longitude);
                 Result = db.insert(Table_Facility, null, values);
                 db.setTransactionSuccessful();
             } catch (Exception ex) {
@@ -562,6 +565,8 @@ public class DataBaseHandlerInsert extends DataBaseHandler {
                 values.put(REPORTENTRY_facilityName, reportEntryInfo.facilityName);
                 values.put(REPORTENTRY_facilityId, reportEntryInfo.facilityId);
                 values.put(REPORTENTRY_estimatedDurationOfVisitInSeconds, reportEntryInfo.estimatedDurationOfVisitInSeconds);
+                values.put(REPORTENTRY_facilityLatitude, reportEntryInfo.facilityLatitude);
+                values.put(REPORTENTRY_facilityLongitude, reportEntryInfo.facilityLongitude);
 
                 Result = db.insert(Table_ReportEntry, null, values);
                 db.setTransactionSuccessful();

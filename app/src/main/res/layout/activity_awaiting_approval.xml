@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tool_bar"
             android:gravity="center"
-            android:text="Venter på godkjenning fra driftssentral"
+            android:text="@string/venter_p_godkjenning_fra_driftssentral"
             android:textSize="10pt"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="18dp"

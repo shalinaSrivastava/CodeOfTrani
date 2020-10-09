@@ -69,7 +69,7 @@ public class CheckedInFacilityAdapter extends RecyclerView.Adapter<CheckedInFaci
         int mins = (int) ((leftTime/(1000*60)) % 60);
         System.out.println("Spent minute = "+mins+"");*/
         String spentTime = spentTime(property.timestamp);
-        holder.txt_hour_spent.setText(spentTime+" since entry");
+        holder.txt_hour_spent.setText(spentTime+context.getString(R.string.since_entry));
         String guestCount = "0";
         if (property.numberOfGuests.equals("0") || property.numberOfGuests.equals("") || property.numberOfGuests.equals("null")) {
             holder.txt_guest.setVisibility(View.GONE);
@@ -87,7 +87,7 @@ public class CheckedInFacilityAdapter extends RecyclerView.Adapter<CheckedInFaci
             holder.txt_security_contact.setVisibility(View.GONE);
         } else {
             holder.txt_security_contact.setVisibility(View.VISIBLE);
-            holder.txt_security_contact.setText("Phone no security: " + property.securityServicePhone);
+            holder.txt_security_contact.setText(context.getString(R.string.phone_number_security) + property.securityServicePhone);
         }
         holder.rl_extend_time_layout.setTag(property);
         holder.rl_notify_exit.setTag(property);
@@ -104,6 +104,7 @@ public class CheckedInFacilityAdapter extends RecyclerView.Adapter<CheckedInFaci
                 intent.putExtra("EntryId", property.entryId);
                 intent.putExtra("SpentTime", spentTime);
                 intent.putExtra("LeftTime", leftTime);
+                intent.putExtra("ActualDuration",property.estimatedDurationOfVisitInSeconds);
                 context.startActivity(intent);
             }
         });
@@ -118,6 +119,8 @@ public class CheckedInFacilityAdapter extends RecyclerView.Adapter<CheckedInFaci
                 intent.putExtra("FacilityName", property.facilityName);
                 intent.putExtra("EntryId", property.entryId);
                 intent.putExtra("SpentTime", spentTime);
+                intent.putExtra("Latitude", property.facilityLatitude);
+                intent.putExtra("Longitude", property.facilityLongitude);
                 context.startActivity(intent);
             }
         });
@@ -156,11 +159,12 @@ public class CheckedInFacilityAdapter extends RecyclerView.Adapter<CheckedInFaci
             long differenceMillis = toBeCompletedMillis - currentDate.getTime();
             long mins = (differenceMillis / (1000 * 60)) % 60;
             long difference_In_Hours = (differenceMillis / (1000 * 60 * 60)) % 24;
-            if (!(difference_In_Hours + "").equals("0")) {
-                leftTime = difference_In_Hours + "hr and " + mins + " min";
+            leftTime = difference_In_Hours + "," + mins +"";
+           /* if (!(difference_In_Hours + "").equals("0")) {
+                leftTime = difference_In_Hours + "," + mins +"";
             } else {
                 leftTime = mins + "min since entry";
-            }
+            }*/
 
             //System.out.println("left time = " + difference_In_Hours + "hr " + mins + "min ");
         } catch (ParseException e) {
@@ -180,9 +184,9 @@ public class CheckedInFacilityAdapter extends RecyclerView.Adapter<CheckedInFaci
             long mins = (differenceMillis / (1000 * 60)) % 60;
             long difference_In_Hours = (differenceMillis / (1000 * 60 * 60)) % 24;
             if (!(difference_In_Hours + "").equals("0")) {
-                spentTime = difference_In_Hours + "hr and " + mins + " min";
+                spentTime = difference_In_Hours + "hr and " + mins + "min";
             } else {
-                spentTime = mins + "min since entry";
+                spentTime = mins + "min";
             }
 
             //System.out.println("Spent time = " + difference_In_Hours + "hour " + mins + "min ");

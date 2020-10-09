@@ -244,6 +244,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     protected static String FACILITY_EmployeeCheckinState = "employeeCheckinState";
     protected static String FACILITY_ImageUrl = "imageUrl";
     protected static String FACILITY_DistanceInKm = "distanceInKm";
+    protected static String FACILITY_AllowGuests = "allowGuests";
+    protected static String FACILITY_Latitude = "latitude";
+    protected static String FACILITY_Longitude = "longitude";
 
     protected String CREATE_REPORTENTRY_TABLE;// new table created 28-09-2020
     protected static String Table_ReportEntry = "ReportEntry";
@@ -259,6 +262,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     protected static String REPORTENTRY_facilityName = "facilityName";
     protected static String REPORTENTRY_facilityId = "facilityId";
     protected static String REPORTENTRY_estimatedDurationOfVisitInSeconds = "estimatedDurationOfVisitInSeconds";
+    protected static String REPORTENTRY_facilityLatitude = "facilityLatitude";
+    protected static String REPORTENTRY_facilityLongitude = "facilityLongitude";
 
 
    /* protected String CREATE_CHECKEDIN_FACILITY_TABLE;// new table created 06-10-2020
@@ -512,7 +517,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + FACILITY_CustomerName + " TEXT, "
                     + FACILITY_EmployeeCheckinState + " TEXT, "
                     + FACILITY_ImageUrl + " TEXT, "
-                    + FACILITY_DistanceInKm + " TEXT ) ";
+                    + FACILITY_DistanceInKm + " TEXT, "
+                    + FACILITY_AllowGuests + " TEXT, "
+                    + FACILITY_Latitude + " TEXT, "
+                    + FACILITY_Longitude + " TEXT ) ";
 
             CREATE_REPORTENTRY_TABLE = "CREATE TABLE IF NOT EXISTS "
                     + Table_ReportEntry + " ( " + REPORTENTRY_userId + " Text, "
@@ -526,7 +534,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + REPORTENTRY_safetycardId + " TEXT, "
                     + REPORTENTRY_facilityName + " TEXT, "
                     + REPORTENTRY_facilityId + " TEXT, "
-                    + REPORTENTRY_estimatedDurationOfVisitInSeconds + " TEXT ) ";
+                    + REPORTENTRY_estimatedDurationOfVisitInSeconds + " TEXT, "
+                    + REPORTENTRY_facilityLatitude + " TEXT, "
+                    + REPORTENTRY_facilityLongitude + " TEXT ) ";
 
             /*CREATE_CHECKEDIN_FACILITY_TABLE = "CREATE TABLE IF NOT EXISTS "
                     + Table_Checked_In_Facility + " ( " + CHECKEDIN_FACILITY_userId + " Text, "

@@ -1447,7 +1447,7 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
     public List<ReportEntryProperty> getFacilityListFromReportEntryTable(String userId, String facilityState) {
         List<ReportEntryProperty> reportEntryPropertyList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String Query = "Select userId,id,checkOutMessage,timestamp,state,numberOfGuests,employeeId,securityServicePhone,safetycardId,facilityName,facilityId,estimatedDurationOfVisitInSeconds from ReportEntry  where userID = '" + userId + "' AND state = '" +facilityState+ "' ";
+        String Query = "Select userId,id,checkOutMessage,timestamp,state,numberOfGuests,employeeId,securityServicePhone,safetycardId,facilityName,facilityId,estimatedDurationOfVisitInSeconds,facilityLatitude,facilityLongitude from ReportEntry  where userID = '" + userId + "' AND state = '" +facilityState+ "' ";
 
         synchronized ("dbLock") {
             try {
@@ -1469,6 +1469,8 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
                             info.facilityName = cursor.getString(9);
                             info.facilityId = cursor.getString(10);
                             info.estimatedDurationOfVisitInSeconds = cursor.getString(11);
+                            info.facilityLatitude = cursor.getString(12);
+                            info.facilityLongitude = cursor.getString(13);
                             reportEntryPropertyList.add(info);
                         } while (cursor.moveToNext());
                     }
@@ -1488,7 +1490,7 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
     public List<FacilityProperty> getFacilityListFromFacilityTable(String facilityState) {
         List<FacilityProperty> facilityPropertyList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String Query = "Select id,name,customerId,customerName,employeeCheckinState,imageUrl,distanceInKm from FacilityTable  where employeeCheckinState <> '" +facilityState+ "' ";
+        String Query = "Select id,name,customerId,customerName,employeeCheckinState,imageUrl,distanceInKm,allowGuests,latitude,longitude from FacilityTable  where employeeCheckinState <> '" +facilityState+ "' ";
 
         synchronized ("dbLock") {
             try {
@@ -1505,6 +1507,9 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
                             info.employeeCheckInState = cursor.getString(4);
                             info.imageUrl = cursor.getString(5);
                             info.distanceInKm = cursor.getString(6);
+                            info.allowGuests = cursor.getString(7);
+                            info.latitude = cursor.getString(8);
+                            info.longitude = cursor.getString(9);
 
                             facilityPropertyList.add(info);
                         } while (cursor.moveToNext());

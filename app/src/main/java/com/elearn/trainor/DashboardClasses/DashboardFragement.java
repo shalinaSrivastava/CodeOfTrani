@@ -343,6 +343,8 @@ public class DashboardFragement extends Fragment implements View.OnClickListener
                                 property.facilityName = jsonObject.getString("facilityName");
                                 property.facilityId = jsonObject.getString("facilityId");
                                 property.estimatedDurationOfVisitInSeconds = jsonObject.getString("estimatedDurationOfVisitInSeconds");
+                                property.facilityLatitude = jsonObject.getString("facilityLatitude");
+                                property.facilityLongitude = jsonObject.getString("facilityLongitude");
                                 dbInsert.addDataIntoReportEntryTable(property);
                             }
                         }

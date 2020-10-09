@@ -31,7 +31,7 @@
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="20dp"
-                    android:text="Checked in to facility"
+                    android:text="@string/checked_in_to_facility"
                     android:textColor="#FFFFFF"
                     android:textSize="8pt"
                     android:textStyle="bold" />
@@ -57,7 +57,7 @@
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:paddingStart="20dp"
-                    android:text="Your safety cards"
+                    android:text="@string/your_safety_cards"
                     android:textColor="#FFFFFF"
                     android:textSize="8pt"
                     android:textStyle="bold" />
@@ -106,7 +106,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/iv_report_entry"
-                android:text="Register entrance to new facility"
+                android:text="@string/register_entrance_to_new_facility"
                 android:textColor="@android:color/white"
                 android:textSize="16dp" />
         </RelativeLayout>

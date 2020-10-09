@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_facility_update_hours_des"
             android:layout_marginTop="0dp"
-            android:text="If you want you can add more hours."
+            android:text="@string/add_more_hours"
             android:textSize="8pt"
             android:textColor="#333333"/>
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_add_more_hour_des1"
             android:layout_marginTop="20dp"
-            android:text="How many hours are you planning to work in the facility?"
+            android:text="@string/hrs_planning_to_work"
             android:textSize="8pt"
             android:textColor="#333333"/>
 
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_add_more_hour_des2"
             android:layout_marginTop="0dp"
-            android:text="This gives you and the operations center a reminder when the given time has passed." />
+            android:text="@string/operation_reminder" />
 
         <RelativeLayout
             android:id="@+id/rl_hour_count"
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Update work hours"
+            android:text="@string/update_work_hours"
             android:textColor="@android:color/white"
             android:textSize="8pt" />
 

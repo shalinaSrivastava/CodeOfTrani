@@ -221,6 +221,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
         swipelayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         rl_safetyCard_list = (RelativeLayout) findViewById(R.id.rl_safetyCard_list);
         rl_report_entery = (RelativeLayout) findViewById(R.id.rl_report_entery);
+        rl_report_entery.setVisibility(View.GONE);
         //rl_report_entery.setVisibility(View.GONE);
         //swipelayout.setVisibility(View.GONE);
         rl_safetyCard_list.setVisibility(View.GONE);
@@ -248,7 +249,6 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
 
         if (getIntent().getStringExtra("RegisterSafetyCard") != null && getIntent().getStringExtra("RegisterSafetyCard").equals("GetSafetyCards")) {
             if (connectionDetector.isConnectingToInternet()) {
-//                showWaitDialog();
 
             } else {
                 if (safetyCardListForRecyclerView.size() > 0) {
@@ -268,10 +268,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
             recyclerView.setAdapter(safetycardAdapter);
         } else {
             if (connectionDetector.isConnectingToInternet()) {
-               /* int safetyCradNotificationCount = Integer.parseInt(dbSelect.getNotificationData("NotificationCountTable", "NotificationCount", "SafetyCard", spManager.getUserID(), "NotificationCount"));
-                safetyCradNotificationCount -= 1;
-                showWaitDialog();
-                updateNotificationCount("SafetyCard", spManager.getUserID(),safetyCradNotificationCount);*/
+
             } else {
                 rl_safetyCard_list.setVisibility(View.GONE);
                 rl_report_entery.setVisibility(View.GONE);
@@ -315,7 +312,6 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                 } else {
                     AlertDialogManager.showDialog(SafetyCards.this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, null);
                 }
-                //getLocation();
                 break;
 
             case R.id.rl_report_entery:
@@ -603,6 +599,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
             Intent intent = new Intent(SafetyCards.this, SafetyCardsDetails.class);
             intent.putExtra("FileName", file.toString());
             intent.putExtra("pdfFileURL", safetyCardProperty.card_url);
+            intent.putExtra("FROM", "SafetyCards");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -844,7 +841,11 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     syncIncompleteDialog.dismiss();
                     syncIncompleteDialog = null;
                 }
-                showWaitDialog();
+                try {
+                    showWaitDialog();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (notificationData.notification_id == null) {
                     notificationData = dbSelect.notificationDataToBeUpdated("UpdateNotification", spManager.getUserID(), "SafetyCard");
                 }

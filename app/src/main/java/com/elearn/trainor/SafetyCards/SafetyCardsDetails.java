@@ -39,7 +39,7 @@ public class SafetyCardsDetails extends AppCompatActivity implements View.OnClic
     ConnectionDetector connectionDetector;
     SharedPreferenceManager spManager;
     PDFView pdfView;
-    String fileName, fromPage;
+    String fileName, fromPage = "";
     Trace myTrace;
     FirebaseAnalytics analytics;
 

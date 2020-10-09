@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white">
 
     <include
@@ -14,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/tool_bar">-->
 
-        <androidx.core.widget.NestedScrollView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tool_bar"
@@ -35,7 +36,7 @@
                     android:layout_below="@+id/map_facility"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select a facility nearby"
+                    android:text="@string/select_a_facility_nearby"
                     android:textColor="@color/color_black"
                     android:textSize="7.5pt"
                     android:layout_marginTop="20dp"
@@ -58,7 +59,7 @@
                     android:layout_below="@+id/rv_facility_nearby"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Or enter facility number:"
+                    android:text="@string/or_enter_facility_number"
                     android:textColor="@color/color_black"
                     android:textSize="7.5pt"
                     android:layout_marginTop="20dp"
@@ -97,7 +98,7 @@
                             android:layout_marginRight="3dp"
                             android:layout_marginTop="3dp"
                             android:background="@null"
-                            android:hint="Klikk for a skrive"
+                            android:hint="@string/klikk_for_a_skrive"
                             android:singleLine="true"
                             android:textSize="7.2pt"
                             android:layout_toLeftOf="@+id/clear_img"/>
@@ -151,7 +152,7 @@
                     android:layout_height="match_parent" />
             </RelativeLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </ScrollView>
 
    <!-- </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 

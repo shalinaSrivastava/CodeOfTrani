@@ -46,11 +46,11 @@ import java.util.Objects;
 
 public class ReportEntry extends AppCompatActivity implements View.OnClickListener {
     LinearLayout ll_back, llhome;
-    TextView text_header, txt_hour_count, txt_guest_count, txt_company_name;
+    TextView text_header, txt_hour_count, txt_guest_count, txt_company_name, txt_guest_numb;
     private ProgressDialog pDialog;
     SharedPreferenceManager spManager;
-    String companyName, facilityName, facilityId,customerId, facilityStatus, entryId;
-    RelativeLayout rl_remove_guest, rl_add_guest, rl_minus_hour, rl_add_hour, rl_report_entery;
+    String companyName, facilityName, facilityId,customerId, facilityStatus, entryId, allowGuest;
+    RelativeLayout rl_remove_guest, rl_add_guest, rl_minus_hour, rl_add_hour, rl_report_entery,rl_guest_count;
     int guestCount = 0, hourCount = 1;
     int workSeconds;
     ConnectionDetector connectionDetector;
@@ -74,6 +74,9 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
         if (getIntent().getStringExtra("FacilityCustomerId") != null && !Objects.equals(getIntent().getStringExtra("FacilityCustomerId"), "")) {
             customerId = getIntent().getStringExtra("FacilityCustomerId");
         }
+        if (getIntent().getStringExtra("AllowGuest") != null && !Objects.equals(getIntent().getStringExtra("AllowGuest"), "")) {
+            allowGuest = getIntent().getStringExtra("AllowGuest");
+        }
         getControls();
     }
 
@@ -95,6 +98,8 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
         rl_minus_hour = findViewById(R.id.rl_minus_hour);
         rl_add_hour = findViewById(R.id.rl_add_hour);
         rl_report_entery = findViewById(R.id.rl_report_entery);
+        txt_guest_numb = findViewById(R.id.txt_guest_numb);
+        rl_guest_count = findViewById(R.id.rl_guest_count);
 
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
@@ -103,6 +108,14 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
         rl_minus_hour.setOnClickListener(this);
         rl_add_hour.setOnClickListener(this);
         rl_report_entery.setOnClickListener(this);
+
+        if(allowGuest.equals("true")){
+            txt_guest_numb.setVisibility(View.VISIBLE);
+            rl_guest_count.setVisibility(View.VISIBLE);
+        }else{
+            txt_guest_numb.setVisibility(View.GONE);
+            rl_guest_count.setVisibility(View.GONE);
+        }
 
     }
 
@@ -183,7 +196,8 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
                             property.facilityName = jsonObj.getString("facilityName");
                             property.facilityId = jsonObj.getString("facilityId");
                             property.estimatedDurationOfVisitInSeconds = jsonObj.getString("estimatedDurationOfVisitInSeconds");
-
+                            property.facilityLatitude = jsonObj.getString("facilityLatitude");
+                            property.facilityLongitude = jsonObj.getString("facilityLongitude");
                             dbInsert.addDataIntoReportEntryTable(property);
                         }
                     }

@@ -44,7 +44,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="25dp"
-                    android:text="If there are safety cards connected to the e-mail they should be syncronized within a few minutes."
+                    android:text="@string/sync_safety_cards"
                     android:textSize="8pt" />
 
                 <RelativeLayout
@@ -60,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Verify more contacts"
+                        android:text="@string/verify_more_contacts"
                         android:textSize="8pt" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -89,7 +89,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="25dp"
-                    android:text="Please enter the code from the text in the box below"
+                    android:text="@string/enter_code_below"
                     android:textSize="8pt" />
 
                 <EditText
@@ -115,16 +115,16 @@
                     android:layout_below="@+id/edit_code"
                     android:layout_marginLeft="100dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginRight="88dp"
-                    android:background="@drawable/shadow_scard">
+                    android:layout_marginRight="100dp">
 
                     <Button
                         android:id="@+id/btn_submit_code"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
                         android:background="@drawable/rippel"
                         android:backgroundTint="#27ae60"
-                        android:text="Submit code"
+                        android:text="@string/submit_code"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="8pt" />

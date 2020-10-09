@@ -98,7 +98,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
     Boolean hasEntery;
     SafetyCardProperty safetyCardProperty;
     String safetycardPDF_FileName = "", fromPage;
-    LinearLayout safetyCardRow;
+    LinearLayout safetyCardRow,ll_checked_in_facility;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +152,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
         txt_hour_spent = findViewById(R.id.txt_hour_spent);
         txt_guest = findViewById(R.id.txt_guest);
         rv_checked_in_facility = findViewById(R.id.rv_checked_in_facilities);
-
+        ll_checked_in_facility = findViewById(R.id.ll_checked_in_facility);
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
         rl_enter_new_facility.setOnClickListener(this);
@@ -167,6 +167,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
             checkedInFacilityList.clear();
             checkedInFacilityList = dbSelect.getFacilityListFromReportEntryTable(spManager.getUserID(),"checked_in");
             if(checkedInFacilityList.size()>0){
+                ll_checked_in_facility.setVisibility(View.VISIBLE);
                 final LinearLayoutManager layoutManager = new LinearLayoutManager(CheckedInFacility.this);
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rv_checked_in_facility.setLayoutManager(layoutManager);
@@ -174,15 +175,13 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                 rv_checked_in_facility.setAdapter(checkedInFacilityAdapter);
                 checkedInFacilityAdapter.notifyDataSetChanged();
             }else{
-                AlertDialogManager.showDialog(CheckedInFacility.this, "", "No data for checked in facility offline", false, new IClickListener() {
+                ll_checked_in_facility.setVisibility(View.GONE);
+              /*  AlertDialogManager.showDialog(CheckedInFacility.this, "", "No data for checked in facility offline", false, new IClickListener() {
                     @Override
                     public void onClick() {
-                        Intent intent = new Intent(CheckedInFacility.this, HomePage.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
+                        commonIntentMethod(HomePage.class);
                     }
-                });
+                });*/
             }
             safetyCardListForRecyclerView.clear();
             safetyCardListForRecyclerView = dbSelect.getSafetyCardAttribute("");
@@ -339,6 +338,8 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                                 property.facilityName = jsonObject.getString("facilityName");
                                 property.facilityId = jsonObject.getString("facilityId");
                                 property.estimatedDurationOfVisitInSeconds = jsonObject.getString("estimatedDurationOfVisitInSeconds");
+                                property.facilityLatitude = jsonObject.getString("facilityLatitude");
+                                property.facilityLongitude = jsonObject.getString("facilityLongitude");
                                 dbInsert.addDataIntoReportEntryTable(property);
 
                                 if(property.state.equals("checked_in")){
@@ -364,6 +365,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                 } finally {
                     //dismissWaitDialog();
                    if(checkedInFacilityList.size()>0){
+                       ll_checked_in_facility.setVisibility(View.VISIBLE);
                        final LinearLayoutManager layoutManager = new LinearLayoutManager(CheckedInFacility.this);
                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                        rv_checked_in_facility.setLayoutManager(layoutManager);
@@ -371,14 +373,15 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                        rv_checked_in_facility.setAdapter(checkedInFacilityAdapter);
                        checkedInFacilityAdapter.notifyDataSetChanged();
                    }else{
-                       AlertDialogManager.showDialog(CheckedInFacility.this, "", "No data for checked in facility online", false, new IClickListener() {
+                       ll_checked_in_facility.setVisibility(View.GONE);
+                      /* AlertDialogManager.showDialog(CheckedInFacility.this, "", "No data for checked in facility online", false, new IClickListener() {
                            @Override
                            public void onClick() {
                                Intent intent = new Intent(CheckedInFacility.this, HomePage.class);
                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                startActivity(intent);
                            }
-                       });
+                       });*/
                    }
                     getSafetyCards();
                 }
@@ -594,6 +597,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
             Intent intent = new Intent(CheckedInFacility.this, SafetyCardsDetails.class);
             intent.putExtra("FileName", file.toString());
             intent.putExtra("pdfFileURL", safetyCardProperty.card_url);
+            intent.putExtra("FROM", "CheckedInFacility");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

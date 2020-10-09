@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/map_facility"
-            android:text="Reporting entry into"
+            android:text="@string/reporting_entry_into"
             android:textSize="7pt" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_company_name"
             android:layout_marginTop="16dp"
-            android:text="How many guests are you bringing into the facility?"
+            android:text="@string/guest_bringing_to_facility"
             android:textSize="8.5pt"
             android:textColor="#333333"/>
 
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_guest_count"
             android:layout_marginTop="16dp"
-            android:text="How many hours are you planning to work in the facility?"
+            android:text="@string/hours_planning_to_work"
             android:textSize="8.5pt"
             android:textColor="#333333"/>
 
@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_work_hours"
-            android:text="This gives you and the operations center a reminder when the given time has passed."
+            android:text="@string/operation_reminder"
             android:textSize="7pt"
             android:layout_marginTop="3dp"/>
 
@@ -187,7 +187,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ic_report_entry" />
+                android:background="@drawable/ic_report_entry"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txt_report_entery"
@@ -196,7 +197,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/iv_report_entery"
-                android:text="Report entry"
+                android:text="@string/report_entry"
                 android:textColor="@android:color/white"
                 android:textSize="16dp" />
         </RelativeLayout>

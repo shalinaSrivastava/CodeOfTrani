@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="20dp"
-                    android:text="Unverified contact info"
+                    android:text="@string/unverified_contact_info"
                     android:textColor="#373a3c" />
                 <View
                     android:id="@+id/line_view1"
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Frequently asked questions"
+                    android:text="@string/frequently_asked_question"
                     android:textSize="8pt" />
             </RelativeLayout>
             <RelativeLayout
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="0dp"
-                    android:text="Verified contact info"
+                    android:text="@string/verified_contact_info"
                     android:textColor="#373a3c" />
                 <View
                     android:id="@+id/verified_line_view4"

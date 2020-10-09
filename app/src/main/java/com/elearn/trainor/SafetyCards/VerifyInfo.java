@@ -102,7 +102,7 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
         ll_back = (LinearLayout) findViewById(R.id.ll_back);
         llhome = (LinearLayout) findViewById(R.id.llhome);
         text_header = (TextView) findViewById(R.id.text_header);
-        text_header.setText("Verify info");
+        text_header.setText(R.string.verify_info_header);
         rl_frequently_asked_qus = findViewById(R.id.rl_frequently_asked_qus);
         rl_unveified = findViewById(R.id.rl_unveified);
         rl_veified = findViewById(R.id.rl_veified);

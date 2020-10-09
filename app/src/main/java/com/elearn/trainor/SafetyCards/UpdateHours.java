@@ -42,12 +42,12 @@ import java.util.Objects;
 
 public class UpdateHours extends AppCompatActivity implements View.OnClickListener {
     LinearLayout ll_back, llhome;
-    TextView text_header, txt_hour_count, txt_guest_count, txt_facility_update_entry,txt_facility_update_hours_des;
+    TextView text_header, txt_hour_count, txt_guest_count, txt_facility_update_entry, txt_facility_update_hours_des;
     private ProgressDialog pDialog;
     SharedPreferenceManager spManager;
-    String spentTime, leftTime, facilityName, entryId;
+    String spentTime, leftTime, facilityName, entryId, spentHour, spentMin, actualDuration;
     RelativeLayout rl_minus_hour, rl_add_hour, rl_update_work_hr;
-    int guestCount = 0, hourCount = 0;
+    int hourCount = 0;
     int workSeconds;
     ConnectionDetector connectionDetector;
     DataBaseHandlerSelect dbSelect;
@@ -68,6 +68,11 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
         }
         if (getIntent().getStringExtra("LeftTime") != null && !Objects.equals(getIntent().getStringExtra("LeftTime"), "")) {
             leftTime = getIntent().getStringExtra("LeftTime");
+            spentHour = leftTime.substring(0, leftTime.indexOf(","));
+            spentMin = leftTime.substring(leftTime.indexOf(",") + 1);
+        }
+        if (getIntent().getStringExtra("ActualDuration") != null && !Objects.equals(getIntent().getStringExtra("ActualDuration"), "")) {
+            actualDuration = getIntent().getStringExtra("ActualDuration");
         }
         getControls();
     }
@@ -84,13 +89,19 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
         txt_hour_count = findViewById(R.id.txt_hour_count);
         txt_guest_count = findViewById(R.id.txt_guest_count);
         txt_facility_update_entry = findViewById(R.id.txt_facility_update_entry);
-        txt_facility_update_entry.setText("Reporting entry into " + facilityName);
+        txt_facility_update_entry.setText(getString(R.string.reporting_entry_into) + facilityName);
         rl_minus_hour = findViewById(R.id.rl_minus_hour);
         rl_add_hour = findViewById(R.id.rl_add_hour);
         rl_update_work_hr = findViewById(R.id.rl_update_work_hr);
         txt_facility_update_hours_des = findViewById(R.id.txt_facility_update_hours_des);
-        String spentNleftTime = "You have been in the facility for "+spentTime+". " +
-                "You have "+leftTime+" left before being notified of exit.";
+        String leftDuration = "";
+        if (!(spentHour + "").equals("0")) {
+            leftDuration = spentHour + "hr and " + spentMin + "min";
+        } else {
+            leftDuration = spentMin + "min";
+        }
+        String spentNleftTime = "You have been in the facility for " + spentTime + ". " +
+                "You have " + leftDuration + " left before being notified of exit.";
         txt_facility_update_hours_des.setText(spentNleftTime);
 
         ll_back.setOnClickListener(this);
@@ -110,7 +121,7 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
                 commonIntentMethod(HomePage.class);
                 break;
             case R.id.rl_minus_hour:
-                if (hourCount > 1) {
+                if (hourCount > 0) {
                     hourCount--;
                 }
                 txt_hour_count.setText(hourCount + "");
@@ -121,7 +132,7 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.rl_update_work_hr:
                 if (hourCount > 0) {
-                    workSeconds = hourCount * 3600;
+                    workSeconds = (hourCount * 3600)+Integer.parseInt(actualDuration);
                     Log.d("Seconds", workSeconds + "");
                     if (connectionDetector.isConnectingToInternet()) {
                         showWaitDialog();

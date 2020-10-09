@@ -56,7 +56,7 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
         ll_back = findViewById(R.id.ll_back);
         llhome = findViewById(R.id.llhome);
         text_header = findViewById(R.id.text_header);
-        text_header.setText("Waiting for response");
+        text_header.setText(R.string.waiting_for_response);
         txt_skip = findViewById(R.id.txt_skip);
 
         ll_back.setOnClickListener(this);
@@ -130,7 +130,7 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                     AlertDialogManager.showDialog(AwaitingApproval.this, "Approval issue", "Please contact administrator / customer care.", false, new IClickListener() {
                         @Override
                         public void onClick() {
-                            commonIntentMethod(HomePage.class);
+                            commonIntentMethod(StartCheckInFacility.class);
                         }
                     });
                 }else{
@@ -164,8 +164,8 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        commonIntentMethod(ReportEntry.class);
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        /*commonIntentMethod(ReportEntry.class);
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);*/
     }
 
     public void commonIntentMethod(Class activity) {

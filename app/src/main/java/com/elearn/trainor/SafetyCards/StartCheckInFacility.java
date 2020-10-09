@@ -54,6 +54,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
@@ -88,6 +89,9 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
     DataBaseHandlerInsert dbInsert;
     DataBaseHandlerDelete dbDelete;
     DataBaseHandlerSelect dbSelect;
+    GoogleMap map;
+    int checkedInFacilityCount = 0;
+    List<ReportEntryProperty> checkedInFacilityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         nearByFacilityListToShow = new ArrayList<>();
         searchFacilityList = new ArrayList<>();
         offlineFacilityListToShow = new ArrayList<>();
+        checkedInFacilityList = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         connectionDetector = new ConnectionDetector(this);
         dbInsert = new DataBaseHandlerInsert(this);
@@ -109,7 +114,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         ll_back = findViewById(R.id.ll_back);
         llhome = findViewById(R.id.llhome);
         text_header = findViewById(R.id.text_header);
-        text_header.setText("Check in to facility");
+        text_header.setText(R.string.checkin_facility);
         //swipelayout = findViewById(R.id.swiperefresh);
         rv_facility_nearby = findViewById(R.id.rv_facility_nearby);
         btn_search = findViewById(R.id.btn_search);
@@ -139,7 +144,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                 SupportMapFragment map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_facility));
                 map.getMapAsync(this);
                 showWaitDialog();
-            }else{
+            } else {
                 SupportMapFragment map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_facility));
                 map.getMapAsync(this);
                 LocationRequest mLocationRequest = LocationRequest.create();
@@ -168,27 +173,41 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onMapReady(GoogleMap homeMap) {
-        homeMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        homeMap.clear();
-        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-        homeMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        homeMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
-        homeMap.addMarker(markerOptions);
+        map = homeMap;
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        map.clear();
 
-        if(connectionDetector.isConnectingToInternet()){
+        try {
+            LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+            map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+            map.setBuildingsEnabled(true);
+            map.setIndoorEnabled(true);
+            map.addMarker(markerOptions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (connectionDetector.isConnectingToInternet()) {
             callgetActiveEntryAPI();
-        }else{
+        } else {
             offlineFacilityListToShow.clear();
             offlineFacilityListToShow = dbSelect.getFacilityListFromFacilityTable("checked_in");
-            if(offlineFacilityListToShow.size()>0){
+            //checkedInFacilityCount++;
+            if (offlineFacilityListToShow.size() > 0) {
+                /*for (FacilityProperty i : offlineFacilityListToShow) {
+                    if(i.employeeCheckInState.equals("checked_in")){
+                        checkedInFacilityCount++;
+                    }
+                }*/
                 final LinearLayoutManager layoutManager = new LinearLayoutManager(StartCheckInFacility.this);
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rv_facility_nearby.setLayoutManager(layoutManager);
                 nearByFacilityAdapter = new NearByFacilityAdapter(StartCheckInFacility.this, offlineFacilityListToShow);
                 rv_facility_nearby.setAdapter(nearByFacilityAdapter);
                 nearByFacilityAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 AlertDialogManager.showDialog(StartCheckInFacility.this, getResources().getString(R.string.internetErrorTitle), getResources().getString(R.string.internetErrorMessage), false, new IClickListener() {
                     @Override
                     public void onClick() {
@@ -233,7 +252,13 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        commonIntentMethod(HomePage.class);
+        checkedInFacilityList.clear();
+        checkedInFacilityList = dbSelect.getFacilityListFromReportEntryTable(spManager.getUserID(),"checked_in");
+        if(checkedInFacilityCount>0||checkedInFacilityList.size()>0){
+            commonIntentMethod(CheckedInFacility.class);
+        }else{
+            commonIntentMethod(SafetyCards.class);
+        }
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
@@ -280,10 +305,13 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                             facility.id = jsonObject.getString("id") == null ? "" : jsonObject.getString("id").equals("") ? "" : jsonObject.getString("id");
                             facility.employeeCheckInState = jsonObject.getString("employeeCheckinState") == null ? "" : jsonObject.getString("employeeCheckinState").equals("") ? "" : jsonObject.getString("employeeCheckinState");
                             facility.imageUrl = jsonObject.getString("imageUrl") == null ? "" : jsonObject.getString("imageUrl").equals("") ? "" : jsonObject.getString("imageUrl");
+                            facility.allowGuests = jsonObject.getString("allowGuests") == null ? "" : jsonObject.getString("allowGuests").equals("") ? "" : jsonObject.getString("allowGuests");
+                            facility.latitude = jsonObject.getString("latitude") == null ? "" : jsonObject.getString("latitude").equals("") ? "" : jsonObject.getString("latitude");
+                            facility.longitude = jsonObject.getString("longitude") == null ? "" : jsonObject.getString("longitude").equals("") ? "" : jsonObject.getString("longitude");
 
                             dbInsert.addDataIntoFacilityTable(facility);
-                            String checkedInStatus = dbSelect.getCheckedInStatusFromEntryTable(spManager.getUserID(),facility.id);
-                            if(!checkedInStatus.equals("checked_in")){
+                            String checkedInStatus = dbSelect.getCheckedInStatusFromEntryTable(spManager.getUserID(), facility.id);
+                            if (!checkedInStatus.equals("checked_in")) {
                                 nearByFacilityListToShow.add(facility);
                             }
                             //nearByFacilityListToShow.add(facility);
@@ -306,6 +334,17 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                     } else {
                         line_view1.setVisibility(View.GONE);
                         txt_select_near_by.setVisibility(View.GONE);
+                    }
+
+                    for (int i=0;i<nearByFacilityListToShow.size();i++){
+                        LatLng latLng = new LatLng(Double.parseDouble(nearByFacilityListToShow.get(i).latitude), Double.parseDouble(nearByFacilityListToShow.get(i).longitude));
+                        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(nearByFacilityListToShow.get(i).customerName);
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                        map.setBuildingsEnabled(true);
+                        map.setIndoorEnabled(true);
+                        map.addMarker(markerOptions);
                     }
                     dismissWaitDialog();
                 }
@@ -364,9 +403,11 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                             facility.distanceInKm = jsonObject.getString("distanceInKm") == null ? "" : jsonObject.getString("distanceInKm").equals("") ? "" : jsonObject.getString("distanceInKm");
                             facility.customerId = jsonObject.getString("customerId") == null ? "" : jsonObject.getString("customerId").equals("") ? "" : jsonObject.getString("customerId");
                             facility.id = jsonObject.getString("id") == null ? "" : jsonObject.getString("id").equals("") ? "" : jsonObject.getString("id");
-                            //facility.employeeCheckInState = jsonObject.getString("employeeCheckInState") == null ? "" : jsonObject.getString("employeeCheckInState").equals("") ? "" : jsonObject.getString("employeeCheckInState");
-                            //
-                            // facility.imageUrl = jsonObject.getString("imageUrl") == null ? "" : jsonObject.getString("imageUrl").equals("") ? "" : jsonObject.getString("imageUrl");
+                            facility.employeeCheckInState = jsonObject.getString("employeeCheckinState") == null ? "" : jsonObject.getString("employeeCheckinState").equals("") ? "" : jsonObject.getString("employeeCheckinState");
+                            facility.imageUrl = jsonObject.getString("imageUrl") == null ? "" : jsonObject.getString("imageUrl").equals("") ? "" : jsonObject.getString("imageUrl");
+                            facility.allowGuests = jsonObject.getString("allowGuests") == null ? "" : jsonObject.getString("allowGuests").equals("") ? "" : jsonObject.getString("allowGuests");
+                            facility.latitude = jsonObject.getString("latitude") == null ? "" : jsonObject.getString("latitude").equals("") ? "" : jsonObject.getString("latitude");
+                            facility.longitude = jsonObject.getString("longitude") == null ? "" : jsonObject.getString("longitude").equals("") ? "" : jsonObject.getString("longitude");
 
                             searchFacilityList.add(facility);
                         }
@@ -374,15 +415,34 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                 } catch (Exception ex) {
                     Log.d("Exception", ex.getMessage());
                 } finally {
-                    if (searchFacilityList.size() > 0) {
+                    if (searchFacilityList.size() == 1) {
                         line_view4.setVisibility(View.VISIBLE);
                         txt_no_facility_found.setVisibility(View.GONE);
-                        final LinearLayoutManager layoutManager = new LinearLayoutManager(StartCheckInFacility.this);
+                       /* final LinearLayoutManager layoutManager = new LinearLayoutManager(StartCheckInFacility.this);
                         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                         rv_facility_search.setLayoutManager(layoutManager);
                         searchFacilityAdapter = new SearchFacilityAdapter(StartCheckInFacility.this, searchFacilityList);
                         rv_facility_search.setAdapter(searchFacilityAdapter);
-                        searchFacilityAdapter.notifyDataSetChanged();
+                        searchFacilityAdapter.notifyDataSetChanged();*/
+                       if(searchFacilityList.get(0).employeeCheckInState.equals("checked_in")){
+                           commonIntentMethod(CheckedInFacility.class);
+                       }else if(searchFacilityList.get(0).employeeCheckInState.equals("awaiting_approval")){
+                           String entryId = dbSelect.getCheckedInStatusFromEntryTable("GetEntryId",searchFacilityList.get(0).id);
+                           Intent intent = new Intent(StartCheckInFacility.this, AwaitingApproval.class);
+                           intent.putExtra("EntryId",entryId);
+                           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                           startActivity(intent);
+
+                       }else{
+                           Intent intent = new Intent(StartCheckInFacility.this, ReportEntry.class);
+                           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                           intent.putExtra("CompanyName",searchFacilityList.get(0).customerName);
+                           intent.putExtra("FacilityName",searchFacilityList.get(0).name);
+                           intent.putExtra("FacilityId", searchFacilityList.get(0).id);
+                           intent.putExtra("FacilityCustomerId", searchFacilityList.get(0).customerId);
+                           intent.putExtra("AllowGuest", searchFacilityList.get(0).allowGuests);
+                           startActivity(intent);
+                       }
                     } else {
                         line_view4.setVisibility(View.VISIBLE);
                         txt_no_facility_found.setVisibility(View.VISIBLE);
@@ -443,6 +503,9 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                                 property.checkOutMessage = jsonObject.getString("checkOutMessage");
                                 property.timestamp = jsonObject.getString("timestamp");
                                 property.state = jsonObject.getString("state");
+                                if(property.state.equals("checked_in")){
+                                    checkedInFacilityCount++;
+                                }
                                 property.numberOfGuests = jsonObject.getString("numberOfGuests");
                                 property.employeeId = jsonObject.getString("employeeId");
                                 property.securityServicePhone = jsonObject.getString("securityServicePhone");
@@ -450,6 +513,8 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                                 property.facilityName = jsonObject.getString("facilityName");
                                 property.facilityId = jsonObject.getString("facilityId");
                                 property.estimatedDurationOfVisitInSeconds = jsonObject.getString("estimatedDurationOfVisitInSeconds");
+                                property.facilityLatitude = jsonObject.getString("facilityLatitude");
+                                property.facilityLongitude = jsonObject.getString("facilityLongitude");
                                 dbInsert.addDataIntoReportEntryTable(property);
                             }
                         }

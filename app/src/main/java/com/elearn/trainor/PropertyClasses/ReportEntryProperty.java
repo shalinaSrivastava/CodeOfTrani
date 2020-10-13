@@ -13,4 +13,6 @@ public class ReportEntryProperty {
     public String facilityName;
     public String facilityId;
     public String estimatedDurationOfVisitInSeconds;
+    public String facilityLatitude;
+    public String facilityLongitude;
 }

@@ -8,4 +8,7 @@ public class FacilityProperty {
     public String id;
     public String employeeCheckInState;
     public String imageUrl;
+    public String allowGuests;
+    public String latitude;
+    public String longitude;
 }

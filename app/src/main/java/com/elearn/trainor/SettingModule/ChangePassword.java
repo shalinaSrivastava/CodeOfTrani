@@ -145,6 +145,8 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
                                 } else {
                                     goTo(Login.class);
                                 }
+                            }else{
+                                goTo(Login.class);
                             }
                         }
                     });

@@ -21,6 +21,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -169,6 +170,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         spManager = new SharedPreferenceManager(Login.this);
+        /*Button crashButton = new Button(this);
+        crashButton.setText("Crash!");
+        crashButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                throw new RuntimeException("Test Crash"); // Force a crash
+            }
+        });
+
+        addContentView(crashButton, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));*/
+
         dbSelect = new DataBaseHandlerSelect(Login.this);
         dbInsert = new DataBaseHandlerInsert(Login.this);
         llToolBox = (LinearLayout) findViewById(R.id.llToolBox);

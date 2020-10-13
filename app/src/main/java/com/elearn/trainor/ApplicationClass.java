@@ -12,12 +12,12 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 import com.elearn.trainor.DBHandler.DataBaseHandlerSelect;
 
 import java.util.Locale;
 
-import io.fabric.sdk.android.Fabric;
+//import io.fabric.sdk.android.Fabric;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import com.elearn.trainor.HelperClasses.SharedPreferenceManager;
@@ -34,7 +34,7 @@ public class ApplicationClass extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        Fabric.with(this, new Crashlytics());
+        //Fabric.with(this, new Crashlytics());
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         dbSelect = new DataBaseHandlerSelect(ApplicationClass.this);
         spManager = new SharedPreferenceManager(ApplicationClass.this);

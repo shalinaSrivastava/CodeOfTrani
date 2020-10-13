@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -62,7 +63,17 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
         txt_skip.setOnClickListener(this);
-        callgetStatusApi();
+       callgetStatusApi();
+    }
+
+    public void callApiAfte10Sec(){
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callgetStatusApi();
+            }
+        }, 10000);
     }
 
     @Override
@@ -91,12 +102,14 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                     if (response != null && !response.equals("")) {
                         JSONObject jsonObject = new JSONObject(response);
                         state = jsonObject.getString("state");
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
+                    System.out.println(state);
                     if(state.equals("awaiting_approval")){
-                        if(loopForStatus==2){
+                        if(loopForStatus==6){
                             AlertDialogManager.showDialog(AwaitingApproval.this, "Approval issue", "Please contact administrator / customer care.", false, new IClickListener() {
                                 @Override
                                 public void onClick() {
@@ -104,10 +117,15 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                                 }
                             });
                         }else{
-                            callgetStatusApi();
+                            //callgetStatusApi();
+                            callApiAfte10Sec();
                         }
                     }else if(state.equals("checked_in")){
                         commonIntentMethod(CheckedInFacility.class);
+                    }else if(state.equals("checked_out")){
+                        commonIntentMethod(HomePage.class);
+                    }else if(state.equals("rejected")){
+                        commonIntentMethod(HomePage.class);
                     }
 
                 }
@@ -126,7 +144,7 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                         Log.d("Exception: ", Objects.requireNonNull(e.getMessage()));
                     }
                 }*/
-                if(loopForStatus==2){
+                if(loopForStatus==6){
                     AlertDialogManager.showDialog(AwaitingApproval.this, "Approval issue", "Please contact administrator / customer care.", false, new IClickListener() {
                         @Override
                         public void onClick() {
@@ -134,7 +152,8 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                         }
                     });
                 }else{
-                    callgetStatusApi();
+                    //callgetStatusApi();
+                    callApiAfte10Sec();
                 }
             }
         }) {
@@ -146,15 +165,16 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                 return params;
             }
 
-            @Override
+          /*  @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 String responseString = "";
                 if (response != null) {
                     responseString = String.valueOf(response.statusCode);
                     // can get more details such as response.headers
                 }
+                assert response != null;
                 return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-            }
+            }*/
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue11 = Volley.newRequestQueue(this);

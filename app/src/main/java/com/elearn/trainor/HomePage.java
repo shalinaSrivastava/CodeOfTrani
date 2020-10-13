@@ -615,6 +615,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                                 property.facilityName = jsonObject.getString("facilityName");
                                 property.facilityId = jsonObject.getString("facilityId");
                                 property.estimatedDurationOfVisitInSeconds = jsonObject.getString("estimatedDurationOfVisitInSeconds");
+                                property.facilityLatitude = jsonObject.getString("facilityLatitude");
+                                property.facilityLongitude = jsonObject.getString("facilityLongitude");
                                 dbInsert.addDataIntoReportEntryTable(property);
                             }
                         }
@@ -627,7 +629,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                int statuscode = error.networkResponse.statusCode;
+               /* int statuscode = error.networkResponse.statusCode;
                 if (statuscode == 403 || statuscode == 404) {
                     try {
                         String responseBody = new String(error.networkResponse.data, "utf-8");
@@ -636,7 +638,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                     } catch (JSONException | UnsupportedEncodingException e) {
                         Log.d("Exception: ", Objects.requireNonNull(e.getMessage()));
                     }
-                }
+                }*/
             }
         }) {
             @Override

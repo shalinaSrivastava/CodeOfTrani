@@ -42,7 +42,7 @@ import java.util.Objects;
 
 public class UpdateHours extends AppCompatActivity implements View.OnClickListener {
     LinearLayout ll_back, llhome;
-    TextView text_header, txt_hour_count, txt_guest_count, txt_facility_update_entry, txt_facility_update_hours_des;
+    TextView text_header, txt_hour_count, txt_guest_count, txt_facility_update_entry, txt_facility_update_hours_des, txt_updated_time;
     private ProgressDialog pDialog;
     SharedPreferenceManager spManager;
     String spentTime, leftTime, facilityName, entryId, spentHour, spentMin, actualDuration;
@@ -94,6 +94,8 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
         rl_add_hour = findViewById(R.id.rl_add_hour);
         rl_update_work_hr = findViewById(R.id.rl_update_work_hr);
         txt_facility_update_hours_des = findViewById(R.id.txt_facility_update_hours_des);
+        txt_updated_time = findViewById(R.id.txt_updated_time);
+        txt_updated_time.setVisibility(View.GONE);
         String leftDuration = "";
         if (!(spentHour + "").equals("0")) {
             leftDuration = spentHour + "hr and " + spentMin + "min";
@@ -123,12 +125,24 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
             case R.id.rl_minus_hour:
                 if (hourCount > 0) {
                     hourCount--;
+                    txt_updated_time.setVisibility(View.VISIBLE);
+                    String newTime = (Integer.parseInt(spentHour)+hourCount)+"";
+                    if(hourCount==0){
+                        txt_updated_time.setVisibility(View.GONE);
+                    }else{
+                        txt_updated_time.setText("New time left is "+newTime+" hours and "+spentMin+" minutes.");
+                    }
+                }else{
+                    txt_updated_time.setVisibility(View.GONE);
                 }
                 txt_hour_count.setText(hourCount + "");
                 break;
             case R.id.rl_add_hour:
                 hourCount++;
                 txt_hour_count.setText(hourCount + "");
+                txt_updated_time.setVisibility(View.VISIBLE);
+                String newTime =  (Integer.parseInt(spentHour)+hourCount)+"";
+                txt_updated_time.setText("New time left is "+newTime+" hours and "+spentMin+" minutes.");
                 break;
             case R.id.rl_update_work_hr:
                 if (hourCount > 0) {

@@ -61,8 +61,7 @@ public class ConnectionDetector {
     }*/
 
     public String getAndroid_ID(Context context) {
-        String device_unique_id = Settings.Secure.getString(context.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        String device_unique_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         return device_unique_id;
     }
 }

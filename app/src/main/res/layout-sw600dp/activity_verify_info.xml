@@ -32,7 +32,7 @@
                     android:layout_marginTop="12dp"
                     android:text="@string/verify_info_des1"
                     android:textColor="#373a3c"
-                    android:textSize="7.5pt" />
+                    android:textSize="10pt" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/verify_info_des2"
                     android:textColor="#373a3c"
-                    android:textSize="7.5pt" />
+                    android:textSize="9pt" />
             </LinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_unveified"
@@ -50,13 +50,13 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/txt_unverified"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="20dp"
-                    android:text="Unverified contact info"
-                    android:textColor="#373a3c" />
+                    android:text="@string/unverified_contact_info"
+                    android:textColor="#373a3c"
+                    android:textSize="9pt"/>
                 <View
                     android:id="@+id/line_view1"
                     android:layout_below="@+id/txt_unverified"
@@ -65,144 +65,18 @@
                     android:layout_marginTop="2dp"
                     android:background="#c7c7c7" />
 
-                <LinearLayout
-                    android:id="@+id/ll_verify_email"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_unverified"
                     android:layout_below="@+id/line_view1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rippel"
-                    android:backgroundTint="@android:color/white">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txt_email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/validCardImage"
-                            android:singleLine="true"
-                            android:text="E-mail"
-                            android:textColor="#c7c7c7"/>
-
-
-                        <TextView
-                            android:id="@+id/txt_email_id"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txt_email"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/validCardImage"
-                            android:singleLine="true"
-                            android:text="vidar.teigen@trainor.no" />
-
-
-                        <TextView
-                            android:id="@+id/txt_company_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txt_email_id"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/validCardImage"
-                            android:singleLine="true"
-                            android:text="Trainor Elsikkerhet AS" />
-
-                        <ImageView
-                            android:id="@+id/validCardImage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_forward" />
-                    </RelativeLayout>
-                </LinearLayout>
-                <View
-                    android:id="@+id/line_view2"
-                    android:layout_below="@+id/ll_verify_email"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="2dp"
-                    android:background="#c7c7c7" />
-
-                <LinearLayout
-                    android:id="@+id/ll_verify_phone"
-                    android:layout_below="@+id/line_view2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rippel"
-                    android:backgroundTint="@android:color/white">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txt_phone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/validCardImage1"
-                            android:singleLine="true"
-                            android:text="Phone"
-                            android:textColor="#c7c7c7"/>
-
-
-                        <TextView
-                            android:id="@+id/txt_phone_no"
-                            android:layout_below="@+id/txt_phone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/validCardImage1"
-                            android:singleLine="true"
-                            android:text="+47 913 83 027" />
-
-                        <TextView
-                            android:id="@+id/txt_private"
-                            android:layout_below="@+id/txt_phone_no"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/validCardImage1"
-                            android:singleLine="true"
-                            android:text="private" />
-
-                        <ImageView
-                            android:id="@+id/validCardImage1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_forward" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/line_view3"
-                    android:layout_below="@+id/ll_verify_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="2dp"
-                    android:background="#c7c7c7" />
+                    android:layout_height="match_parent" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_frequently_asked_qus"
                 android:layout_below="@+id/rl_unveified"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:layout_margin="30dp"
                 android:background="@drawable/rounded_search">
 
                 <TextView
@@ -210,8 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Frequently asked questions"
-                    android:textSize="8pt" />
+                    android:text="@string/frequently_asked_question"
+                    android:textSize="9pt" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_veified"
@@ -224,137 +98,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="0dp"
-                    android:text="Verified contact info"
-                    android:textColor="#373a3c" />
-                <LinearLayout
-                    android:id="@+id/ll_verified_email"
+                    android:text="@string/verified_contact_info"
+                    android:textColor="#373a3c"
+                    android:textSize="9pt"/>
+                <View
+                    android:id="@+id/verified_line_view4"
                     android:layout_below="@+id/txt_verified_contacts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rippel"
-                    android:backgroundTint="@android:color/white">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txt_verified_email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/verified_validCardImage"
-                            android:singleLine="true"
-                            android:text="E-mail"
-                            android:textColor="#c7c7c7"/>
-
-
-                        <TextView
-                            android:id="@+id/txt_verified_email_id"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txt_verified_email"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/verified_validCardImage"
-                            android:singleLine="true"
-                            android:text="vidar.teigen@trainor.no" />
-
-
-                        <TextView
-                            android:id="@+id/txt_verified_company_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txt_verified_email_id"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/verified_validCardImage"
-                            android:singleLine="true"
-                            android:text="Trainor Elsikkerhet AS" />
-
-                        <ImageView
-                            android:id="@+id/verified_validCardImage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_forward" />
-                    </RelativeLayout>
-                </LinearLayout>
-                <View
-                    android:id="@+id/verified_line_view2"
-                    android:layout_below="@+id/ll_verified_email"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="2dp"
                     android:background="#c7c7c7" />
-                <LinearLayout
-                    android:id="@+id/ll_verified_phone"
-                    android:layout_below="@+id/verified_line_view2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rippel"
-                    android:backgroundTint="@android:color/white">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txt_verified_phone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/verified_validCardImage1"
-                            android:singleLine="true"
-                            android:text="Phone"
-                            android:textColor="#c7c7c7"/>
-
-
-                        <TextView
-                            android:id="@+id/txt_verified_phone_no"
-                            android:layout_below="@+id/txt_verified_phone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/verified_validCardImage1"
-                            android:singleLine="true"
-                            android:text="+47 913 83 027" />
-
-                        <TextView
-                            android:id="@+id/txt_verified_private"
-                            android:layout_below="@+id/txt_verified_phone_no"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:layout_toStartOf="@+id/verified_validCardImage1"
-                            android:singleLine="true"
-                            android:text="private" />
-
-                        <ImageView
-                            android:id="@+id/verified_validCardImage1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_forward" />
-                    </RelativeLayout>
-                </LinearLayout>
-                <View
-                    android:id="@+id/verified_line_view3"
-                    android:layout_below="@+id/ll_verified_phone"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_verified"
+                    android:layout_below="@+id/verified_line_view4"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="2dp"
-                    android:background="#c7c7c7" />
+                    android:layout_height="match_parent" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

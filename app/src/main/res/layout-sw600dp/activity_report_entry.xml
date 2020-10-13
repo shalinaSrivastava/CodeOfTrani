@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/custom_page_header" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tool_bar"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginRight="7dp">
+
+        <TextView
+            android:id="@+id/txt_reporting_entry_into"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/map_facility"
+            android:text="@string/reporting_entry_into"
+            android:textSize="8.5pt" />
+
+        <TextView
+            android:id="@+id/txt_company_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_reporting_entry_into"
+            android:layout_marginTop="5dp"
+            android:text="Høyspenningslab 875643"
+            android:textColor="#333333"
+            android:textSize="10.5pt" />
+
+        <TextView
+            android:id="@+id/txt_guest_numb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_company_name"
+            android:layout_marginTop="20dp"
+            android:text="@string/guest_bringing_to_facility"
+            android:textSize="9.5pt"
+            android:textColor="#333333"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_guest_count"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_below="@+id/txt_guest_numb"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_remove_guest"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_corner_half_left">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_minus" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_text_num_guest"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/rl_remove_guest"
+                android:background="@drawable/custom_rectangle_shape">
+
+                <TextView
+                    android:id="@+id/txt_guest_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="0"
+                    android:textSize="12pt"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_add_guest"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/rl_text_num_guest"
+                android:background="@drawable/rounded_corner_half_right">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_add" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/txt_work_hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_guest_count"
+            android:layout_marginTop="16dp"
+            android:text="@string/hours_planning_to_work"
+            android:textSize="9.5pt"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/txt_hour_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_work_hours"
+            android:text="@string/operation_reminder"
+            android:textSize="8pt"
+            android:layout_marginTop="3dp"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_hour_count"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_below="@+id/txt_hour_des"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_minus_hour"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_corner_half_left">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_minus" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_text_hour"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/rl_minus_hour"
+                android:background="@drawable/custom_rectangle_shape">
+
+                <TextView
+                    android:id="@+id/txt_hour_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="1"
+                    android:textSize="12pt"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_add_hour"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/rl_text_hour"
+                android:background="@drawable/rounded_corner_half_right">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_add" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_report_entery"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="22dp"
+        android:background="@drawable/rippel"
+        android:backgroundTint="#27ae60">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/iv_report_entery"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_report_entry"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/txt_report_entery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/iv_report_entery"
+                android:text="@string/report_entry"
+                android:textColor="@android:color/white"
+                android:textSize="9pt" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.elearn.trainor.SafetyCards.ProcessVerifyInfo">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/custom_page_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tool_bar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rl_verify_email_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_verify_email_des1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="25dp"
+                    android:text=""
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:id="@+id/txt_verify_email_des2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_verify_email_des1"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/sync_safety_cards"
+                    android:textSize="8pt" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_verify_more_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/txt_verify_email_des2"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/rounded_search">
+
+                    <TextView
+                        android:id="@+id/txt_add_more_cards"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/verify_more_contacts"
+                        android:textSize="8pt" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_verify_phone_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txt_verify_phone_des1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="25dp"
+                    android:text=""
+                    android:textSize="10pt" />
+
+                <TextView
+                    android:id="@+id/txt_verify_phone_des2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_verify_phone_des1"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/enter_code_below"
+                    android:textSize="10pt" />
+
+                <EditText
+                    android:id="@+id/edit_code"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_below="@+id/txt_verify_phone_des2"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_search"
+                    android:singleLine="true"
+                    android:textSize="10pt"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"/>
+
+                    <Button
+                        android:layout_below="@+id/edit_code"
+                        android:id="@+id/btn_submit_code"
+                        android:layout_width="300dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="15dp"
+                        android:backgroundTint="#27ae60"
+                        android:text="@string/submit_code"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="9pt"
+                        android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_frequently_asked_qus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_frequently_asked_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="left"
+                    android:text="@string/frequently_asked_questions"
+                    android:textSize="8pt" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

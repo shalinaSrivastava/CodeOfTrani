@@ -315,6 +315,7 @@ public class DashboardFragement extends Fragment implements View.OnClickListener
     }
 
     public void callgetActiveEntryAPI() {
+        showWaitDialog();
         facilityCheckedInState = "NotCheckedIn";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.GetActiveEntries, new Response.Listener<String>() {
             @Override
@@ -365,10 +366,14 @@ public class DashboardFragement extends Fragment implements View.OnClickListener
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissWaitDialog();
-                if(facilityCheckedInState.equals("CheckedIn")){
-                    commonIntentMethod(getActivity(), CheckedInFacility.class, "");
-                }else{
-                    commonIntentMethod(getActivity(), SafetyCards.class, "");
+                try {
+                    if(facilityCheckedInState.equals("CheckedIn")){
+                        commonIntentMethod(getActivity(), CheckedInFacility.class, "");
+                    }else{
+                        commonIntentMethod(getActivity(), SafetyCards.class, "");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }) {

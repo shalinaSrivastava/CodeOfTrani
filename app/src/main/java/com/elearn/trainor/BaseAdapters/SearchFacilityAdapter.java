@@ -79,7 +79,7 @@ public class SearchFacilityAdapter extends RecyclerView.Adapter<SearchFacilityAd
                 intent.putExtra("FacilityName",property.name);
                 intent.putExtra("FacilityId", property.id);
                 intent.putExtra("FacilityCustomerId", property.customerId);
-
+                intent.putExtra("AllowGuest", property.allowGuests);
                 context.startActivity(intent);
             }
         });

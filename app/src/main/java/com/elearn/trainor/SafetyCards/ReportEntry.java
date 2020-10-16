@@ -226,6 +226,12 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
                        //JSONArray errors = data.getJSONArray("errors");
                        //JSONObject jsonMessage = errors.getJSONObject(0);
                        String message = data.getString("message");
+                       if(message.contains("awaiting_approval")){
+                           Intent intent = new Intent(ReportEntry.this, AwaitingApproval.class);
+                           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                           intent.putExtra("EntryId",entryId);
+                           startActivity(intent);
+                       }
                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                    } catch (JSONException | UnsupportedEncodingException e) {
                        Log.d("Exception: ", Objects.requireNonNull(e.getMessage()));

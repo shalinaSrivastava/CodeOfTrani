@@ -21,7 +21,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.elearn.trainor.CourseModule.CourseDownloadingActivity;
 import com.elearn.trainor.HelperClasses.AlertDialogManager;
+import com.elearn.trainor.HelperClasses.ConnectionDetector;
 import com.elearn.trainor.HelperClasses.IClickListener;
 import com.elearn.trainor.HelperClasses.SharedPreferenceManager;
 import com.elearn.trainor.HelperClasses.WebServicesURL;
@@ -42,6 +44,7 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
     String entryId, state;
     int loopForStatus = 0;
     SharedPreferenceManager spManager;
+    ConnectionDetector connectionDetector;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +56,14 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
     }
 
     public void getControls() {
+        connectionDetector =  new ConnectionDetector(this);
         spManager = new SharedPreferenceManager(this);
         ll_back = findViewById(R.id.ll_back);
         llhome = findViewById(R.id.llhome);
         text_header = findViewById(R.id.text_header);
         text_header.setText(R.string.waiting_for_response);
         txt_skip = findViewById(R.id.txt_skip);
+        ll_back.setVisibility(View.GONE);
 
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
@@ -107,7 +112,6 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
-                    System.out.println(state);
                     if(state.equals("awaiting_approval")){
                         if(loopForStatus==6){
                             AlertDialogManager.showDialog(AwaitingApproval.this, "Approval issue", "Please contact administrator / customer care.", false, new IClickListener() {
@@ -117,8 +121,18 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                                 }
                             });
                         }else{
+                            if(connectionDetector.isConnectingToInternet()){
+                                callApiAfte10Sec();
+                            }else{
+                                AlertDialogManager.showDialog(AwaitingApproval.this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, new IClickListener() {
+                                    @Override
+                                    public void onClick() {
+                                        commonIntentMethod(StartCheckInFacility.class);
+                                    }
+                                });
+                            }
                             //callgetStatusApi();
-                            callApiAfte10Sec();
+
                         }
                     }else if(state.equals("checked_in")){
                         commonIntentMethod(CheckedInFacility.class);
@@ -152,8 +166,17 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                         }
                     });
                 }else{
+                    if(connectionDetector.isConnectingToInternet()){
+                        callApiAfte10Sec();
+                    }else{
+                        AlertDialogManager.showDialog(AwaitingApproval.this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, new IClickListener() {
+                            @Override
+                            public void onClick() {
+                                commonIntentMethod(StartCheckInFacility.class);
+                            }
+                        });
+                    }
                     //callgetStatusApi();
-                    callApiAfte10Sec();
                 }
             }
         }) {

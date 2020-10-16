@@ -66,7 +66,7 @@ public class NearByFacilityAdapter extends RecyclerView.Adapter<NearByFacilityAd
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
                 }if(property.employeeCheckInState.equals("awaiting_approval")){
-                    if(connectionDetector.isConnectingToInternet()){
+                   /* if(connectionDetector.isConnectingToInternet()){
                         String entryId = dbSelect.getCheckedInStatusFromEntryTable("GetEntryId",property.id);
                         Intent intent = new Intent(context, AwaitingApproval.class);
                         intent.putExtra("EntryId",entryId);
@@ -74,7 +74,15 @@ public class NearByFacilityAdapter extends RecyclerView.Adapter<NearByFacilityAd
                         context.startActivity(intent);
                     }else{
                         Toast.makeText(context, "Internet error", Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
+                    Intent intent = new Intent(context, ReportEntry.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("CompanyName",property.customerName);
+                    intent.putExtra("FacilityName",property.name);
+                    intent.putExtra("FacilityId", property.id);
+                    intent.putExtra("FacilityCustomerId", property.customerId);
+                    intent.putExtra("AllowGuest", property.allowGuests);
+                    context.startActivity(intent);
 
                 }else{
                     Intent intent = new Intent(context, ReportEntry.class);

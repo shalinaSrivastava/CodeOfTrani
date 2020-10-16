@@ -338,10 +338,11 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
 
                     for (int i=0;i<nearByFacilityListToShow.size();i++){
                         LatLng latLng = new LatLng(Double.parseDouble(nearByFacilityListToShow.get(i).latitude), Double.parseDouble(nearByFacilityListToShow.get(i).longitude));
-                        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(nearByFacilityListToShow.get(i).customerName);
-                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(nearByFacilityListToShow.get(i).name);
+                        //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
                         map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                         map.setBuildingsEnabled(true);
                         map.setIndoorEnabled(true);
                         map.addMarker(markerOptions);
@@ -352,11 +353,9 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (pDialog != null && pDialog.isShowing()) {
-                    line_view1.setVisibility(View.GONE);
-                    txt_select_near_by.setVisibility(View.GONE);
-                    dismissWaitDialog();
-                }
+                line_view1.setVisibility(View.GONE);
+                txt_select_near_by.setVisibility(View.GONE);
+                dismissWaitDialog();
             }
         }) {
             @Override
@@ -425,7 +424,13 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                         rv_facility_search.setAdapter(searchFacilityAdapter);
                         searchFacilityAdapter.notifyDataSetChanged();*/
                        if(searchFacilityList.get(0).employeeCheckInState.equals("checked_in")){
-                           commonIntentMethod(CheckedInFacility.class);
+                           AlertDialogManager.showDialog(StartCheckInFacility.this, "", searchFacilityList.get(0).name +" is already checked in.", false, new IClickListener() {
+                               @Override
+                               public void onClick() {
+                                   commonIntentMethod(CheckedInFacility.class);
+                               }
+                           });
+                           //commonIntentMethod(CheckedInFacility.class);
                        }else if(searchFacilityList.get(0).employeeCheckInState.equals("awaiting_approval")){
                            String entryId = dbSelect.getCheckedInStatusFromEntryTable("GetEntryId",searchFacilityList.get(0).id);
                            Intent intent = new Intent(StartCheckInFacility.this, AwaitingApproval.class);

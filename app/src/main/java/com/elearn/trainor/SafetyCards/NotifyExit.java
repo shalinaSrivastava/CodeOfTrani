@@ -37,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
@@ -125,6 +126,7 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
         homeMap.addMarker(markerOptions);*/
         LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
         MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(facilityName);
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
         homeMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         homeMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
         homeMap.setBuildingsEnabled(true);
@@ -193,7 +195,13 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
                         //JSONArray errors = data.getJSONArray("errors");
                         //JSONObject jsonMessage = errors.getJSONObject(0);
                         String message = data.getString("message");
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        AlertDialogManager.showDialog(NotifyExit.this, "", message, false, new IClickListener() {
+                            @Override
+                            public void onClick() {
+                                commonIntentMethod(CheckedInFacility.class);
+                            }
+                        });
+                        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     } catch (JSONException | UnsupportedEncodingException e) {
                         Log.d("Exception: ", Objects.requireNonNull(e.getMessage()));
                     }

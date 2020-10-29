@@ -131,7 +131,7 @@
                             android:id="@+id/txt_missing_cards"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Missing cards?"
+                            android:text="@string/missing_cards"
                             android:textColor="@color/color_black"
                             android:textSize="8pt" />
 
@@ -140,7 +140,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txt_missing_cards"
-                            android:text="Confirm all your e-mails and phone numbers to make sure you have all your cards syncronized."
+                            android:text="@string/confirm_all_your_e_mails_and_phone_numbers_to_make_sure"
                             android:textSize="8pt" />
 
                         <RelativeLayout
@@ -156,7 +156,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="Add more cards"
+                                android:text="@string/add_more_cards"
                                 android:textSize="8pt" />
                         </RelativeLayout>
 
@@ -207,9 +207,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/iv_report_entery"
-                android:text="Report entry to new facility"
+                android:text="@string/report_entry_to_new_facility"
                 android:textColor="@android:color/white"
-                android:textSize="16dp" />
+                android:textSize="8pt" />
         </RelativeLayout>
 
     </RelativeLayout>

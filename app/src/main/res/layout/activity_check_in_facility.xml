@@ -139,7 +139,7 @@
                     android:layout_below="@+id/line_view4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No facility found!"
+                    android:text="@string/no_facility_found"
                     android:textSize="8pt"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="20dp"

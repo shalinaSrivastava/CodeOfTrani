@@ -62,7 +62,7 @@
         <RelativeLayout
             android:id="@+id/rl_extend_time_layout"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="51dp"
             android:layout_below="@+id/rl_guest_hour_des"
             android:background="@drawable/custom_rectangle_shape">
 
@@ -71,7 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                android:layout_centerInParent="true"
-                android:text="Extend stay"
+                android:text="@string/extend_stay"
+
                 android:textSize="9pt" />
 
         </RelativeLayout>
@@ -80,9 +81,9 @@
             android:id="@+id/rl_notify_exit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="-3dp"
             android:layout_below="@+id/rl_extend_time_layout"
-            android:background="@drawable/rippel"
+            android:layout_marginTop="-1dp"
+            android:background="@drawable/rounded_semi_checkedin_facility"
             android:backgroundTint="#cc2020">
 
             <RelativeLayout
@@ -96,7 +97,7 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:background="@drawable/ic_report_entry"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txt_report_entery"
@@ -105,9 +106,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/iv_report_entery"
-                    android:text="Notify exit from facility"
+                    android:text="@string/notify_exit_from_facility"
                     android:textColor="@android:color/white"
-                    android:textSize="10pt" />
+                    android:textSize="9pt" />
             </RelativeLayout>
 
         </RelativeLayout>

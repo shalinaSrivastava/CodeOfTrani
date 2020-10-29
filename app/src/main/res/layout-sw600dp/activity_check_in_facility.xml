@@ -9,12 +9,6 @@
         android:id="@+id/tool_bar"
         layout="@layout/custom_page_header" />
 
-    <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swiperefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tool_bar">-->
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -139,7 +133,7 @@
                     android:layout_below="@+id/line_view4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No facility found!"
+                    android:text="@string/no_facility_found"
                     android:textSize="8pt"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="20dp"

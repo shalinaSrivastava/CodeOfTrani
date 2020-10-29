@@ -100,7 +100,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/line_view"
+            android:id="@+id/line_view1"
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
             android:layout_below="@+id/ll_register_psi"
@@ -117,6 +117,41 @@
             android:text="@string/psi_card_not_uploaded"
             android:textSize="9.5pt"
             android:gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/ll_start_psi_course"
+            android:layout_below="@+id/line_view1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rippel"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/tv_start_psi_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/start_psi_course"
+                android:textColor="@android:color/black"
+                android:textSize="9pt" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_forward" />
+        </LinearLayout>
+        <View
+            android:id="@+id/line_view"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_below="@+id/ll_start_psi_course"
+            android:background="@color/color_gray" />
 
         <TextView
             android:id="@+id/tv_try_again"

@@ -20,7 +20,6 @@
             android:id="@+id/txt_reporting_entry_into"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/map_facility"
             android:text="@string/reporting_entry_into"
             android:textSize="7pt" />
 
@@ -30,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_reporting_entry_into"
             android:layout_marginTop="2dp"
-            android:text="Høyspenningslab 875643"
+            android:text=""
             android:textColor="#333333"
             android:textSize="9.5pt" />
 

@@ -71,8 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                android:layout_centerInParent="true"
-                android:text="Extend stay"
-                android:textSize="9pt" />
+                android:text="@string/extend_stay"
+                android:textSize="8pt" />
 
         </RelativeLayout>
 
@@ -82,7 +82,7 @@
             android:layout_height="45dp"
             android:layout_marginTop="-1dp"
             android:layout_below="@+id/rl_extend_time_layout"
-            android:background="@drawable/rippel"
+            android:background="@drawable/rounded_semi_checkedin_facility"
             android:backgroundTint="#cc2020">
 
             <RelativeLayout
@@ -105,7 +105,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/iv_report_entery"
-                    android:text="Notify exit from facility"
+                    android:text="@string/notify_exit_from_facility"
                     android:textColor="@android:color/white"
                     android:textSize="8pt" />
             </RelativeLayout>

@@ -102,6 +102,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
     DataBaseHandlerDelete dataBaseHandlerDelete;
     ConnectionDetector connectionDetector;
     SharedPreferenceManager spManager;
+    SharedPreferences.Editor editor;
     List<SafetyCardProperty> safetyCardListForRecyclerView;
     List<SafetyCardProperty> approvedCardList;
     List<SafetyCardProperty> unApprovedCardList;
@@ -199,6 +200,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
         dataBaseHandlerInsert = new DataBaseHandlerInsert(SafetyCards.this);
         dataBaseHandlerDelete = new DataBaseHandlerDelete(SafetyCards.this);
         spManager = new SharedPreferenceManager(SafetyCards.this);
+        editor = spManager.backToSafetCardPref();
         safetyCardSwitch_Status = dbSelect.getStstusFromOfflineDownloadTable(spManager.getUserID(), "SafetyCardSwitchStatus", " ");
 
         internet_intent_filter = new IntentFilter();
@@ -222,8 +224,6 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
         rl_safetyCard_list = (RelativeLayout) findViewById(R.id.rl_safetyCard_list);
         rl_report_entery = (RelativeLayout) findViewById(R.id.rl_report_entery);
         rl_report_entery.setVisibility(View.GONE);
-        //rl_report_entery.setVisibility(View.GONE);
-        //swipelayout.setVisibility(View.GONE);
         rl_safetyCard_list.setVisibility(View.GONE);
         firstTimeView.setVisibility(View.GONE);
         ll_back.setOnClickListener(this);
@@ -307,6 +307,8 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
             case R.id.btn_register_card:
             case R.id.rl_add_more_cards:
                 if (connectionDetector.isConnectingToInternet()) {
+                    editor.putString("GoToSafetyCard", "True");
+                    editor.commit();
                     commonIntentMethod(VerifyInfo.class);
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 } else {
@@ -380,6 +382,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                                 property.employeeId = jsonObject.getString("employeeId");
                                 property.card_url = jsonObject.getString("downloadUrl");
                                 property.customerId = jsonObject.getString("customerId");
+                                property.confirmed = jsonObject.getString("confirmed");
                                 if (property.approval_status != null && property.approval_status.equals("true")) {
                                     approvedCardList.add(property);
                                     DownloadUrlProperty downloadUrlProperty = new DownloadUrlProperty();
@@ -398,6 +401,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                             dbDelete.deleteTableByName("SafetyCards", "");
                             dataBaseHandlerInsert.addDataIntoSafetyCardTable(safetyCardListForRecyclerView);
                         }
+
                         if (safetyCardListForRecyclerView.size() > 0) {
                             recyclerView.setLayoutManager(new LinearLayoutManager(SafetyCards.this));
                             safetycardAdapter = new SafetyCardRecyclerViewAdapter(SafetyCards.this, safetyCardListForRecyclerView,"");
@@ -406,8 +410,8 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                             firstTimeView.setVisibility(View.GONE);
                         } else {
                             rl_safetyCard_list.setVisibility(View.GONE);
-                            rl_report_entery.setVisibility(View.GONE);
                             firstTimeView.setVisibility(View.VISIBLE);
+                            rl_report_entery.setVisibility(View.GONE);
                         }
                     }
                 } catch (Exception ex) {
@@ -906,7 +910,12 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     e.printStackTrace();
                 } finally {
                     if (hasEntery) {
-                        rl_report_entery.setVisibility(View.VISIBLE);
+                        if(safetyCardListForRecyclerView.size()>0){
+                            rl_report_entery.setVisibility(View.VISIBLE);
+                        }else{
+                            rl_report_entery.setVisibility(View.GONE);
+                        }
+
                     } else {
                         //rl_report_entery.setVisibility(View.VISIBLE);
                         rl_report_entery.setVisibility(View.GONE);

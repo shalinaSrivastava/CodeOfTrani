@@ -162,6 +162,7 @@ public class DataBaseHandlerInsert extends DataBaseHandler {
                     values.put(TblSafetyCard_Key_ID, content.id);
                     values.put(TblSafetyCard_Key_EmployeeID, content.employeeId);
                     values.put(TblSafetyCard_Key_CustomerId, content.customerId);
+                    values.put(TblSafetyCard_Key_Confirmed, content.confirmed);
                     db.insert(TABLE_SAFETY_CARDS, null, values);
                 }
                 db.setTransactionSuccessful();

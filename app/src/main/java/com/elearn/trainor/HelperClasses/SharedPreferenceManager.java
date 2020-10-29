@@ -77,6 +77,15 @@ public class SharedPreferenceManager {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("ProfileInfo", 0);
         return sharedPreferences.getString("Token", "");
     }
+    // new added 27-10-2020
+    public String getProfileEmailVerified() {
+        SharedPreferences sharedPreferences = this.context.getSharedPreferences("ProfileInfo", 0);
+        return sharedPreferences.getString("EmailVerified", "");
+    }
+    public String getProfilePhoneVerified() {
+        SharedPreferences sharedPreferences = this.context.getSharedPreferences("ProfileInfo", 0);
+        return sharedPreferences.getString("PhoneVerified", "");
+    }
 
     public void removeSharedPreference() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("ProfileInfo", 0);
@@ -148,22 +157,18 @@ public class SharedPreferenceManager {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("COPCourseStatus", "");
     }
-
     public String getCOPregdDate() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("RegdDate", "");
     }
-
     public String getCOPplacePlatformName() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("PlacePlatformName", "");
     }
-
     public String getCOPplacePlatformId() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("PlacePlatformID", "");
     }
-
     public String getCOPdepartmentName() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("DepartmentName", "");
@@ -172,52 +177,42 @@ public class SharedPreferenceManager {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("GroupObject", "");
     }
-
     public String getCOPdepartmentId() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("DepartmentID", "");
     }
-
     public String getCOPtopicDiscussed() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("TopicDiscussed", "");
     }
-
     public String getCOPriskIdentified() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("RiskIdentified", "false");
     }
-
     public String getCOPplannedFollowUp() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("PlannedFollowUp", "");
     }
-
     public String getCOPheatColdStatus() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("HeatColdStatus", "");
     }
-
     public String getCOPpressureStatus() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("PressureStatus", "");
     }
-
     public String getCOPchemicalStatus() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("ChemicalStatus", "");
     }
-
     public String getCOPelectricalStatus() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("ElectricalStatus", "");
     }
-
     public String getCOPgravityStatus() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("GravityStatus", "");
     }
-
     public String getCOPradiationStatus() {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("RadiationStatus", "");
@@ -238,7 +233,6 @@ public class SharedPreferenceManager {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("COPCardDetails", 0);
         return sharedPreferences.getString("PresentMomemtStatus", "false");
     }
-
 
     public SharedPreferences.Editor COPFacilityPreference() {
         SharedPreferences.Editor editor = context.getSharedPreferences("COPFacilityResponse", Context.MODE_PRIVATE).edit();
@@ -285,6 +279,8 @@ public class SharedPreferenceManager {
         }
         editor.putString("Phone_no", info.Phone_no);
         editor.putString("UserName", info.UserName);
+        editor.putString("EmailVerified", info.emailVerified);
+        editor.putString("PhoneVerified", info.phoneVerified);
         editor.commit();
     }
 
@@ -308,5 +304,15 @@ public class SharedPreferenceManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(key);
         editor.apply();
+    }
+
+    //verify info back safetycard
+    public SharedPreferences.Editor backToSafetCardPref() {
+        SharedPreferences.Editor editor = context.getSharedPreferences("FacilitySafetyCardBack", Context.MODE_PRIVATE).edit();
+        return editor;
+    }
+    public String goBacktoSafetyCard() {
+        SharedPreferences sharedPreferences = this.context.getSharedPreferences("FacilitySafetyCardBack", 0);
+        return sharedPreferences.getString("GoToSafetyCard", "");
     }
 }

@@ -98,7 +98,7 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
             longitude = getIntent().getStringExtra("Longitude");
         }
         txt_facilityName.setText(facilityName);
-        txt_hour_spent.setText(spentTime+" since entry.");
+        txt_hour_spent.setText(spentTime+getString(R.string.since_entry));
         fetchLocation();
     }
 
@@ -127,8 +127,7 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
         LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
         MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(facilityName);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
-        homeMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        homeMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+        homeMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
         homeMap.setBuildingsEnabled(true);
         homeMap.setIndoorEnabled(true);
         homeMap.addMarker(markerOptions);
@@ -171,16 +170,13 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
                     e.printStackTrace();
                 } finally {
                     if(response.equals("200")){
-                        AlertDialogManager.showDialog(NotifyExit.this, "", facilityName +" is sucessfully checked out.", false, new IClickListener() {
+                        AlertDialogManager.showDialog(NotifyExit.this, "", facilityName +getString(R.string.sucessfully_checked_out), false, new IClickListener() {
                             @Override
                             public void onClick() {
                                 commonIntentMethod(CheckedInFacility.class);
                             }
                         });
-                       /* Intent intent = new Intent(NotifyExit.this, CheckedInFacility.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("RemainedTimer","2hr and 13min since entry");
-                        startActivity(intent);*/
+
                     }
                 }
             }

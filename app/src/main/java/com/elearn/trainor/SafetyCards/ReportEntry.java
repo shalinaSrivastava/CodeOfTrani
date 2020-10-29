@@ -151,21 +151,21 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
             case R.id.rl_report_entery:
                 if (hourCount > 0) {
                     workSeconds = hourCount * 3600;
-                    Log.d("Seconds", workSeconds + "");
+                    //Log.d("Seconds", workSeconds + "");
                     if(connectionDetector.isConnectingToInternet()){
-                        List<String> safetyCardIdList = dbSelect.getSafetyCardidByCustId(customerId);
+                        List<String> safetyCardIdList = dbSelect.getSafetyCardidByCustId(customerId,"true");
                         if(safetyCardIdList.size()>0){
                             showWaitDialog();
                             callReportEntryAPI(facilityId,safetyCardIdList.get(0),workSeconds,guestCount);
                         }else{
-                            Toast.makeText(this, "Something went wrong. Please contact administrator!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getString(R.string.went_wrng_contact_admin), Toast.LENGTH_SHORT).show();
                         }
                         //callReportEntryAPI(facilityId,"5fbcf276-48ed-461e-bb20-6f3ce0b92ea5",workSeconds,guestCount);
                     }else{
-                        Toast.makeText(this, "Not connected to internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.internetErrorTitle), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "Please select valid hours.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.select_valid_hour), Toast.LENGTH_SHORT).show();
                 }
                 //commonIntentMethod(AwaitingApproval.class);
                 break;

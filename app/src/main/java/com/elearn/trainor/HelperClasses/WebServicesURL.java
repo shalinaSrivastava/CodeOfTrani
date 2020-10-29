@@ -33,6 +33,8 @@ public class WebServicesURL {
 
     // Push Notification Module
     public static String Notification_Base_URL = "http://pushapi.trainor.no/api/NotificationAPI/";
+    //public static String Notification_Base_URL = "http://192.168.88.167:1251/api/NotificationAPI/";//local
+
     public static String Update_FirebaseToken_URL = Notification_Base_URL + "insertIntoFirebaseToken";
     public static String Update_NotificationMode_URL = Notification_Base_URL + "updateNotificationMode";
     public static String Update_NotificationCount_URL = Notification_Base_URL + "newUpdateNotificationCountTable";

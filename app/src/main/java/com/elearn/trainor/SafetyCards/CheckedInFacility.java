@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,6 +35,7 @@ import com.elearn.trainor.BaseAdapters.SafetyCardRecyclerViewAdapter;
 import com.elearn.trainor.DBHandler.DataBaseHandlerDelete;
 import com.elearn.trainor.DBHandler.DataBaseHandlerInsert;
 import com.elearn.trainor.DBHandler.DataBaseHandlerSelect;
+import com.elearn.trainor.DBHandler.DataBaseHandlerUpdate;
 import com.elearn.trainor.DashboardClasses.LoadingPageActivity;
 import com.elearn.trainor.HelperClasses.AlertDialogManager;
 import com.elearn.trainor.HelperClasses.AppConstants;
@@ -77,14 +79,16 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
     public static CheckedInFacility instance;
     LinearLayout ll_back, llhome;
     TextView text_header;
-    RelativeLayout rl_checked_in_facility,rl_enter_new_facility;
+    RelativeLayout rl_checked_in_facility,rl_enter_new_facility,rl_add_more_cards;
     TextView txt_companyName,txt_hour_spent,txt_guest;
     String updateHourVisibility = "";
     SharedPreferenceManager spManager;
+    SharedPreferences.Editor editor;
     ConnectionDetector connectionDetector;
     DataBaseHandlerInsert dbInsert;
     DataBaseHandlerDelete dbDelete;
     DataBaseHandlerSelect dbSelect;
+    DataBaseHandlerUpdate dbUpdate;
     List<ReportEntryProperty> checkedInFacilityList;
     RecyclerView rv_checked_in_facility, rv_safetyCards;
     CheckedInFacilityAdapter checkedInFacilityAdapter;
@@ -129,10 +133,12 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
 
     public void getControls() {
         spManager = new SharedPreferenceManager(CheckedInFacility.this);
+        editor = spManager.backToSafetCardPref();
         connectionDetector = new ConnectionDetector(this);
         dbInsert = new DataBaseHandlerInsert(this);
         dbDelete = new DataBaseHandlerDelete(this);
         dbSelect = new DataBaseHandlerSelect(this);
+        dbUpdate = new DataBaseHandlerUpdate(this);
         checkedInFacilityList = new ArrayList<>();
 
         safetyCardListForRecyclerView = new ArrayList<>();
@@ -153,6 +159,9 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
         txt_guest = findViewById(R.id.txt_guest);
         rv_checked_in_facility = findViewById(R.id.rv_checked_in_facilities);
         ll_checked_in_facility = findViewById(R.id.ll_checked_in_facility);
+        rl_add_more_cards = findViewById(R.id.rl_add_more_cards);
+
+        rl_add_more_cards.setOnClickListener(this);
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
         rl_enter_new_facility.setOnClickListener(this);
@@ -185,9 +194,15 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
             }
             safetyCardListForRecyclerView.clear();
             safetyCardListForRecyclerView = dbSelect.getSafetyCardAttribute("");
-            rv_safetyCards.setLayoutManager(new LinearLayoutManager(CheckedInFacility.this));
-            safetycardAdapter = new SafetyCardRecyclerViewAdapter(CheckedInFacility.this, safetyCardListForRecyclerView,"CheckedInFacility");
-            rv_safetyCards.setAdapter(safetycardAdapter);
+            if(safetyCardListForRecyclerView.size()>0){
+                rv_safetyCards.setLayoutManager(new LinearLayoutManager(CheckedInFacility.this));
+                safetycardAdapter = new SafetyCardRecyclerViewAdapter(CheckedInFacility.this, safetyCardListForRecyclerView,"CheckedInFacility");
+                rv_safetyCards.setAdapter(safetycardAdapter);
+                rl_enter_new_facility.setVisibility(View.VISIBLE);
+            }else{
+                rl_enter_new_facility.setVisibility(View.GONE);
+            }
+
         }
         getReportEntryButtonStatus();
     }
@@ -290,6 +305,16 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
             case R.id.rl_update_work_hr:
                 commonIntentMethod(CheckedInFacility.class);
                 break;
+            case R.id.rl_add_more_cards:
+                if (connectionDetector.isConnectingToInternet()) {
+                    editor.putString("GoToSafetyCard", "False");
+                    editor.commit();
+                    commonIntentMethod(VerifyInfo.class);
+                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                } else {
+                    AlertDialogManager.showDialog(CheckedInFacility.this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, null);
+                }
+                break;
         }
     }
 
@@ -341,20 +366,9 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                                 property.facilityLatitude = jsonObject.getString("facilityLatitude");
                                 property.facilityLongitude = jsonObject.getString("facilityLongitude");
                                 dbInsert.addDataIntoReportEntryTable(property);
-
+                                dbUpdate.updateFacilityData("FacilityTable",spManager.getUserID(),property.facilityId,"employeeCheckinState",property.state);
                                 if(property.state.equals("checked_in")){
                                     checkedInFacilityList.add(property);
-                                    /*CheckedInFacilityProperty propertyCheckedIn = new CheckedInFacilityProperty();
-                                    propertyCheckedIn.userId = property.userId;
-                                    propertyCheckedIn.entryId = property.entryId;
-                                    propertyCheckedIn.checkOutMessage = property.checkOutMessage;
-                                    propertyCheckedIn.timestamp = property.timestamp;
-                                    propertyCheckedIn.state = property.state ;
-                                    propertyCheckedIn.employeeId = property.employeeId;
-                                    propertyCheckedIn.facilityName = property.facilityName;
-                                    propertyCheckedIn.facilityId = property.facilityId;
-                                    propertyCheckedIn.estimatedDurationOfVisitInSeconds = property.estimatedDurationOfVisitInSeconds;
-                                    dbInsert.addDataIntoCheckedInFacilityTable(propertyCheckedIn);*/
                                 }
                             }
                         }
@@ -374,14 +388,6 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                        checkedInFacilityAdapter.notifyDataSetChanged();
                    }else{
                        ll_checked_in_facility.setVisibility(View.GONE);
-                      /* AlertDialogManager.showDialog(CheckedInFacility.this, "", "No data for checked in facility online", false, new IClickListener() {
-                           @Override
-                           public void onClick() {
-                               Intent intent = new Intent(CheckedInFacility.this, HomePage.class);
-                               intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                               startActivity(intent);
-                           }
-                       });*/
                    }
                     getSafetyCards();
                 }
@@ -402,7 +408,8 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                 }else{
                     Toast.makeText(CheckedInFacility.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }*/
-                Toast.makeText(CheckedInFacility.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                getSafetyCards();
+                Toast.makeText(CheckedInFacility.this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
 
                 dismissWaitDialog();
             }
@@ -443,6 +450,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
     }
 
     public void getSafetyCards() {
+        showWaitDialog();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.Upcoming_SafetyCards_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -469,6 +477,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                                 property.employeeId = jsonObject.getString("employeeId");
                                 property.card_url = jsonObject.getString("downloadUrl");
                                 property.customerId = jsonObject.getString("customerId");
+                                property.confirmed = jsonObject.getString("confirmed");
                                 if (property.approval_status != null && property.approval_status.equals("true")) {
                                     approvedCardList.add(property);
                                     DownloadUrlProperty downloadUrlProperty = new DownloadUrlProperty();
@@ -486,12 +495,14 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                             dbDelete.deleteTableByName("SafetyCards", "");
                             dbInsert.addDataIntoSafetyCardTable(safetyCardListForRecyclerView);
                         }
+
                         if (safetyCardListForRecyclerView.size() > 0) {
                             rv_safetyCards.setLayoutManager(new LinearLayoutManager(CheckedInFacility.this));
                             safetycardAdapter = new SafetyCardRecyclerViewAdapter(CheckedInFacility.this, safetyCardListForRecyclerView,"CheckedInFacility");
                             rv_safetyCards.setAdapter(safetycardAdapter);
+                            rl_enter_new_facility.setVisibility(View.VISIBLE);
                         } else {
-                           //todo
+                            rl_enter_new_facility.setVisibility(View.GONE);
                         }
                     }
                 } catch (Exception ex) {
@@ -589,7 +600,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
     public void showDiplomaPDF_File(File file) {
         dismissWaitDialog();
         if (!file.exists()) {
-            AlertDialogManager.showDialog(CheckedInFacility.this, getResources().getString(R.string.bad_file_format), "No safetycard to show .", false, null);
+            AlertDialogManager.showDialog(CheckedInFacility.this, getResources().getString(R.string.bad_file_format), "", false, null);
         } else {
             //Start DOwnload And VIew Safety Card Analytics
             Bundle bundle = new Bundle();

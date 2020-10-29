@@ -13,4 +13,5 @@ public class SafetyCardProperty {
     public String id;
     public String employeeId;
     public String customerId;
+    public String confirmed;
 }

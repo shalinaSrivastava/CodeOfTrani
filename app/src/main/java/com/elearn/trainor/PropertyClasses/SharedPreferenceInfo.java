@@ -12,4 +12,6 @@ public class SharedPreferenceInfo {
     public String language;
     public String Phone_no;
     public String UserName;
+    public String emailVerified;
+    public String phoneVerified;
 }

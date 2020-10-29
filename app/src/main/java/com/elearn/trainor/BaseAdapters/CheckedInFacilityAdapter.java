@@ -184,9 +184,9 @@ public class CheckedInFacilityAdapter extends RecyclerView.Adapter<CheckedInFaci
             long mins = (differenceMillis / (1000 * 60)) % 60;
             long difference_In_Hours = (differenceMillis / (1000 * 60 * 60)) % 24;
             if (!(difference_In_Hours + "").equals("0")) {
-                spentTime = difference_In_Hours + "hr and " + mins + "min";
+                spentTime = difference_In_Hours +" "+ context.getString(R.string.hour)+" "+ mins +" "+ context.getString(R.string.minute);
             } else {
-                spentTime = mins + "min";
+                spentTime = mins +" "+ context.getString(R.string.minute);
             }
 
             //System.out.println("Spent time = " + difference_In_Hours + "hour " + mins + "min ");

@@ -45,7 +45,9 @@ import com.google.firebase.perf.metrics.Trace;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -66,6 +68,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
     RelativeLayout rl_frequently_asked_qus, rl_verify_phone_view, rl_verify_email_view, rl_verify_more_contacts;
     EditText edit_code;
     Button btn_submit_code;
+    JSONArray arrJsonemails,arrJsonPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
         if (getIntent().getStringExtra("TypeName") != null && !Objects.equals(getIntent().getStringExtra("TypeName"), "")) {
             typeName = getIntent().getStringExtra("TypeName");
         }
+//Test();
         if (type.equals("FrequentlyAsked")) {
             rl_frequently_asked_qus.setVisibility(View.VISIBLE);
             rl_verify_phone_view.setVisibility(View.GONE);
@@ -125,6 +129,27 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
             getCode(WebServicesURL.VerificationOTPPhone + "?customerId=" + customerId);
         }
     }
+
+   /* public void Test(){
+        try {
+            String emails = "[c32be323-7be4-46b1-a8ec-8543bfe876f1, 6fa3e54b-f99a-44ee-8789-4ae8e421e9c4,844e0564-b6bd-11e6-bb41-00505601092f]";
+            arrJsonemails = (JSONArray) new JSONObject(new JSONTokener("{data:"+emails+"}")).get("data");
+
+            String phones = "[]";
+            arrJsonPhone = (JSONArray) new JSONObject(new JSONTokener("{data:"+phones+"}")).get("data");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("emailLength",arrJsonemails.length()+"");
+        Log.d("phoneLength",arrJsonPhone.length()+"");
+        if(arrJsonemails.length()==0){
+            Log.d("emailLength",arrJsonemails.length()+"");
+        }
+        if(arrJsonPhone.length()==0){
+            Log.d("phoneLength",arrJsonPhone.length()+"");
+        }
+
+    }*/
 
     public void getCode(String URL) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -149,15 +174,15 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                             rl_frequently_asked_qus.setVisibility(View.GONE);
                             rl_verify_phone_view.setVisibility(View.VISIBLE);
                             rl_verify_email_view.setVisibility(View.GONE);
-                            txt_verify_phone_des1.setText("An e-mail has been sent to " + typeName + ". Please click the link in the e-mail to verify your e-mail.");
+                            txt_verify_phone_des1.setText(getString(R.string.email_sent_to)+ typeName + getString(R.string.verify_ur_email));
                         } else if (type.equals("Phone")) {
                             rl_frequently_asked_qus.setVisibility(View.GONE);
                             rl_verify_phone_view.setVisibility(View.VISIBLE);
                             rl_verify_email_view.setVisibility(View.GONE);
-                            txt_verify_phone_des1.setText("A text message has been sent to " + typeName + ".");
+                            txt_verify_phone_des1.setText(getString(R.string.msg_sent_to) + typeName + ".");
                         }
                     } else {
-                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Something went wrong. Please try again later", false, new IClickListener() {
+                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.try_after_some_time), false, new IClickListener() {
                             @Override
                             public void onClick() {
                                 Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
@@ -178,7 +203,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                 }*/
                 final String status_Code = String.valueOf(error.networkResponse.statusCode);
                 Log.d("Satus Code= ", status_Code);
-                AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "User does not have an valid email address/phone associated", false, new IClickListener() {
+                AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.not_having_valid_email_phone), false, new IClickListener() {
                     @Override
                     public void onClick() {
                         Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
@@ -223,7 +248,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                         showWaitDialog();
                         callSubmitCodeApi(code);
                     }else {
-                        AlertDialogManager.showDialog(this, "", "Please input valid code.", false, null);
+                        AlertDialogManager.showDialog(this, "", getString(R.string.input_valid_code), false, null);
                     }
                 }else{
                     AlertDialogManager.showDialog(this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, null);
@@ -235,6 +260,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
 
     public void callSubmitCodeApi(String code){
         String url = WebServicesURL.VerifiyCode + "?requestId=" + requestId+"&code="+code;
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -248,6 +274,17 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                             if (jsonObject.has("userPhoneVerified")) {
                                 userPhoneVerified = jsonObject.getString("userPhoneVerified");
                             }
+                            if (jsonObject.has("emailVerifiedCustomerIds")) {
+                                String emails = jsonObject.getString("emailVerifiedCustomerIds");
+                                //String emails = "[c32be323-7be4-46b1-a8ec-8543bfe876f1, 6fa3e54b-f99a-44ee-8789-4ae8e421e9c4,844e0564-b6bd-11e6-bb41-00505601092f]";
+                                 arrJsonemails = (JSONArray) new JSONObject(new JSONTokener("{data:"+emails+"}")).get("data");
+                            }
+                            if (jsonObject.has("phoneVerifiedCustomerIds")) {
+                                String phones = jsonObject.getString("phoneVerifiedCustomerIds");
+                                //String phones = "[]";
+                                arrJsonPhone = (JSONArray) new JSONObject(new JSONTokener("{data:"+phones+"}")).get("data");
+
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -255,8 +292,53 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                     e.printStackTrace();
                 } finally {
                     dismissWaitDialog();
-                    if ((!userEmailVerified.equals("")|| !userPhoneVerified.equals(""))&& (userEmailVerified.equals("true")||userPhoneVerified.equals("true"))) {
-                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Verified", false, new IClickListener() {
+                    if(type.equals("E-mail")){
+                        if(userEmailVerified.equals("false") && arrJsonemails.length()==0){
+                            AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.not_verified_try_again), false, new IClickListener() {
+                                @Override
+                                public void onClick() {
+                                    Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }else{
+                            AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.verified), false, new IClickListener() {
+                                @Override
+                                public void onClick() {
+                                    Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }
+                    }else if (type.equals("Phone")){
+                        if(userPhoneVerified.equals("false") && arrJsonPhone.length()==0){
+                            AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.not_verified_try_again), false, new IClickListener() {
+                                @Override
+                                public void onClick() {
+                                    Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }else{
+                            AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.verified), false, new IClickListener() {
+                                @Override
+                                public void onClick() {
+                                    Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }
+                    }
+                    /*if ((userEmailVerified.equals("false") ||userPhoneVerified.equals("false")) && (arrJsonemails.length()==0 || arrJsonPhone.length()==0)) {
+                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.not_verified_try_again), false, new IClickListener() {
                             @Override
                             public void onClick() {
                                 Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
@@ -266,7 +348,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                             }
                         });
                     } else {
-                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Not verified. Try again after some time.", false, new IClickListener() {
+                        AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.verified), false, new IClickListener() {
                             @Override
                             public void onClick() {
                                 Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
@@ -275,7 +357,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                                 finish();
                             }
                         });
-                    }
+                    }*/
                 }
             }
         }, new Response.ErrorListener() {
@@ -287,7 +369,15 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
                 }*/
                 final String status_Code = String.valueOf(error.networkResponse.statusCode);
                 Log.d("Satus Code= ", status_Code);
-                AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", "Request id or code is invalid. Please try again!", false, null);
+                AlertDialogManager.showDialog(ProcessVerifyInfo.this, "", getString(R.string.request_id_code_invalid), false, new IClickListener() {
+                    @Override
+                    public void onClick() {
+                        Intent intent = new Intent(ProcessVerifyInfo.this, VerifyInfo.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
 
             }
         }) {

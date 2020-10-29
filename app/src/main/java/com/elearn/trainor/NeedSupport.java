@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.elearn.trainor.ConcoPhilips.ConcoPhilips;
 import com.elearn.trainor.CourseModule.GetMoreCourses;
 import com.elearn.trainor.HelperClasses.*;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -73,9 +74,11 @@ public class NeedSupport extends AppCompatActivity implements View.OnClickListen
         if (From != null && From.equals("OrderCourse")) {
             commonIntentMethod(NeedSupport.this, GetMoreCourses.class, "NeedSupport");
         } else {
-            if (getIntent().getStringExtra("From") != null && getIntent().getStringExtra("From").equals("HomePage")) {
+            if (From.equals("HomePage")) {
                 commonIntentMethod(NeedSupport.this, HomePage.class, "NeedSupport");
-            } else {
+            } else if(From.equals("COP")){
+                commonIntentMethod(NeedSupport.this, ConcoPhilips.class, "");
+            }else {
                 commonIntentMethod(NeedSupport.this, ForgetPassword.class, "");
             }
         }

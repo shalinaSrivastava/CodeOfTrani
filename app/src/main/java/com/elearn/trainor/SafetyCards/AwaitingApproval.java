@@ -114,7 +114,7 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                 } finally {
                     if(state.equals("awaiting_approval")){
                         if(loopForStatus==6){
-                            AlertDialogManager.showDialog(AwaitingApproval.this, "Approval issue", "Please contact administrator / customer care.", false, new IClickListener() {
+                            AlertDialogManager.showDialog(AwaitingApproval.this, getString(R.string.approval_issue), getString(R.string.contact_customer_care), false, new IClickListener() {
                                 @Override
                                 public void onClick() {
                                     commonIntentMethod(HomePage.class);
@@ -132,14 +132,19 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                                 });
                             }
                             //callgetStatusApi();
-
                         }
                     }else if(state.equals("checked_in")){
                         commonIntentMethod(CheckedInFacility.class);
                     }else if(state.equals("checked_out")){
                         commonIntentMethod(HomePage.class);
                     }else if(state.equals("rejected")){
-                        commonIntentMethod(HomePage.class);
+                        AlertDialogManager.showDialog(AwaitingApproval.this, "", getString(R.string.facility_rejected), false, new IClickListener() {
+                            @Override
+                            public void onClick() {
+                                commonIntentMethod(HomePage.class);
+                            }
+                        });
+
                     }
 
                 }
@@ -159,7 +164,7 @@ public class AwaitingApproval extends AppCompatActivity implements View.OnClickL
                     }
                 }*/
                 if(loopForStatus==6){
-                    AlertDialogManager.showDialog(AwaitingApproval.this, "Approval issue", "Please contact administrator / customer care.", false, new IClickListener() {
+                    AlertDialogManager.showDialog(AwaitingApproval.this, getString(R.string.approval_issue), getString(R.string.contact_customer_care), false, new IClickListener() {
                         @Override
                         public void onClick() {
                             commonIntentMethod(StartCheckInFacility.class);

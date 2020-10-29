@@ -880,6 +880,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             if (selectedImage != null && !selectedImage.toString().isEmpty()) {
@@ -1092,6 +1093,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                 sharedPreferenceInfo.Phone_no = spManager.getPhone();
                 sharedPreferenceInfo.UserName = spManager.getUsername();
                 sharedPreferenceInfo.UserID = spManager.getUserID();
+                //changes on 27-10-2020
+                sharedPreferenceInfo.emailVerified = spManager.getProfileEmailVerified();
+                sharedPreferenceInfo.phoneVerified = spManager.getProfilePhoneVerified();
                 spManager.removeSharedPreference();
                 SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
             }
@@ -1125,6 +1129,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                         sharedPreferenceInfo.Phone_no = spManager.getPhone();
                         sharedPreferenceInfo.UserName = spManager.getUsername();
                         sharedPreferenceInfo.UserID = spManager.getUserID();
+                        //changes on 27-10-2020
+                        sharedPreferenceInfo.emailVerified = spManager.getProfileEmailVerified();
+                        sharedPreferenceInfo.phoneVerified = spManager.getProfilePhoneVerified();
                         spManager.removeSharedPreference();
                         SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
                     }
@@ -1147,6 +1154,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                         sharedPreferenceInfo.Phone_no = spManager.getPhone();
                         sharedPreferenceInfo.UserName = spManager.getUsername();
                         sharedPreferenceInfo.UserID = spManager.getUserID();
+                        //changes on 27-10-2020
+                        sharedPreferenceInfo.emailVerified = spManager.getProfileEmailVerified();
+                        sharedPreferenceInfo.phoneVerified = spManager.getProfilePhoneVerified();
                         spManager.removeSharedPreference();
                         SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
                     }
@@ -1215,6 +1225,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                     sharedPreferenceInfo.Phone_no = phone;
                     sharedPreferenceInfo.UserName = spManager.getUsername();
                     sharedPreferenceInfo.UserID = spManager.getUserID();
+                    //changes on 27-10-2020
+                    sharedPreferenceInfo.emailVerified = spManager.getProfileEmailVerified();
+                    sharedPreferenceInfo.phoneVerified = spManager.getProfilePhoneVerified();
                     spManager.removeSharedPreference();
                     SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
                     if (languagepart.startsWith("nb")) {
@@ -1289,8 +1302,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("profilePictureUrl").toString() != null && !jsonObject.getString("profilePictureUrl").equals("")) {
+                        String emailVerified = jsonObject.getString("emailVerified") == null ? "" : jsonObject.getString("emailVerified").equals("null") ? "" : jsonObject.getString("emailVerified");
+                        String phoneVerified = jsonObject.getString("phoneVerified") == null ? "" : jsonObject.getString("phoneVerified").equals("null") ? "" : jsonObject.getString("phoneVerified");
+
                         getUserImageFromLive(jsonObject.getString("profilePictureUrl"), spManager.getUsername(),
-                                jsonObject.getString("emailAddress"), jsonObject.getString("phone"), jsonObject.getString("birthDate"), jsonObject.getString("language"), jsonObject.getString("firstname"), jsonObject.getString("lastname"));
+                                jsonObject.getString("emailAddress"), jsonObject.getString("phone"), jsonObject.getString("birthDate"), jsonObject.getString("language"), jsonObject.getString("firstname"), jsonObject.getString("lastname"),emailVerified,phoneVerified);
                     } else {
                         swipelayout.setRefreshing(false);
                         if (spManager.getSharedPreferenceExistence()) {
@@ -1309,6 +1325,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                             sharedPreferenceInfo.Phone_no = jsonObject.getString("phone").equals("null") ? "" : jsonObject.getString("phone") == null ? "" : jsonObject.getString("phone");
                             sharedPreferenceInfo.UserName = username;
                             sharedPreferenceInfo.UserID = spManager.getUserID();
+                            //changes on 27-10-2020
+                            sharedPreferenceInfo.emailVerified = jsonObject.getString("emailVerified").equals("null") ? "" : jsonObject.getString("emailVerified") == null ? "" : jsonObject.getString("emailVerified");
+                            sharedPreferenceInfo.phoneVerified = jsonObject.getString("phoneVerified").equals("null") ? "" : jsonObject.getString("phoneVerified") == null ? "" : jsonObject.getString("phoneVerified");
                             spManager.removeSharedPreference();
                             SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
                             String language = jsonObject.getString("language").equals("null") ? "en" : jsonObject.getString("language") == null ? "en" : jsonObject.getString("language");
@@ -1350,7 +1369,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         requestQueue11.add(stringRequest);
     }
 
-    public void getUserImageFromLive(final String ImageUrl, final String username, final String email, final String phone, final String birthdate, final String language, final String FirstName, final String LastName) {
+    public void getUserImageFromLive(final String ImageUrl, final String username, final String email, final String phone, final String birthdate, final String language, final String FirstName, final String LastName, final String emailVerified, final String phoneVerified) {
         Glide.with(Settings.this).load(ImageUrl).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -1369,6 +1388,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                     sharedPreferenceInfo.Phone_no = phone.equals("null") ? "" : phone == null ? "" : phone;
                     sharedPreferenceInfo.UserName = username;
                     sharedPreferenceInfo.UserID = spManager.getUserID();
+                    //changes on 27-10-2020
+                    sharedPreferenceInfo.emailVerified = emailVerified;
+                    sharedPreferenceInfo.phoneVerified = phoneVerified;
                     spManager.removeSharedPreference();
                     SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
                     if (language == null || language.equals("null") || language.equals("")) {
@@ -1408,6 +1430,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                     sharedPreferenceInfo.Phone_no = phone.equals("null") ? "" : phone == null ? "" : phone;
                     sharedPreferenceInfo.UserName = username;
                     sharedPreferenceInfo.UserID = spManager.getUserID();
+                    //changes on 27-10-2020
+                    sharedPreferenceInfo.emailVerified = emailVerified;
+                    sharedPreferenceInfo.phoneVerified = phoneVerified;
                     spManager.removeSharedPreference();
                     SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
                     if (language == null || language.equals("null") || language.equals("")) {

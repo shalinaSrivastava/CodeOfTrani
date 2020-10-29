@@ -1386,10 +1386,10 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
         return list;
     }
     //added on 16-09-2020
-    public List<String> getSafetyCardidByCustId(String customerID) {
+    public List<String> getSafetyCardidByCustId(String customerID, String isConfirmed) {
         List<String> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String Query = "Select id from SafetyCards where customerId = '" + customerID + "'";
+        String Query = "Select id from SafetyCards where customerId = '" + customerID + "'And confirmed = '" + isConfirmed + "'";
         synchronized ("dbLock") {
             try {
                 db.beginTransaction();

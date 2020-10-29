@@ -251,8 +251,8 @@ public class DataBaseHandlerUpdate extends DataBaseHandler {
             }
         }
     }
-// added new 06-10-2020
-/*public long updateFacilityData(String tableName, String userID, String entryId, String columnName, String value) {
+// added new 20-10-2020
+public long updateFacilityData(String tableName, String userID, String facilityId, String columnName, String value) {
     long Result = -1;
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
@@ -260,7 +260,7 @@ public class DataBaseHandlerUpdate extends DataBaseHandler {
         try {
             db.beginTransaction();
             values.put(columnName, value);
-            Result = db.update(tableName, values, "userId=? AND id=?", new String[]{userID, entryId});
+            Result = db.update(tableName, values, "id=?", new String[]{facilityId});
             db.setTransactionSuccessful();
         } catch (Exception ex) {
         } finally {
@@ -269,6 +269,6 @@ public class DataBaseHandlerUpdate extends DataBaseHandler {
         }
     }
     return Result;
-}*/
+}
 
 }

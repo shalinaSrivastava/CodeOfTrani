@@ -98,12 +98,12 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
         txt_updated_time.setVisibility(View.GONE);
         String leftDuration = "";
         if (!(spentHour + "").equals("0")) {
-            leftDuration = spentHour + "hr and " + spentMin + "min";
+            leftDuration = spentHour + " "+getString(R.string.hour) +" "+ spentMin + " "+getString(R.string.minute);
         } else {
-            leftDuration = spentMin + "min";
+            leftDuration = spentMin  + " "+getString(R.string.minute);
         }
-        String spentNleftTime = "You have been in the facility for " + spentTime + ". " +
-                "You have " + leftDuration + " left before being notified of exit.";
+        String spentNleftTime = getString(R.string.have_been_facility_for) + spentTime + ". " +
+                getString(R.string.you_have) + leftDuration + getString(R.string.left_before_being_notified_exit);
         txt_facility_update_hours_des.setText(spentNleftTime);
 
         ll_back.setOnClickListener(this);
@@ -130,7 +130,7 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
                     if(hourCount==0){
                         txt_updated_time.setVisibility(View.GONE);
                     }else{
-                        txt_updated_time.setText("New time left is "+newTime+" hours and "+spentMin+" minutes.");
+                        txt_updated_time.setText(getString(R.string.new_time_left)+newTime+" "+getString(R.string.hour)+" "+spentMin+" "+getString(R.string.minutes)+".");
                     }
                 }else{
                     txt_updated_time.setVisibility(View.GONE);
@@ -142,21 +142,21 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
                 txt_hour_count.setText(hourCount + "");
                 txt_updated_time.setVisibility(View.VISIBLE);
                 String newTime =  (Integer.parseInt(spentHour)+hourCount)+"";
-                txt_updated_time.setText("New time left is "+newTime+" hours and "+spentMin+" minutes.");
+                txt_updated_time.setText(getString(R.string.new_time_left)+newTime+" "+getString(R.string.hour)+" "+spentMin+" "+getString(R.string.minutes)+".");
                 break;
             case R.id.rl_update_work_hr:
                 if (hourCount > 0) {
                     workSeconds = (hourCount * 3600)+Integer.parseInt(actualDuration);
-                    Log.d("Seconds", workSeconds + "");
+                   // Log.d("Seconds", workSeconds + "");
                     if (connectionDetector.isConnectingToInternet()) {
                         showWaitDialog();
                         callUpdateHourApi(entryId, workSeconds + "");
                         //callReportEntryAPI(facilityId,"5fbcf276-48ed-461e-bb20-6f3ce0b92ea5",workSeconds,guestCount);
                     } else {
-                        Toast.makeText(this, "Not connected to internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.internetErrorTitle), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "Please select valid hours.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.select_valid_hour), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -199,11 +199,11 @@ public class UpdateHours extends AppCompatActivity implements View.OnClickListen
                     }
                 } catch (UnsupportedEncodingException ex) {
                     ex.printStackTrace();
-                    Toast.makeText(UpdateHours.this, "Server error. Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateHours.this, getString(R.string.internalServerError), Toast.LENGTH_SHORT).show();
                     Log.d("Exception: ", Objects.requireNonNull(ex.getMessage()));
                 } catch (JSONException ex) {
                     Log.d("Exception: ", Objects.requireNonNull(ex.getMessage()));
-                    Toast.makeText(UpdateHours.this, "Server error. Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateHours.this, getString(R.string.internalServerError), Toast.LENGTH_SHORT).show();
                     ex.printStackTrace();
                 }
                 if (pDialog != null && pDialog.isShowing()) {

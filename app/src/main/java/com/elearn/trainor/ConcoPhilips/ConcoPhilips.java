@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +48,7 @@ import java.util.Map;
 
 
 public class ConcoPhilips extends AppCompatActivity implements View.OnClickListener {
-    LinearLayout ll_back, llhome, ll_register_psi, firstTimeView, ll_go_to_help;
+    LinearLayout ll_back, llhome, ll_register_psi, firstTimeView, ll_go_to_help, ll_start_psi_course;
     RelativeLayout tbl_actionbar, rl_when_psi_course_taken;
     TextView text_header, tv_try_again, tv_psi_not_uploaded;
     Button btn_start_psi_course;
@@ -91,6 +93,7 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
         ll_go_to_help = (LinearLayout) findViewById(R.id.ll_go_to_help);
         btn_start_psi_course = (Button) findViewById(R.id.btn_start_psi_course);
         rl_when_psi_course_taken = (RelativeLayout) findViewById(R.id.rl_when_psi_course_taken);
+        ll_start_psi_course = findViewById(R.id.ll_start_psi_course);
         psi_image = (ImageView) findViewById(R.id.iv_psi_logo);
 
         ll_back.setOnClickListener(this);
@@ -100,43 +103,9 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
         btn_start_psi_course.setOnClickListener(this);
         ll_go_to_help.setOnClickListener(this);
         psi_image.setOnClickListener(this);
+        ll_start_psi_course.setOnClickListener(this);
         dbCourseStatus = dbSelect.getDataFromCoursesTable("status", spManager.getUserID(), spManager.getCOPlisenceId());
         dbCourseStatus = dbCourseStatus.equals("") ? dbSelect.getSCORMStatusFromSCORMTable(spManager.getUserID(), spManager.getCOPlisenceId(), "cmiCompletionStatus") : "";
-        if (connectionDetector.isConnectingToInternet()) {
-            showWaitDialog();
-            getPSICourseLisence();
-        } else {
-            String spCourseStatus = spManager.getCOPcourseStatus();
-            if (spCourseStatus.equals("approved") || dbCourseStatus.equalsIgnoreCase("completed")) {
-                firstTimeView.setVisibility(View.GONE);
-                rl_when_psi_course_taken.setVisibility(View.VISIBLE);
-            } else if (spCourseStatus.equals("started") || spCourseStatus.equals("none")) {
-                firstTimeView.setVisibility(View.VISIBLE);
-                rl_when_psi_course_taken.setVisibility(View.GONE);
-
-                if (spCourseStatus.equals("started")) {
-                    btn_start_psi_course.setText(getResources().getString(R.string.resume_courses));
-                }
-            } else if (dbCourseStatus.equals("STARTED")) {
-                firstTimeView.setVisibility(View.VISIBLE);
-                rl_when_psi_course_taken.setVisibility(View.GONE);
-                btn_start_psi_course.setText(getResources().getString(R.string.resume_courses));
-
-            } else if (dbCourseStatus.equals("COMPLETED")) {
-                firstTimeView.setVisibility(View.GONE);
-                rl_when_psi_course_taken.setVisibility(View.VISIBLE);
-            } else {
-                firstTimeView.setVisibility(View.VISIBLE);
-                rl_when_psi_course_taken.setVisibility(View.GONE);
-
-                if (spCourseStatus.equals("started")) {
-                    btn_start_psi_course.setText(getResources().getString(R.string.resume_courses));
-                }
-                //AlertDialogManager.showDialog(ConcoPhilips.this, getResources().getString(R.string.internetErrorTitle), getResources().getString(R.string.course_sync_error), false, null);
-            }
-
-        }
-
         showHideCradsNumbers();
 
         //dbSelect.getDataFromCoursesTable("*", spManager.getUserID(), );
@@ -154,9 +123,9 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
             tv_psi_not_uploaded.setVisibility(View.VISIBLE);
             int cardsToBeUploaded = notUploadedCardsList.size();
             if (cardsToBeUploaded == 1) {
-                tv_psi_not_uploaded.setText(cardsToBeUploaded+" " + getResources().getString(R.string.psi_card_not_uploaded));
-            }else{
-                tv_psi_not_uploaded.setText(cardsToBeUploaded+" " + getResources().getString(R.string.psi_cards_not_uploaded));
+                tv_psi_not_uploaded.setText(cardsToBeUploaded + " " + getResources().getString(R.string.psi_card_not_uploaded));
+            } else {
+                tv_psi_not_uploaded.setText(cardsToBeUploaded + " " + getResources().getString(R.string.psi_cards_not_uploaded));
             }
         } else {
             tv_try_again.setVisibility(View.GONE);
@@ -187,7 +156,7 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
                 }
 
                 break;
-            case R.id.btn_start_psi_course:
+           /* case R.id.btn_start_psi_course:
                 String PSIlisenceId = spManager.getCOPlisenceId();
                 dbCourseStatus = dbSelect.getDataFromCoursesTable("status", spManager.getUserID(), spManager.getCOPlisenceId());
                 if (dbCourseStatus.equals("NONE") || dbCourseStatus.equals("STARTED") || spManager.getCOPcourseStatus().equals("started")
@@ -197,12 +166,26 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
                     AlertDialogManager.showDialog(ConcoPhilips.this, getResources().getString(R.string.internetErrorTitle), getResources().getString(R.string.internetErrorMessage), false, null);
                 }
 
-                break;
+                break;*/
             case R.id.ll_go_to_help:
                 commonIntentMethod(NeedSupport.class);
                 break;
             case R.id.iv_psi_logo:
                 commonIntentMethod(RegisterPSI.class);
+                break;
+            case R.id.ll_start_psi_course:
+                if (connectionDetector.isConnectingToInternet()) {
+                    showWaitDialog();
+                    getPSICourseLisence();
+                } else {
+                    String spCourseStatus = spManager.getCOPlisenceId();
+                    if(!spCourseStatus.equals("")){
+                        commonIntentMethod(Courses.class);
+                    }else{
+                        AlertDialogManager.showDialog(ConcoPhilips.this, getResources().getString(R.string.internetErrorTitle), getResources().getString(R.string.internetErrorMessage), false, null);
+                    }
+                }
+
                 break;
         }
     }
@@ -248,7 +231,7 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
-                    if (!psiCourseLisenceId.equals("")) {
+                    /*if (!psiCourseLisenceId.equals("")) {
                         String spCourseStatus = spManager.getCOPcourseStatus();
                         if (spCourseStatus.equals("approved") || dbCourseStatus.equalsIgnoreCase("completed")) {
                             firstTimeView.setVisibility(View.GONE);
@@ -263,6 +246,9 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
                         //commonIntentMethod(Courses.class);
                         //commonIntentMethod(RegisterPSI.class);
 
+                    }*/
+                    if (!psiCourseLisenceId.equals("")) {
+                        commonIntentMethod(Courses.class);
                     }
                     if (pDialog != null && pDialog.isShowing()) {
                         dismissWaitDialog();
@@ -278,12 +264,11 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
 
                 final String status_Code = String.valueOf(error.networkResponse.statusCode);
                 Log.d("Satus Code= ", status_Code);
-                if(status_Code.equals("404")){
+                if (status_Code.equals("404")) {
                     //txtMessage.setText(getResources().getString(R.string.ready));
                     callEnrollInPsiCourse();
-                }else if(status_Code.equals("500")){
+                } else if (status_Code.equals("500")) {
                     Toast.makeText(ConcoPhilips.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-
                 }
 
             }
@@ -326,7 +311,7 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } finally {
-                    if (!psiCourseLisenceId.equals("")) {
+                   /* if (!psiCourseLisenceId.equals("")) {
                         String spCourseStatus = spManager.getCOPcourseStatus();
                         if (spCourseStatus.equals("approved") || dbCourseStatus.equalsIgnoreCase("completed")) {
                             firstTimeView.setVisibility(View.GONE);
@@ -341,6 +326,9 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
                         //commonIntentMethod(Courses.class);
                         //commonIntentMethod(RegisterPSI.class);
 
+                    }*/
+                    if (!psiCourseLisenceId.equals("")) {
+                        commonIntentMethod(Courses.class);
                     }
                     if (pDialog != null && pDialog.isShowing()) {
                         dismissWaitDialog();
@@ -350,6 +338,7 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ConcoPhilips.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                 if (pDialog != null && pDialog.isShowing()) {
                     dismissWaitDialog();
                 }
@@ -371,7 +360,8 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
 
     public void commonIntentMethod(Class activity) {
         Intent intent = new Intent(ConcoPhilips.this, activity);
-        intent.putExtra("FromCOP", "True");
+        //intent.putExtra("FromCOP", "True");
+        intent.putExtra("From", "COP");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -383,10 +373,14 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
         if (pDialog == null) {
             pDialog = new ProgressDialog(ConcoPhilips.this);
         }
-        pDialog.setMessage(getString(R.string.please_wait));
-        pDialog.setCancelable(false);
-        if (pDialog != null && !pDialog.isShowing()) {
-            pDialog.show();
+        try {
+            pDialog.setMessage(getString(R.string.please_wait));
+            pDialog.setCancelable(false);
+            if (pDialog != null && !pDialog.isShowing()) {
+                pDialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

@@ -56,6 +56,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 
@@ -75,10 +76,9 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
     LinearLayout ll_back, llhome;
     TextView text_header, txt_select_near_by, txt_no_facility_found;
     View line_view1, line_view4;
-    //SwipeRefreshLayout swipelayout;
     private Location currentLocation;
     private ProgressDialog pDialog;
-    List<FacilityProperty> nearByFacilityListToShow, searchFacilityList, offlineFacilityListToShow;
+    List<FacilityProperty> nearByFacilityListToShow, searchFacilityList;
     NearByFacilityAdapter nearByFacilityAdapter;
     SearchFacilityAdapter searchFacilityAdapter;
     RecyclerView rv_facility_nearby, rv_facility_search;
@@ -92,7 +92,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
     GoogleMap map;
     int checkedInFacilityCount = 0;
     List<ReportEntryProperty> checkedInFacilityList;
-
+    int mapi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +104,6 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         spManager = new SharedPreferenceManager(StartCheckInFacility.this);
         nearByFacilityListToShow = new ArrayList<>();
         searchFacilityList = new ArrayList<>();
-        offlineFacilityListToShow = new ArrayList<>();
         checkedInFacilityList = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         connectionDetector = new ConnectionDetector(this);
@@ -115,7 +114,6 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         llhome = findViewById(R.id.llhome);
         text_header = findViewById(R.id.text_header);
         text_header.setText(R.string.checkin_facility);
-        //swipelayout = findViewById(R.id.swiperefresh);
         rv_facility_nearby = findViewById(R.id.rv_facility_nearby);
         btn_search = findViewById(R.id.btn_search);
         txt_select_near_by = findViewById(R.id.txt_select_near_by);
@@ -128,9 +126,6 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
         btn_search.setOnClickListener(this);
-
-        //swipelayout.setRefreshing(false);
-
 
         fetchLocation();
     }
@@ -180,8 +175,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         try {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-            map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
             map.setBuildingsEnabled(true);
             map.setIndoorEnabled(true);
             map.addMarker(markerOptions);
@@ -192,19 +186,14 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         if (connectionDetector.isConnectingToInternet()) {
             callgetActiveEntryAPI();
         } else {
-            offlineFacilityListToShow.clear();
-            offlineFacilityListToShow = dbSelect.getFacilityListFromFacilityTable("checked_in");
-            //checkedInFacilityCount++;
-            if (offlineFacilityListToShow.size() > 0) {
-                /*for (FacilityProperty i : offlineFacilityListToShow) {
-                    if(i.employeeCheckInState.equals("checked_in")){
-                        checkedInFacilityCount++;
-                    }
-                }*/
+            nearByFacilityListToShow.clear();
+            nearByFacilityListToShow = dbSelect.getFacilityListFromFacilityTable("checked_in");
+            if (nearByFacilityListToShow.size() > 0) {
+                addLocationsToMap();
                 final LinearLayoutManager layoutManager = new LinearLayoutManager(StartCheckInFacility.this);
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rv_facility_nearby.setLayoutManager(layoutManager);
-                nearByFacilityAdapter = new NearByFacilityAdapter(StartCheckInFacility.this, offlineFacilityListToShow);
+                nearByFacilityAdapter = new NearByFacilityAdapter(StartCheckInFacility.this, nearByFacilityListToShow);
                 rv_facility_nearby.setAdapter(nearByFacilityAdapter);
                 nearByFacilityAdapter.notifyDataSetChanged();
             } else {
@@ -219,7 +208,6 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                 });
             }
             dismissWaitDialog();
-
         }
     }
 
@@ -243,7 +231,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                         AlertDialogManager.showDialog(StartCheckInFacility.this, getString(R.string.internetErrorTitle), getString(R.string.internetErrorMessage), false, null);
                     }
                 } else {
-                    Toast.makeText(this, "Please input valid text", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.input_valid_text), Toast.LENGTH_SHORT).show();
                 }
                 //commonIntentMethod(ReportEntry.class);
                 break;
@@ -335,18 +323,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                         line_view1.setVisibility(View.GONE);
                         txt_select_near_by.setVisibility(View.GONE);
                     }
-
-                    for (int i=0;i<nearByFacilityListToShow.size();i++){
-                        LatLng latLng = new LatLng(Double.parseDouble(nearByFacilityListToShow.get(i).latitude), Double.parseDouble(nearByFacilityListToShow.get(i).longitude));
-                        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(nearByFacilityListToShow.get(i).name);
-                        //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
-                        map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                        map.setBuildingsEnabled(true);
-                        map.setIndoorEnabled(true);
-                        map.addMarker(markerOptions);
-                    }
+                    addLocationsToMap();
                     dismissWaitDialog();
                 }
             }
@@ -382,6 +359,64 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         RequestQueue requestQueue11 = Volley.newRequestQueue(this);
         stringRequest.setShouldCache(false);
         requestQueue11.add(stringRequest);
+    }
+
+    private final void addLocationsToMap() {
+        for (FacilityProperty facility : nearByFacilityListToShow) {
+            LatLng latLng = new LatLng(Double.parseDouble(facility.latitude), Double.parseDouble(facility.longitude));
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(facility.name);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            map.setBuildingsEnabled(true);
+            map.setIndoorEnabled(true);
+            map.addMarker(markerOptions);
+        }
+
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String title = marker.getTitle();
+                int position = -1;
+                for (int i = 0; i < nearByFacilityListToShow.size(); i++) {
+                    if (nearByFacilityListToShow.get(i).name.equals(title)) {
+                        position = i;
+                        break;  // uncomment to get the first instance
+                    }
+                }
+                try {
+                    FacilityProperty property = nearByFacilityListToShow.get(position);
+                    if(property.employeeCheckInState.equals("checked_in")){
+                        Intent intent = new Intent(StartCheckInFacility.this, CheckedInFacility.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }else if(property.employeeCheckInState.equals("awaiting_approval")){
+                        Intent intent = new Intent(StartCheckInFacility.this, ReportEntry.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("CompanyName",property.customerName);
+                        intent.putExtra("FacilityName",property.name);
+                        intent.putExtra("FacilityId", property.id);
+                        intent.putExtra("FacilityCustomerId", property.customerId);
+                        intent.putExtra("AllowGuest", property.allowGuests);
+                        startActivity(intent);
+
+                    }else{
+                        Intent intent = new Intent(StartCheckInFacility.this, ReportEntry.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("CompanyName",property.customerName);
+                        intent.putExtra("FacilityName",property.name);
+                        intent.putExtra("FacilityId", property.id);
+                        intent.putExtra("FacilityCustomerId", property.customerId);
+                        intent.putExtra("AllowGuest", property.allowGuests);
+                        startActivity(intent);
+                    }
+                } catch (Exception e) {
+                    Log.d("Exception", " Occured");
+                }
+
+            }
+        });
+
     }
 
     public void callSearchByIdentifier(String identifier) {
@@ -431,13 +466,6 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                                }
                            });
                            //commonIntentMethod(CheckedInFacility.class);
-                       }else if(searchFacilityList.get(0).employeeCheckInState.equals("awaiting_approval")){
-                           String entryId = dbSelect.getCheckedInStatusFromEntryTable("GetEntryId",searchFacilityList.get(0).id);
-                           Intent intent = new Intent(StartCheckInFacility.this, AwaitingApproval.class);
-                           intent.putExtra("EntryId",entryId);
-                           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                           startActivity(intent);
-
                        }else{
                            Intent intent = new Intent(StartCheckInFacility.this, ReportEntry.class);
                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);

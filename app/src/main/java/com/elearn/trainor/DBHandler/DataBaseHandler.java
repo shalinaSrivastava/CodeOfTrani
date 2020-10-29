@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
-    protected static final int DATABASE_VERSION = 35;
+    protected static final int DATABASE_VERSION = 36;
     protected static final String DATABASE_NAME = "TrainorDB.db";
 
     protected static String Table_Profile = "ProfileDetail";
@@ -43,7 +43,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     protected static String TblNotificationCount_Category = "NotificationCategory"; // new added 13-08-2017
     protected static String TblNotificationCount_NotificationId_Server = "NotificationID_Server"; // new added 11-09-2018
 
-
     protected static String TABLE_CUSTOMERS_DETILS = "CustomerDetails";
     protected static String CUSTOMER_ID = "Customer_id";
     protected static String TblCustomer_Details_Key_CUSTOMER_NAME = "customerName";
@@ -69,6 +68,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     protected static String TblSafetyCard_Key_ID = "id";
     protected static String TblSafetyCard_Key_EmployeeID = "employeeId";
     protected static String TblSafetyCard_Key_CustomerId = "customerId";// new added 16-09-2020
+    protected static String TblSafetyCard_Key_Confirmed = "confirmed";// new added 26-10-2020
+
 
     protected static String TABLE_DIPLOMAS = "DiplomasTable";
     protected static String TblDiplomas_Key_Expires_Date = "expiresDate";
@@ -265,19 +266,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     protected static String REPORTENTRY_facilityLatitude = "facilityLatitude";
     protected static String REPORTENTRY_facilityLongitude = "facilityLongitude";
 
-
-   /* protected String CREATE_CHECKEDIN_FACILITY_TABLE;// new table created 06-10-2020
-    protected static String Table_Checked_In_Facility = "CheckedInFacility";
-    protected static String CHECKEDIN_FACILITY_userId = "userId";
-    protected static String CHECKEDIN_FACILITY_EntryId = "id";
-    protected static String CHECKEDIN_FACILITY_checkOutMessage = "checkOutMessage";
-    protected static String CHECKEDIN_FACILITY_timestamp = "timestamp";
-    protected static String CHECKEDIN_FACILITY_state = "state";
-    protected static String CHECKEDIN_FACILITY_employeeId = "employeeId";
-    protected static String CHECKEDIN_FACILITY_facilityName = "facilityName";
-    protected static String CHECKEDIN_FACILITY_facilityId = "facilityId";
-    protected static String CHECKEDIN_FACILITY_estimatedDurationOfVisitInSeconds = "estimatedDurationOfVisitInSeconds";*/
-
     public DataBaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -344,7 +332,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + TblSafetyCard_Key_Card_URL + " TEXT, "
                     + TblSafetyCard_Key_ID + " TEXT, "
                     + TblSafetyCard_Key_EmployeeID + " TEXT, "
-                    + TblSafetyCard_Key_CustomerId + " TEXT ) ";
+                    + TblSafetyCard_Key_CustomerId + " TEXT, "
+                    + TblSafetyCard_Key_Confirmed + " TEXT ) ";
 
             String CREATE_DIPLOMAS_TABLE = "CREATE TABLE IF NOT EXISTS "
                     + TABLE_DIPLOMAS + " ( " + TblDiplomas_Key_Expires_Date + " TEXT, "
@@ -769,6 +758,47 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             } catch (Exception ex) {
                 Log.d("Error", ex.getMessage());
             }
+
+            try { // added on 29-10-2020
+                db.execSQL(CREATE_FACILITY_TABLE);
+                db.execSQL("Alter Table FacilityTable add COLUMN id Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN name Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN customerId Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN customerName Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN employeeCheckinState Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN imageUrl Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN distanceInKm Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN allowGuests Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN latitude Text");
+                db.execSQL("Alter Table FacilityTable add COLUMN longitude Text");
+
+                db.execSQL(CREATE_REPORTENTRY_TABLE);
+                db.execSQL("Alter Table ReportEntry add COLUMN userId Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN id Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN checkOutMessage Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN timestamp Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN state Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN numberOfGuests Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN employeeId Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN securityServicePhone Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN safetycardId Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN facilityName Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN facilityId Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN estimatedDurationOfVisitInSeconds Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN facilityLatitude Text");
+                db.execSQL("Alter Table ReportEntry add COLUMN facilityLongitude Text");
+
+                db.execSQL("Alter Table CustomerDetails add COLUMN emailVerified Text");
+                db.execSQL("Alter Table CustomerDetails add COLUMN phoneVerified Text");
+                db.execSQL("Alter Table CustomerDetails add COLUMN isPrivate Text");
+                db.execSQL("Alter Table SafetyCards add COLUMN customerId Text");
+                db.execSQL("Alter Table SafetyCards add COLUMN confirmed Text");
+
+            } catch (Exception ex) {
+                Log.d("Error", ex.getMessage());
+            }
+
+
         }
         onCreate(db);
     }

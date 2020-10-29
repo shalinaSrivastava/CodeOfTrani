@@ -4,7 +4,10 @@ import com.elearn.trainor.BaseAdapters.NearByFacilityAdapter;
 import com.elearn.trainor.BaseAdapters.UnVerifiedContactFacilityAdapter;
 import com.elearn.trainor.BaseAdapters.VerifiedContactFacilityAdapter;
 import com.elearn.trainor.DBHandler.DataBaseHandlerDelete;
+import com.elearn.trainor.DashboardClasses.LoadingPageActivity;
+import com.elearn.trainor.Login;
 import com.elearn.trainor.PropertyClasses.CustomerDetailsProperty;
+import com.elearn.trainor.PropertyClasses.SharedPreferenceInfo;
 import com.elearn.trainor.PropertyClasses.VerifyUnverifyProperty;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
@@ -16,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,11 +60,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 public class VerifyInfo extends AppCompatActivity implements View.OnClickListener {
     LinearLayout ll_back, llhome, ll_verify_email,ll_verify_phone,ll_verified_email,ll_verified_phone;
     TextView text_header;
     ConnectionDetector connectionDetector;
     SharedPreferenceManager spManager;
+    SharedPreferences.Editor editor;
     DataBaseHandlerSelect dbSelect;
     DataBaseHandlerInsert dbInsert;
     DataBaseHandlerDelete dbDelete;
@@ -87,7 +94,7 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
 
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(VerifyInfo.this);
-        myTrace = FirebasePerformance.getInstance().newTrace("Register_SafetyCard_trace");
+        myTrace = FirebasePerformance.getInstance().newTrace("VerifyInfo_trace");
         myTrace.start();
 
         dbSelect = new DataBaseHandlerSelect(VerifyInfo.this);
@@ -95,6 +102,7 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
         dbDelete = new DataBaseHandlerDelete(VerifyInfo.this);
         connectionDetector = new ConnectionDetector(VerifyInfo.this);
         spManager = new SharedPreferenceManager(VerifyInfo.this);
+        editor = spManager.backToSafetCardPref();
         customerList = new ArrayList<>();
         verifiedList = new ArrayList<>();
         notVerifiedList = new ArrayList<>();
@@ -119,7 +127,8 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
         ll_verified_phone.setOnClickListener(this);*/
         if(connectionDetector.isConnectingToInternet()){
             showWaitDialog();
-            saveCustomerDetails(spManager.getUserID());
+            //saveCustomerDetails(spManager.getUserID());
+            getUserDetails();
         }else{
             customerList.clear();
             customerList = dbSelect.getCustomerListForFacility();
@@ -181,6 +190,37 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
             }
         }
 
+        if(spManager.getProfileEmailVerified().equals("true")){
+            VerifyUnverifyProperty property = new VerifyUnverifyProperty();
+            property.customer_id = "";
+            property.typeCategory = "E-mail";
+            property.typeName = spManager.getEmail();
+            property.customerName = "Private";
+            verifiedList.add(property);
+        }else{
+            VerifyUnverifyProperty property = new VerifyUnverifyProperty();
+            property.customer_id = "";
+            property.typeCategory = "E-mail";
+            property.typeName = spManager.getEmail();
+            property.customerName = "Private";
+            notVerifiedList.add(property);
+        }
+        if(spManager.getProfilePhoneVerified().equals("true")){
+            VerifyUnverifyProperty property = new VerifyUnverifyProperty();
+            property.customer_id = "";
+            property.typeCategory = "Phone";
+            property.typeName = spManager.getPhone();
+            property.customerName = "Private";
+            verifiedList.add(property);
+        }else{
+            VerifyUnverifyProperty property = new VerifyUnverifyProperty();
+            property.customer_id = "";
+            property.typeCategory = "Phone";
+            property.typeName = spManager.getPhone();
+            property.customerName = "Private";
+            notVerifiedList.add(property);
+        }
+
         if(notVerifiedList.size()>0){
             rv_unverified.setVisibility(View.VISIBLE);
             final LinearLayoutManager layoutManager = new LinearLayoutManager(VerifyInfo.this);
@@ -234,7 +274,6 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
                     }
                 } catch (Exception ex) {
                     dismissWaitDialog();
-                    dismissWaitDialog();
                 } finally {
                     dismissWaitDialog();
                    if(customerList.size()>0){
@@ -246,10 +285,10 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissWaitDialog();
-                String errorMsg = error.getMessage().toString();
+               /* String errorMsg = error.getMessage().toString();
                 if (errorMsg.equals("com.android.volley.AuthFailureError")) {
                     AlertDialogManager.showCustomDialog(VerifyInfo.this, "Error", "Authicatiion Error.", false, null, null, "Ok", "", null);
-                }
+                }*/
             }
         }) {
             @Override
@@ -280,7 +319,16 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        commonIntentMethod(SafetyCards.class,"");
+        if(spManager.goBacktoSafetyCard().equals("False")){
+            editor.putString("GoToSafetyCard", "");
+            editor.commit();
+            commonIntentMethod(CheckedInFacility.class,"");
+        }else{
+            editor.putString("GoToSafetyCard", "");
+            editor.commit();
+            commonIntentMethod(SafetyCards.class,"");
+        }
+
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
@@ -338,4 +386,78 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
             pDialog.dismiss();
         }
     }
+
+    // changes 27-10-2020
+    public void getUserDetails() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.FetchDetail_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String firstName = jsonObject.getString("firstname") == null ? "" : jsonObject.getString("firstname").equals("null") ? "" : jsonObject.getString("firstname");
+                        String lastName = jsonObject.getString("lastname") == null ? "" : jsonObject.getString("lastname").equals("null") ? "" : jsonObject.getString("lastname");
+                        String lang = jsonObject.getString("language") == null ? "en" : jsonObject.getString("language").equals("null") ? "en" : jsonObject.getString("language");
+                        if (lang.startsWith("nb")) {
+                            lang = "nb";
+                        } else if (lang.startsWith("en")) {
+                            lang = "en_US";
+                        } else if (lang.startsWith("ko")) {
+                            lang = "ko_KR";
+                        } else if (lang.startsWith("pl")) {
+                            lang = "pl_PL";
+                        } else if (lang.startsWith("sv")) {
+                            lang = "sv_SE";
+                        } else if (lang.startsWith("pt")) {
+                            lang = "pt_BR";
+                        }
+                        //new added 27-10-2020
+                        String emailVerified = jsonObject.getString("emailVerified") == null ? "" : jsonObject.getString("emailVerified").equals("null") ? "" : jsonObject.getString("emailVerified");
+                        String phoneVerified = jsonObject.getString("phoneVerified") == null ? "" : jsonObject.getString("phoneVerified").equals("null") ? "" : jsonObject.getString("phoneVerified");
+
+                        saveSharedPreferenceValues("", firstName, lastName, jsonObject.getString("emailAddress") == null ? "" : jsonObject.getString("emailAddress").equals("null") ? "" : jsonObject.getString("emailAddress"), jsonObject.getString("birthDate") == null ? "" : jsonObject.getString("birthDate").equals("null") ? "" : jsonObject.getString("birthDate"), lang, jsonObject.getString("phone") == null ? "" : jsonObject.getString("phone").equals("null") ? "" : jsonObject.getString("phone"), (firstName + " " + lastName), jsonObject.getString("id"),emailVerified,phoneVerified);
+
+                } catch (Exception ex) {
+                    Log.d("Exception Meaasge", ex.toString());
+                }finally {
+                    saveCustomerDetails(spManager.getUserID());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                saveCustomerDetails(spManager.getUserID());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", "Bearer "+spManager.getToken());
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue11 = Volley.newRequestQueue(VerifyInfo.this);
+        requestQueue11.add(stringRequest);
+    }
+
+    public void saveSharedPreferenceValues(final String ImageUrl, final String FirstName, final String LastName, final String email, final String birthdate, final String language, final String phone, final String username, final String UserID, final String emailVerified, final String phoneVerified) {
+
+        SharedPreferences.Editor editor = spManager.getProfileInfoSharedPreference();
+        SharedPreferenceInfo sharedPreferenceInfo = new SharedPreferenceInfo();
+        sharedPreferenceInfo.Token = spManager.getToken();
+        sharedPreferenceInfo.ProfilePicURL = ImageUrl;
+        sharedPreferenceInfo.FirstName = FirstName == null ? "" : FirstName.equals("null") ? "" : FirstName;
+        sharedPreferenceInfo.LastName = LastName == null ? "" : LastName.equals("null") ? "" : LastName;
+        sharedPreferenceInfo.Email = email == null ? "" : email.equals("null") ? "" : email;
+        sharedPreferenceInfo.dob = birthdate == null ? "" : birthdate.equals("null") ? "" : birthdate;
+        sharedPreferenceInfo.language = language;
+        sharedPreferenceInfo.Phone_no = phone == null ? "" : phone.equals("null") ? "" : phone;
+        sharedPreferenceInfo.UserName = getIntent().getStringExtra("username");
+        sharedPreferenceInfo.UserID = UserID;
+        sharedPreferenceInfo.emailVerified = emailVerified;
+        sharedPreferenceInfo.phoneVerified = phoneVerified;
+        spManager.removeSharedPreference();
+        SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
+    }
+
 }

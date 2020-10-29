@@ -221,12 +221,14 @@ public class LoadingPageActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("profilePictureUrl").toString() != null && !jsonObject.getString("profilePictureUrl").equals("")) {
                         String username = getIntent().getStringExtra("username");
+                        String emailVerified = jsonObject.getString("emailVerified") == null ? "" : jsonObject.getString("emailVerified").equals("null") ? "" : jsonObject.getString("emailVerified");
+                        String phoneVerified = jsonObject.getString("phoneVerified") == null ? "" : jsonObject.getString("phoneVerified").equals("null") ? "" : jsonObject.getString("phoneVerified");
                         getUserImageFromLive(jsonObject.getString("profilePictureUrl"), username,
-                                jsonObject.getString("emailAddress"), jsonObject.getString("phone"), jsonObject.getString("birthDate"), jsonObject.getString("language"), jsonObject.getString("firstname"), jsonObject.getString("lastname"), jsonObject.getString("id"));
+                                jsonObject.getString("emailAddress"), jsonObject.getString("phone"), jsonObject.getString("birthDate"), jsonObject.getString("language"), jsonObject.getString("firstname"), jsonObject.getString("lastname"), jsonObject.getString("id"),emailVerified,phoneVerified);
                         updateFirebaseTokenOnServer(jsonObject.getString("id"), "not applicable", connectionDetector.getAndroid_ID(LoadingPageActivity.this), FirebaseToken, "android", "insert", jsonObject.getString("language"));
                     } else {
                         updateFirebaseTokenOnServer(jsonObject.getString("id"), "not applicable", connectionDetector.getAndroid_ID(LoadingPageActivity.this), FirebaseToken, "android", "insert", jsonObject.getString("language"));
-                        String firstName = jsonObject.getString("firstname") == null ? "" : jsonObject.getString("firstname").equals("null") ? "" : jsonObject.getString("lastname");
+                        String firstName = jsonObject.getString("firstname") == null ? "" : jsonObject.getString("firstname").equals("null") ? "" : jsonObject.getString("firstname");
                         String lastName = jsonObject.getString("lastname") == null ? "" : jsonObject.getString("lastname").equals("null") ? "" : jsonObject.getString("lastname");
                         String lang = jsonObject.getString("language") == null ? "en" : jsonObject.getString("language").equals("null") ? "en" : jsonObject.getString("language");
                         if (lang.startsWith("nb")) {
@@ -242,7 +244,11 @@ public class LoadingPageActivity extends AppCompatActivity {
                         } else if (lang.startsWith("pt")) {
                             lang = "pt_BR";
                         }
-                        saveSharedPreferenceValues("", firstName, lastName, jsonObject.getString("emailAddress") == null ? "" : jsonObject.getString("emailAddress").equals("null") ? "" : jsonObject.getString("emailAddress"), jsonObject.getString("birthDate") == null ? "" : jsonObject.getString("birthDate").equals("null") ? "" : jsonObject.getString("birthDate"), lang, jsonObject.getString("phone") == null ? "" : jsonObject.getString("phone").equals("null") ? "" : jsonObject.getString("phone"), (firstName + " " + lastName), jsonObject.getString("id"));
+                        //new added 27-10-2020
+                        String emailVerified = jsonObject.getString("emailVerified") == null ? "" : jsonObject.getString("emailVerified").equals("null") ? "" : jsonObject.getString("emailVerified");
+                        String phoneVerified = jsonObject.getString("phoneVerified") == null ? "" : jsonObject.getString("phoneVerified").equals("null") ? "" : jsonObject.getString("phoneVerified");
+
+                        saveSharedPreferenceValues("", firstName, lastName, jsonObject.getString("emailAddress") == null ? "" : jsonObject.getString("emailAddress").equals("null") ? "" : jsonObject.getString("emailAddress"), jsonObject.getString("birthDate") == null ? "" : jsonObject.getString("birthDate").equals("null") ? "" : jsonObject.getString("birthDate"), lang, jsonObject.getString("phone") == null ? "" : jsonObject.getString("phone").equals("null") ? "" : jsonObject.getString("phone"), (firstName + " " + lastName), jsonObject.getString("id"),emailVerified,phoneVerified);
                         txtWelcome.setText(getResources().getString(R.string.welcome_loading));
                         txtUserName.setText(jsonObject.getString("firstname"));
                         showCircleImageViewAnimation();
@@ -316,6 +322,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                                 property.employeeId = jsonObject.getString("employeeId");
                                 property.card_url = jsonObject.getString("downloadUrl");
                                 property.customerId = jsonObject.getString("customerId");
+                                property.confirmed = jsonObject.getString("confirmed");
                                 if (property.approval_status != null && property.approval_status.equals("true")) {
                                     approvedCardList.add(property);
                                     DownloadUrlProperty downloadUrlProperty = new DownloadUrlProperty();
@@ -936,7 +943,7 @@ public class LoadingPageActivity extends AppCompatActivity {
         requestQueue11.add(stringRequest);
     }
 
-    public void getUserImageFromLive(final String ImageUrl, final String username, final String email, final String phone, final String birthdate, final String language, final String FirstName, final String LastName, final String UserID) {
+    public void getUserImageFromLive(final String ImageUrl, final String username, final String email, final String phone, final String birthdate, final String language, final String FirstName, final String LastName, final String UserID,final String emailVerified, final String phoneVerified) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -944,7 +951,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
                         if (isActivityVisible) {
-                            saveSharedPreferenceValues(ImageUrl, FirstName, LastName, email, birthdate, language, phone, username, UserID);
+                            saveSharedPreferenceValues(ImageUrl, FirstName, LastName, email, birthdate, language, phone, username, UserID,emailVerified,phoneVerified);
                             txtWelcome.setText(getResources().getString(R.string.welcome_loading));
                             txtUserName.setText(FirstName);
                             showCircleImageViewAnimation();
@@ -954,7 +961,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                     @Override
                     public void onError() {
                         if (isActivityVisible) {
-                            saveSharedPreferenceValues("", FirstName, LastName, email, birthdate, language, phone, username, UserID);
+                            saveSharedPreferenceValues("", FirstName, LastName, email, birthdate, language, phone, username, UserID,emailVerified,phoneVerified);
                             txtWelcome.setText(getResources().getString(R.string.welcome_loading));
                             txtUserName.setText(FirstName);
                             circleImageView.setImageResource(R.drawable.ic_default_profile_pic);
@@ -1030,7 +1037,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                         }
                     }
                 } catch (Exception ex) {
-
+                    Log.d("Excepction",ex.getMessage());
                 }
             }
         }, new Response.ErrorListener() {
@@ -1062,7 +1069,7 @@ public class LoadingPageActivity extends AppCompatActivity {
         requestQueue11.add(stringRequest);
     }
 
-    public void saveSharedPreferenceValues(final String ImageUrl, final String FirstName, final String LastName, final String email, final String birthdate, final String language, final String phone, final String username, final String UserID) {
+    public void saveSharedPreferenceValues(final String ImageUrl, final String FirstName, final String LastName, final String email, final String birthdate, final String language, final String phone, final String username, final String UserID, final String emailVerified, final String phoneVerified) {
         if (spManager.getSharedPreferenceExistence()) {
             if (firebaseAnalytics != null) {
                 firebaseAnalytics.setUserProperty("user_id", UserID);
@@ -1082,6 +1089,8 @@ public class LoadingPageActivity extends AppCompatActivity {
             sharedPreferenceInfo.Phone_no = phone == null ? "" : phone.equals("null") ? "" : phone;
             sharedPreferenceInfo.UserName = getIntent().getStringExtra("username");
             sharedPreferenceInfo.UserID = UserID;
+            sharedPreferenceInfo.emailVerified = emailVerified;
+            sharedPreferenceInfo.phoneVerified = phoneVerified;
             SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
             if (language == null || language.equals("null") || language.equals("")) {
                 setLocale("en");
@@ -1102,6 +1111,8 @@ public class LoadingPageActivity extends AppCompatActivity {
             sharedPreferenceInfo.Phone_no = phone == null ? "" : phone.equals("null") ? "" : phone;
             sharedPreferenceInfo.UserName = getIntent().getStringExtra("username");
             sharedPreferenceInfo.UserID = UserID;
+            sharedPreferenceInfo.emailVerified = emailVerified;
+            sharedPreferenceInfo.phoneVerified = phoneVerified;
             SharedPreferenceManager.insertValuesIntoSharedPreference(editor, sharedPreferenceInfo);
             if (language == null || language.equals("null") || language.equals("")) {
                 setLocale("en");

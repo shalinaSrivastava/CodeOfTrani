@@ -224,7 +224,7 @@
     <!--  <string name="no_connection_error">Mangler internett-tilkobling. Forsøk igjen litt senere.</string>-->
     <string name="server_error_msg">En teknisk feil oppstod. Vennlist forsøk igjen litt senere.</string>
     <!-- Map -->
-    <string name="google_maps_key">AIzaSyB9k7poEo7d8wfgAaMrba_IJOUSvErN1-4</string>
+    <!--<string name="google_maps_key">AIzaSyBtI3avY8gxHkxLA6JNwlBCnpsEt8ZzFzA</string>-->
     <string name="title_activity_google_map">Kart</string>
 
 
@@ -370,7 +370,7 @@
     <string name="start_psi_course">Start PSI-kurset</string>
     <string name="risk_been_identified">Har nye farer / risiko blitt identifisert under samtalen?</string>
     <string name="planned_follow_up">Planlagt oppfølging</string>
-    <string name="topic_discussed">Vennligst fyll</string>
+    <string name="topic_discussed">Emne diskutert</string>
     <string name="observation_handling"><html><font size="16">Observasjon og håndtering av energier</font></html>
         \n\n<html><font size="16"><font color="red">Ri</font>siko<font color="red">B</font>asert <font color="red">O</font>bservasjonsteknikk - <font color="red">RIBO</font></font></html>
         \n\n<html><font size="16"><font color="red">O</font>VERBLIKK:</font></html> Før du setter i gang arbeidet, stopp opp og dann deg et overblikk rundt og i området du skal arbeide.
@@ -390,7 +390,7 @@
     <string name="placeplatform"> Sted/Plattform </string>
     <string name="department">Avdeling</string>
     <string name="conocophillips">ConocoPhillips</string>
-    <string name="select_valid_place_platform">Vennligst velg sted/plattform.</string>
+    <string name="select_valid_place_platform">Du må velge Sted/Plattform.</string>
     <string name="saved_offline_msg">PSI-skjema vil bli lagret offline. Vennligst prøv å laste opp på nytt når du er koblet til internett.</string>
     <string name="something_went_wrong">Noe gikk galt. Vennligst prøv igjen.</string>
     <string name="not_assocaiated_dept">Sted/plattform har ingen avdelinger.</string>
@@ -409,13 +409,78 @@
     <string name="no_place_platform_associated">No place/platform is associated with this user.</string>
 
     <!--new added for Facility safetycard-->
-    <string name="safety_card_des_2">If the company you work for use sikkerhetskort.no you can add your card here by confirming your contact details and it will stay up to date</string>
-    <string name="register_card">Verify phone or e-mail</string>
-    <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to app by validating your e-mail or phone number</string>
-    <string name="verify_info_des2">Click the e-mail or phone number you would like to verify.</string>
-    <string name="planned_work_in_hours">Planned work in hours</string>
-    <string name="remember_n_check"><html><font color="black" size="18">Did you remember?</font></html>
-        \n<html> <font size="18" color="black">\t&#9679;  To bring all your things?</font></html>
-        \n<html> <font size="18" color="black">\t&#9679;  To clean up after yourself?</font></html>
-        \n<html> <font size="18" color="black">\t&#9679;  To lock all doors?</font></html></string>
+    <string name="safety_card_des_2">Hvis selskapet du jobber for bruker Sikkerhetskort.no kan du legge til kortene dine her ved å bekrefte kontaktdetaljene dine. Da vil kortene dine alltid være oppdatert her i appen.</string>
+    <string name="register_card">Bekreft e-post eller telefonnummer</string>
+    <string name="verify_info_des1">Har du sikkerhetskort fra Sikkerhetskort.no? Legg det til i appen ved å bekrefte e-posten eller telefonnummeret ditt.</string>
+    <string name="verify_info_des2">Klikk på e-posten eller telefonnummeret du vil bekrefte.</string>
+    <string name="planned_work_in_hours">Planlagt arbeidstid i timer</string>
+    <string name="remember_n_check"><html><font color="#333333" size="18">Har du husket?</font></html>
+        \n<html> <font color="#333333" size="18">\t&#9679;  Å ta med deg alle tingene dine?</font></html>
+        \n<html> <font color="#333333" size="18">\t&#9679;  Å rydde etter deg?</font></html>
+        \n<html> <font color="#333333" size="18">\t&#9679;  Å låse alle dører?</font></html></string>
+    <string name="frequently_asked_questions" translatable="false"><html><font color="black" size="18">Ofte stilte spørsmål</font></html>
+       <html> <font size="15"> \n\nE-postaddressen eller telefonnummeret må være registrert på kortet på sikkerhetskort.no. Ved bekreftelse av e-post eller telefonnummer vil kortene automatisk synkroniseres mot din Trainor-konto. I tillegg vil kompetansen din automatisk overføres til sikkerhetskort.no</font></html>
+        <html> <font color="#333333" size="16">\n\nJeg har bekreftet alle e-postene mine, men mangler fortsatt et eller flere sikkerhetskort.</font></html>
+       <html> <font size="15"> \nHør med din nærmeste leder eller ansvarlig for sikkerhetskort i din bedrift hvilken e-postaddresse eller telefonnummer du er registrert med på Sikkerhetskort.no. Denne informasjonen må fylles inn og være korrekt før du får synkronisert sikkerhetskort.</font></html>
+        <html> <font color="#333333" size="16">\n\nHvorfor må jeg bekrefte e-post eller telefonnummer for å få se sikkerhetskortet mitt?</font></html>
+        <html> <font size="15">\nFor å være sikker på at ingen utgir seg for å være deg når man går inn på et anlegg må vi så godt vi kan bekrefte at kortet utstedt fra sikkerhetskort.no er ment til deg.</font></html>
+        <html> <font size="15">\nFordi vi ikke vet hvilken e-post som er koblet til et sikkerhetskort kan det være lurt å bekrefte alle.</font></html>
+    </string>
+    <string name="select_a_facility_nearby">Velg et anlegg i nærheten</string>
+    <string name="or_enter_facility_number">Eller skriv inn anleggsnummer:</string>
+    <string name="klikk_for_a_skrive">Klikk for å skrive</string>
+    <string name="phone_number_security">Tlf vekter: \</string>
+    <string name="since_entry">\ siden adgang</string>
+    <string name="waiting_for_response">Venter på svar</string>
+    <string name="venter_p_godkjenning_fra_driftssentral">Venter på godkjennelse fra operasjonsentralen</string>
+    <string name="checked_in_to_facility">Meldt inn i anlegg</string>
+    <string name="your_safety_cards">Dine sikkerhetskort</string>
+    <string name="register_entrance_to_new_facility">Meld inngang til nytt anlegg</string>
+    <string name="notify_exit_header">Meld fra om utgang av anlegg</string>
+    <string name="confirm_exit">Bekreft utmelding</string>
+    <string name="enter_code_below">Vennligst skriv inn koden du har mottatt i boksen under.</string>
+    <string name="submit_code">Send inn kode</string>
+    <string name="verify_more_contacts">Bekreft flere e-poster/tlfnummer</string>
+    <string name="sync_safety_cards">Sikkerhetskort koblet til e-postadressen vil bli dukke opp innen et par minutter.</string>
+    <string name="verify_info_header">Bekreft informasjon</string>
+    <string name="reporting_entry_into">Melder inn i \</string>
+    <string name="guest_bringing_to_facility">Hvor mange gjester har du med deg?</string>
+    <string name="hours_planning_to_work">Hvor mange timer tenker du å jobbe i anlegget?</string>
+    <string name="operation_reminder">Dette gir deg og operasjonsentralen beskjed når du skulle ha gått ut. Det er mulig å øke tiden senere.</string>
+    <string name="report_entry">Meld inngang</string>
+    <string name="checkin_facility">Meld inn i anlegg</string>
+    <string name="add_more_hours">Hvis du vil kan du legge til flere timer.</string>
+    <string name="hrs_planning_to_work">Hvror mange timer tenker du å jobbe i anlegget??</string>
+    <string name="update_work_hours">Oppdater arbeidstimer</string>
+    <string name="unverified_contact_info">Ikke bekreftet kontaktinfo</string>
+    <string name="frequently_asked_question">Ofte stilte spørsmål</string>
+    <string name="verified_contact_info">Bekreftet kontaktinfo</string>
+    <string name="extend_stay">Forleng arbeidstid</string>
+    <string name="report_entry_to_new_facility">Meld inngang til nytt anlegg</string>
+
+    <string name="approval_issue">Godkjenningsproblem</string>
+    <string name="contact_customer_care">Vennligst kontakt leder / support.</string>
+    <string name="sucessfully_checked_out">\ ble utmeldt.</string>
+    <string name="email_sent_to">En e-post har blitt sendt til \ </string>
+    <string name="verify_ur_email">. Sjekk e-posten din for en kode.</string>
+    <string name="msg_sent_to">En tekstmelding har blitt sendt til \</string>
+    <string name="not_having_valid_email_phone">Du har ikke en gyldig e-post eller telefonnummer tilknyttet kontoen din.</string>
+    <string name="input_valid_code">Skriv inn en gyldig kode.</string>
+    <string name="verified">Bekreftet</string>
+    <string name="not_verified_try_again">Ikke bekreftet. Prøv igjen senere</string>
+    <string name="request_id_code_invalid">Feil kode. Prøv igjen.</string>
+    <string name="went_wrng_contact_admin">Sikkerhetskortet er ikke bekreftet.</string>
+    <string name="select_valid_hour">Velg gyldig timeantall.</string>
+    <string name="input_valid_text">Skriv inn gyldig tekst</string>
+    <string name="have_been_facility_for">Du har vært i anlegget i \</string>
+    <string name="you_have">Du har \</string>
+    <string name="left_before_being_notified_exit">\ igjen før du blir minnet på utgang.</string>
+    <string name="new_time_left">Ny tid igjen \</string>
+    <string name="confirm_all_your_e_mails_and_phone_numbers_to_make_sure">Bekreft alle e-postadressene og telefunnummerne dine for å være sikker på at alle dine sikkerhetskort er synkronisert.</string>
+    <string name="missing_cards">Mangler du kort?</string>
+    <string name="add_more_cards">Legg til kort</string>
+    <string name="no_facility_found">Fant ingen anlegg!</string>
+    <string name="notify_exit_from_facility">Meld utgang fra anlegg</string>
+    <string name="facility_rejected">Adgangen har blitt avvist. Vennligst kontakt operasjonssentralen.</string>
+
 </resources>

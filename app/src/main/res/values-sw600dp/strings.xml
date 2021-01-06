@@ -5,4 +5,17 @@
         \n\n<html><font size="19"><font color="red">O</font><font color="black">VERSIGHT:</font></font></html> <font color="black" size="17">Before starting a job, stop and get an overview of the area in which you are about to work.</font>
         \n<html><font size="19"><font color="red">L</font><font color="black">IMIT THE AREA:</font></font></html> <font color="black" size="17">Split the working area into smaller segments to give you the required overview.</font>
         \n<html><font size="19"><font color="red">S</font><font color="black">POT ENERGY:</font></font></html> <font color="black" size="17">Identify those types of energies in and around your work area that can represent a risk. Implement and note eventual measures to be taken to secure safe job execution.</font></string>
+
+    <string name="frequently_asked_questions" translatable="false"><html><font color="#333333" size="20">Frequently asked questions</font></html>
+       <html> <font size="17"> \n\nThe e-mail or phone number has to be registered on your card on sikkerhetskort.no By verifying the cards connected to the contact point will automatically be syncronized to your Trainor account. In addition your competence will be syncronized to sikkerhetskort.no</font></html>
+        <html> <font color="#333333" size="18">\n\nI have verified all my e-mails and phone numbers but am still missing one or more safety cards.</font></html>
+       <html> <font size="17"> \nAsk your closest leader or responsible for safety cards in your company what e-mail address or phone number you are registered with on Sikkerhetskort.no. This information needs to be filled in and correct before you can syncronize your safety cards.</font></html>
+        <html> <font color="#333333" size="18">\n\nWhy do I have to confirm my e-mail or phone number to see my safety card?</font></html>
+        <html> <font size="17">\nTo be sure that no one is pretending to be you when you enter a facility, we must confirm that the card issued is intended for you.</font></html>
+        <html> <font size="17">\nBecause we do not know which email is connected to a security card, you may want to confirm everyone.</font></html></string>
+
+    <string name="remember_n_check"><html><font color="#333333" size="20">Did you remember?</font></html>
+        \n<html> <font color="#333333" size="20">\t&#9679;  To bring all your things?</font></html>
+        \n<html> <font color="#333333" size="20">\t&#9679;  To clean up after yourself?</font></html>
+        \n<html> <font color="#333333" size="20">\t&#9679;  To lock all doors?</font></html></string>
 </resources>

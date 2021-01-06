@@ -133,6 +133,11 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
                         String percentage = String.valueOf(percentage_double);
                         percentage = percentage.substring(0, percentage.indexOf("."));
                         holder.course_status.setText((percentage + "% " + context.getResources().getString(R.string.completed)).replace(".0", ""));
+                    }else if((Double.valueOf(courseInfo.cmiProgressPercentage) == 1.0)){
+                        holder.course_status.setText(context.getResources().getString(R.string.completed_capital));
+                        if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
+                            holder.btnStartCourse.setText(context.getResources().getString(R.string.start_offline));
+                        }
                     }
                 }
 

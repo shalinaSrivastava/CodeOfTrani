@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
-    protected static final int DATABASE_VERSION = 36;
+    protected static final int DATABASE_VERSION = 38;
     protected static final String DATABASE_NAME = "TrainorDB.db";
 
     protected static String Table_Profile = "ProfileDetail";

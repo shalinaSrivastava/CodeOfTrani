@@ -497,7 +497,9 @@ public class ConcoPhilips extends AppCompatActivity implements View.OnClickListe
                     energyTypes = "[]";
                 }
                 String str = "{ \"plannedFollowUp\": \"" + copProperty.plannedFollowUp + "\",\"conversedAt\": \"" + copProperty.regdDate + "\",\"groupId\":" + copProperty.departmentId + ",\"didConversationIdentifyNewRisks\": " + copProperty.riskIdentified + " ,\"presentInTheMomentMarked\": " + copProperty.presentMomentStatus + ",\"energyTypes\": " + energyTypes + ", \"facilityId\": " + copProperty.placePlatformId + " ,\"issueDiscussed\": \"" + copProperty.topicDiscussed + "\"}";
-                return str.getBytes();
+                String replacedString = str.replace("\n",  "\\n");
+                return replacedString.getBytes();
+                //return str.getBytes();
             }
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

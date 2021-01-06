@@ -135,9 +135,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
-        <meta-data
+       <!-- <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="60b5d446101383221df5ef5952813cbe864d25c5" />
+            android:value="60b5d446101383221df5ef5952813cbe864d25c5" />-->
 
         <activity
             android:name=".NeedSupport"
@@ -240,7 +240,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="${mapsApiKey}" />
 
         <activity
             android:name=".CourseModule.GoogleMapActivity"

@@ -295,8 +295,10 @@ public class RegisterPSI extends AppCompatActivity implements View.OnClickListen
         String follow_up_string = spManager.getCOPplannedFollowUp();
         edt_planned_folow_up.setText(spManager.getCOPplannedFollowUp());
         edt_planned_folow_up.setSelection(follow_up_string.length());
-        edt_topic_discussed.setText(spManager.getCOPtopicDiscussed());
-        edt_topic_discussed.setSelection(spManager.getCOPtopicDiscussed().length());
+        String val_edt_topic_discussed = spManager.getCOPtopicDiscussed();
+        edt_topic_discussed.setText(val_edt_topic_discussed);
+        edt_topic_discussed.setSelection(val_edt_topic_discussed.length());
+        System.out.println(val_edt_topic_discussed);
         if (spManager.getCOPriskIdentified().equals("true")) {
             btn_risk_indentified.setChecked(true);
         } else {
@@ -644,7 +646,8 @@ public class RegisterPSI extends AppCompatActivity implements View.OnClickListen
                     energyTypes = "[]";
                 }
                 String str = "{ \"plannedFollowUp\": \"" + copProperty.plannedFollowUp + "\",\"conversedAt\": \"" + copProperty.regdDate + "\",\"groupId\":" + departmentid + ",\"didConversationIdentifyNewRisks\": " + copProperty.riskIdentified + " ,\"presentInTheMomentMarked\": " + copProperty.presentMomentStatus + ",\"energyTypes\": " + energyTypes + ", \"facilityId\": " + copProperty.placePlatformId + " ,\"issueDiscussed\": \"" + copProperty.topicDiscussed + "\"}";
-                return str.getBytes();
+                String replacedString = str.replace("\n",  "\\n");
+                return replacedString.getBytes();
             }
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

@@ -1,5 +1,6 @@
 package com.elearn.trainor;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,7 +20,7 @@ public class WebActivity extends Activity {
     String Action;
     WebView webView;
     ProgressDialog progressDialog;
-    FirebaseAnalytics analytics;
+    //FirebaseAnalytics analytics;
 
 
     @Override
@@ -34,11 +35,12 @@ public class WebActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "NewUserRegistration", this.getClass().getSimpleName());
+       // analytics.setCurrentScreen(this, "NewUserRegistration", this.getClass().getSimpleName());
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     public void getControl() {
-        analytics = FirebaseAnalytics.getInstance(this);
+        //analytics = FirebaseAnalytics.getInstance(this);
         progressDialog = new ProgressDialog(WebActivity.this);
         progressDialog.setTitle("");
         progressDialog.setMessage(getResources().getString(R.string.please_wait));
@@ -85,15 +87,6 @@ public class WebActivity extends Activity {
         webView.loadUrl(BaseURL);
     }
 
-    /*public void webViewClientPost(WebView webView, String url) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<html><head></head>");
-        sb.append("<h3>Please wait...</h3>");
-        sb.append("<body onload='form1.submit()'>");
-        sb.append(String.format("<form id='form1' action='%s' method='%s'>", url));
-        sb.append("</form></body></html>");
-        webView.loadData(sb.toString(), "text/html", "utf-8");
-    }*/
 
     @Override
     public void onBackPressed() {

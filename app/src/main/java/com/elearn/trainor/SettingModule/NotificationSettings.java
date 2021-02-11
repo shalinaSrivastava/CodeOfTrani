@@ -1,6 +1,8 @@
 package com.elearn.trainor.SettingModule;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
+
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,7 +71,7 @@ public class NotificationSettings extends AppCompatActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "NotificationSettings", this.getClass().getSimpleName());
+       // analytics.setCurrentScreen(this, "NotificationSettings", this.getClass().getSimpleName());
     }
 
     @Override
@@ -78,6 +80,7 @@ public class NotificationSettings extends AppCompatActivity implements View.OnCl
         super.onStop();
     }
 
+    @SuppressLint("MissingPermission")
     public void getConrols() {
         analytics = FirebaseAnalytics.getInstance(this);
         myTrace = FirebasePerformance.getInstance().newTrace("Notification_trace");

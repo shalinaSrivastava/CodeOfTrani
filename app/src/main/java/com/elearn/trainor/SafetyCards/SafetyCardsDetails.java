@@ -1,5 +1,6 @@
 package com.elearn.trainor.SafetyCards;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -66,7 +67,7 @@ public class SafetyCardsDetails extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "SafetyCardDetails", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "SafetyCardDetails", this.getClass().getSimpleName());
     }
 
     @Override
@@ -82,6 +83,7 @@ public class SafetyCardsDetails extends AppCompatActivity implements View.OnClic
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();

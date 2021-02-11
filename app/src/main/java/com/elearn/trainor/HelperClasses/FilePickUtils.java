@@ -11,33 +11,14 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 public class FilePickUtils {
-    private static String getPathDeprecated(Context ctx, Uri uri) {
-        if (uri == null) {
-            return null;
-        }
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = ctx.getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
-        return uri.getPath();
-    }
 
     public static String getSmartFilePath(Context ctx, Uri uri) {
-
-        if (Build.VERSION.SDK_INT < 19) {
-            return getPathDeprecated(ctx, uri);
-        }
         return FilePickUtils.getPath(ctx, uri);
     }
 
     @SuppressLint("NewApi")
     public static String getPath(final Context context, final Uri uri) {
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");

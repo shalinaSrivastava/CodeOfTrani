@@ -353,7 +353,7 @@ public class VerifyInfo extends AppCompatActivity implements View.OnClickListene
     protected void onResume() {
         isActivityLive = true;
         super.onResume();
-        analytics.setCurrentScreen(this, "RegisterSafetyCard", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "RegisterSafetyCard", this.getClass().getSimpleName());
     }
 
     @Override

@@ -100,7 +100,8 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
         File file = null;
         try {
             File rootDir = Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + courseInfo.licenseId);
+            //File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + courseInfo.licenseId);
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + courseInfo.licenseId);
             String filePath = root.getAbsolutePath();
             file = new File(filePath);
             if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
@@ -118,7 +119,7 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
             Log.d("Error", ex.getMessage());
         } finally {
             if (!FromRecyclerView.equals("Classroom") && courseInfo.courseType.equals("E-Learning")) {
-                if (courseInfo.cmiProgressPercentage.equals("") || courseInfo.cmiProgressPercentage.equals("undefined")) {
+                /*if (courseInfo.cmiProgressPercentage.equals("") || courseInfo.cmiProgressPercentage.equals("undefined")) {
                     // added new below
                     holder.course_status.setText(context.getResources().getString(R.string.not_started));
                     // new implemented as per req (Start button text)
@@ -134,13 +135,87 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
                         percentage = percentage.substring(0, percentage.indexOf("."));
                         holder.course_status.setText((percentage + "% " + context.getResources().getString(R.string.completed)).replace(".0", ""));
                     }else if((Double.valueOf(courseInfo.cmiProgressPercentage) == 1.0)){
-                        holder.course_status.setText(context.getResources().getString(R.string.completed_capital));
+                        //holder.course_status.setText(context.getResources().getString(R.string.completed_capital));
+                        holder.course_status.setText(courseInfo.status);
                         if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
                             holder.btnStartCourse.setText(context.getResources().getString(R.string.start_offline));
                         }
                     }
-                }
+                }*/
 
+              /*  if ( courseInfo.cmiProgressPercentage.equals("undefined") || courseInfo.status.equals("NONE")) {
+                    // added new below
+                    holder.course_status.setText(context.getResources().getString(R.string.not_started));
+                    // new implemented as per req (Start button text)
+                    if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
+                        holder.btnStartCourse.setText(context.getResources().getString(R.string.start_offline));
+                    }
+                } else if ( courseInfo.cmiProgressPercentage.equals("undefined") || courseInfo.status.equals("STARTED")) {
+                    // added new below
+                    if ((Double.valueOf(courseInfo.cmiProgressPercentage) < 1.0 && Double.valueOf(courseInfo.cmiProgressPercentage) > 0)){
+                        holder.btnStartCourse.setText(context.getResources().getString(R.string.kontinue));
+                        double percentage_double = Double.parseDouble(courseInfo.cmiProgressPercentage) * 100;
+                        //String percentage = String.valueOf(Math.ceil(percentage_double));
+                        String percentage = String.valueOf(percentage_double);
+                        percentage = percentage.substring(0, percentage.indexOf("."));
+                        holder.course_status.setText((percentage + "% " + context.getResources().getString(R.string.completed)).replace(".0", ""));
+
+                    }else{
+                        holder.course_status.setText(context.getResources().getString(R.string.not_started));
+                    }
+
+                    // new implemented as per req (Start button text)
+                    if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
+                        holder.btnStartCourse.setText(context.getResources().getString(R.string.start_offline));
+                    }
+                } else {
+                    if ((Double.valueOf(courseInfo.cmiProgressPercentage) < 1.0 && Double.valueOf(courseInfo.cmiProgressPercentage) > 0)) {
+                        holder.btnStartCourse.setText(context.getResources().getString(R.string.kontinue));
+                        double percentage_double = Double.parseDouble(courseInfo.cmiProgressPercentage) * 100;
+                        //String percentage = String.valueOf(Math.ceil(percentage_double));
+                        String percentage = String.valueOf(percentage_double);
+                        percentage = percentage.substring(0, percentage.indexOf("."));
+                        holder.course_status.setText((percentage + "% " + context.getResources().getString(R.string.completed)).replace(".0", ""));
+                    }else if((Double.valueOf(courseInfo.cmiProgressPercentage) == 1.0) || courseInfo.status.equals("PASSED")){
+                        //holder.course_status.setText(context.getResources().getString(R.string.completed_capital));
+                        holder.course_status.setText(courseInfo.status);
+                        if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
+                            holder.btnStartCourse.setText(context.getResources().getString(R.string.start_offline));
+                        }
+                    }
+                }*/
+
+
+                if(courseInfo.status.equals("STARTED")){
+                    if ((Double.parseDouble(courseInfo.cmiProgressPercentage) < 1.0 || Double.parseDouble(courseInfo.cmiProgressPercentage) > 0)) {
+                        holder.btnStartCourse.setText(context.getResources().getString(R.string.kontinue));
+                        double percentage_double = Double.parseDouble(courseInfo.cmiProgressPercentage) * 100;
+                        String percentage = String.valueOf(percentage_double);
+                        percentage = percentage.substring(0, percentage.indexOf("."));
+                        holder.course_status.setText((percentage + "% " + context.getResources().getString(R.string.completed)).replace(".0", ""));
+                    }
+                }else if(courseInfo.status.equals("NONE")){
+                    if(courseInfo.cmiProgressPercentage.equals("") || courseInfo.cmiProgressPercentage.equals("undefined")){
+                        holder.course_status.setText(context.getResources().getString(R.string.not_started));
+                        if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
+                            holder.btnStartCourse.setText(context.getResources().getString(R.string.start_offline));
+                        }
+                    }else{
+                        if ((Double.parseDouble(courseInfo.cmiProgressPercentage) < 1.0 && Double.parseDouble(courseInfo.cmiProgressPercentage) > 0)) {
+                            holder.btnStartCourse.setText(context.getResources().getString(R.string.kontinue));
+                            double percentage_double = Double.parseDouble(courseInfo.cmiProgressPercentage) * 100;
+                            String percentage = String.valueOf(percentage_double);
+                            percentage = percentage.substring(0, percentage.indexOf("."));
+                            holder.course_status.setText((percentage + "% " + context.getResources().getString(R.string.completed)).replace(".0", ""));
+                        }
+                    }
+
+                }else if(courseInfo.status.equals("PASSED")){
+                    holder.course_status.setText(context.getResources().getString(R.string.completed_capital));
+                    if (file.exists() && courseInfo.downloadedStatus.equals("Yes")) {
+                        holder.btnStartCourse.setText(context.getResources().getString(R.string.start_offline));
+                    }
+                }
                 holder.ll_btn_start_course.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -148,7 +223,8 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
                         DiplomaProperty info = (DiplomaProperty) btn_start_course.getTag();
                         if (permissionGranted) {
                             File rootDir = android.os.Environment.getExternalStorageDirectory();
-                            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+                            //File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+                            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/");
                             String filePath = root.getAbsolutePath() + "/" + info.licenseId + "/UnZipped";
                             File file = new File(filePath);
                             if (file.exists()) {
@@ -468,7 +544,9 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
 
     public void startCourse(DiplomaProperty info) {
         File rootDir = android.os.Environment.getExternalStorageDirectory();
-        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+        //File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/");
+
         String filePath = root.getAbsolutePath() + "/" + info.licenseId + "/UnZipped";
         File file = new File(filePath);
         if (file.exists()) {
@@ -570,6 +648,8 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
                                     intent.putExtra("LisenceId", info.licenseId);
                                     intent.putExtra("fileSize", size);
                                     intent.putExtra("fileSizeInMB", downloadVideoSize + "");
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    //spManager.removeValueByKeyNameFromDownloadCoursePage("ReferenceID"); // changes on 09-01-2021
                                     context.startActivity(intent);
                                 } else {
                                     AlertDialogManager.showDialog(context, context.getResources().getString(R.string.internetErrorTitle), context.getResources().getString(R.string.wifi_not_not_ebabled_course), false, null);
@@ -583,6 +663,8 @@ public class CourseElearningRecyclerViewAdapter extends RecyclerView.Adapter<Cou
                                 intent.putExtra("LisenceId", info.licenseId);
                                 intent.putExtra("fileSize", size);
                                 intent.putExtra("fileSizeInMB", downloadVideoSize + "");
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                //spManager.removeValueByKeyNameFromDownloadCoursePage("ReferenceID"); // changes on 09-01-2021
                                 context.startActivity(intent);
                             }
                         } else {

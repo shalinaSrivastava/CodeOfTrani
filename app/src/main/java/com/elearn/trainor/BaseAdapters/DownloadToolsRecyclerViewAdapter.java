@@ -87,7 +87,7 @@ public class DownloadToolsRecyclerViewAdapter extends RecyclerView.Adapter<Downl
                     public void onClick(View view) {
                         dialog.dismiss();
                         File rootDir = android.os.Environment.getExternalStorageDirectory();
-                        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                         File downloadDir = new File(root.getAbsolutePath());
                         File downloadUnzippedDir = new File(root.getAbsolutePath() + "/UnZipped/");
                         getFilesFromDir(downloadDir, downloadUnzippedDir, tools.name, tools.id, position);

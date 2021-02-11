@@ -1,5 +1,6 @@
 package com.elearn.trainor.SettingModule;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -60,6 +61,7 @@ public class ImageCropActivity extends AppCompatActivity {
         cropImage();
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         internetErrorTitle = getResources().getString(R.string.internetErrorTitle);
@@ -88,7 +90,7 @@ public class ImageCropActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         isWindowActiviated = true;
-        analytics.setCurrentScreen(this, "ImageCrop", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "ImageCrop", this.getClass().getSimpleName());
     }
 
     @Override

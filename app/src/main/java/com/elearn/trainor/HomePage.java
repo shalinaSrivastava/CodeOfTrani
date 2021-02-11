@@ -1,5 +1,6 @@
 package com.elearn.trainor;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -160,7 +161,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "HomeScreen", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "HomeScreen", this.getClass().getSimpleName());
         if (!connectionDetector.isConnectingToInternet()) {
             if (!spManager.getProfileURL().equals("invalid URL")) {
                 PicasoImageLoader.setOfflineImage(HomePage.this, spManager.getProfileURL(), profile_image, new Callback() {
@@ -184,6 +185,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         dbUpdate = new DataBaseHandlerUpdate(this);

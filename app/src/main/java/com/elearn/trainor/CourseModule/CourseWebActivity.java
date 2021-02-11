@@ -2,6 +2,7 @@ package com.elearn.trainor.CourseModule;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -16,9 +17,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.FileProvider;
 
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -99,10 +98,11 @@ public class CourseWebActivity extends Activity {
     @Override
     protected void onResume() {
         isActivityLive = true;
-        analytics.setCurrentScreen(CourseWebActivity.this, "CoursePlayer", this.getClass().getSimpleName());
+       // analytics.setCurrentScreen(CourseWebActivity.this, "CoursePlayer", this.getClass().getSimpleName());
         super.onResume();
     }
 
+    @SuppressLint("MissingPermission")
     public void getControl() {
         analytics = FirebaseAnalytics.getInstance(this);
         spManager = new SharedPreferenceManager(CourseWebActivity.this);
@@ -315,7 +315,8 @@ public class CourseWebActivity extends Activity {
 
     public void playCourseOffline(String jquery_path, String scorm_wrapper_path, String CourseFolderName) {
         File rootDir = android.os.Environment.getExternalStorageDirectory();
-        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+        //File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/");
         String path = root.getAbsolutePath() + "/" + CourseFolderName + "/UnZipped/html5.html";
         File fileToShow = new File(path);
         if (fileToShow.exists()) {
@@ -508,7 +509,7 @@ public class CourseWebActivity extends Activity {
         return currentDate;
     }
 
-    private BroadcastReceiver internetInfoReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver internetInfoReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

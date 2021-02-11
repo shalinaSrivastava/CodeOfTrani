@@ -1,5 +1,6 @@
 package com.elearn.trainor.ToolBoxModule;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -63,9 +64,10 @@ public class ToolboxLoadingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "ToolsDownloading", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "ToolsDownloading", this.getClass().getSimpleName());
     }
 
+    @SuppressLint("MissingPermission")
     public void GetControls() {
         writeNoMediaFile();
         analytics = FirebaseAnalytics.getInstance(this);
@@ -193,7 +195,9 @@ public class ToolboxLoadingActivity extends AppCompatActivity {
             request.setAllowedOverRoaming(false);
             request.setVisibleInDownloadsUi(true);
             //request.setDestinationInExternalPublicDir("/MyTrainor/.movetools/", ZipFileName);
-            request.setDestinationInExternalPublicDir("/MyTrainor/.tools/", ZipFileName);
+            //request.setDestinationInExternalPublicDir("/Android/data/com.elearn.trainor/files/MyTrainor/.tools/", ZipFileName);
+            request.setDestinationInExternalFilesDir(this,"/MyTrainor/.tools/" ,  ZipFileName );
+
             downloadReference = downloadManager.enqueue(request);
             Log.d("myDownloadReferenece", downloadReference + "");
             spManager.removeSharedPreferenceByName("Download");
@@ -308,7 +312,7 @@ public class ToolboxLoadingActivity extends AppCompatActivity {
     public void writeNoMediaFile() {
         try {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/");
             String filePath = root.getAbsolutePath();
             File file = new File(filePath, ".nomedia");
             if (!file.exists()) {

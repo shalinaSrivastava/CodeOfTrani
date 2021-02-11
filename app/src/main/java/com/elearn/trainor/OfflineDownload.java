@@ -5,6 +5,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -63,6 +64,7 @@ public class OfflineDownload extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         dbUpdate = new DataBaseHandlerUpdate(this);
@@ -115,7 +117,7 @@ public class OfflineDownload extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "OfflineDownload", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "OfflineDownload", this.getClass().getSimpleName());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.elearn.trainor.SettingModule;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,9 +58,10 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "ChangePassword", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "ChangePassword", this.getClass().getSimpleName());
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         dbDelete = new DataBaseHandlerDelete(ChangePassword.this);

@@ -3,6 +3,7 @@ package com.elearn.trainor.ToolBoxModule;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -119,7 +120,7 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "ToolBox", null);
+        //analytics.setCurrentScreen(this, "ToolBox", null);
     }
 
     @Override
@@ -156,6 +157,7 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         myTrace = FirebasePerformance.getInstance().newTrace("ToolBox_trace");
@@ -314,8 +316,8 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
 
                                     if (!last_modified.equals(info.last_modified) && info.force_download.equals("0")) {
                                         File rootDir = android.os.Environment.getExternalStorageDirectory();
-                                        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/UnZipped/" + info.name);
-                                        File rootZipped = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/" + info.name);
+                                        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/UnZipped/" + info.name);
+                                        File rootZipped = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + info.name);
                                         String filePath = root.getAbsolutePath();
                                         File dir = new File(filePath);
                                         String filePath1 = rootZipped.getAbsolutePath();
@@ -386,7 +388,7 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
                     stream.readFully(buffer);
                     stream.close();
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -553,7 +555,7 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
     public void only_downloadFile() {
         if (connectionDetector.isConnectingToInternet()) {
             if (downloadUrlList != null && downloadUrlList.size() > 0) {
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/.tools/" + downloadUrlList.get(0).safetyCard_cardID);
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + downloadUrlList.get(0).safetyCard_cardID);
                 if (!file.exists()) {
                     if (50 <= freeSpaceMB) {
                         downloadFileFromServer(downloadUrlList.get(0).downloadURL, downloadUrlList.get(0).safetyCard_cardID);
@@ -593,7 +595,7 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
                     HttpRequest request = HttpRequest.get(u);
                     request.accept("application/zip");
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -609,7 +611,7 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
                 } catch (Exception ex) {
                     dismissWaitDialog();
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName);
@@ -677,7 +679,7 @@ public class ToolBox extends AppCompatActivity implements View.OnClickListener {
             if (connectionDetector.isConnectingToInternet()) {
                 dbUpdate.updateToolBoxDetails(info, "FileDownloaded");
                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                File toolFile = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/" + info.name);
+                File toolFile = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + info.name);
                 if ((!last_modified_From_DB.equals(info.last_modified)) || (!(toolFile.exists()))) {
                     downloadFile(info.file, info.name);
                 } else {

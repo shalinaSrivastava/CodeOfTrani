@@ -18,7 +18,6 @@ import com.elearn.trainor.HelperClasses.*;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class NeedSupport extends AppCompatActivity implements View.OnClickListener {
-
     TextView text_header, txtDescription;
     LinearLayout support_mail, ll_support_phone, ll_back, llhome;
     String need_support1, From = "", userID = "", courseID = "", orderID = "", timePurchase = "";
@@ -35,7 +34,7 @@ public class NeedSupport extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "NeedSupport", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "NeedSupport", this.getClass().getSimpleName());
     }
 
     public void getControls() {
@@ -71,16 +70,21 @@ public class NeedSupport extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        if (From != null && From.equals("OrderCourse")) {
-            commonIntentMethod(NeedSupport.this, GetMoreCourses.class, "NeedSupport");
-        } else {
-            if (From.equals("HomePage")) {
-                commonIntentMethod(NeedSupport.this, HomePage.class, "NeedSupport");
-            } else if(From.equals("COP")){
-                commonIntentMethod(NeedSupport.this, ConcoPhilips.class, "");
-            }else {
-                commonIntentMethod(NeedSupport.this, ForgetPassword.class, "");
+        try {
+            if (From != null && From.equals("OrderCourse")) {
+                commonIntentMethod(NeedSupport.this, GetMoreCourses.class, "NeedSupport");
+            } else {
+                assert From != null;
+                if (From.equals("HomePage")) {
+                    commonIntentMethod(NeedSupport.this, HomePage.class, "NeedSupport");
+                } else if(From.equals("COP")){
+                    commonIntentMethod(NeedSupport.this, ConcoPhilips.class, "");
+                }else {
+                    commonIntentMethod(NeedSupport.this, ForgetPassword.class, "");
+                }
             }
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 

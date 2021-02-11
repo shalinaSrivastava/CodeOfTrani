@@ -133,7 +133,7 @@ public class MyCmpnyDocumentRecyclerViewAdapter extends RecyclerView.Adapter<MyC
         new AsyncTask<Bitmap, Bitmap, Bitmap>() {
             @Override
             protected Bitmap doInBackground(Bitmap... voids) {
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + fileName);
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + fileName);
                 if (file.exists()) {
                     ArrayList<Bitmap> bitmaps = new ArrayList<>();
                     bitmaps = pdfToBitmap(file);

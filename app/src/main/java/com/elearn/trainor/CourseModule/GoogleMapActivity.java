@@ -1,6 +1,8 @@
 package com.elearn.trainor.CourseModule;
 
 import androidx.fragment.app.FragmentActivity;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -32,6 +34,7 @@ public class GoogleMapActivity extends FragmentActivity implements OnMapReadyCal
     SupportMapFragment mapFragment;
     FirebaseAnalytics analytics;
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,7 @@ public class GoogleMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "ClassroomMap", this.getClass().getSimpleName());
+       // analytics.setCurrentScreen(this, "ClassroomMap", this.getClass().getSimpleName());
 
     }
 

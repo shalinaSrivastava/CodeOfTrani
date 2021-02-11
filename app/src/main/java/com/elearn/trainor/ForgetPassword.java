@@ -1,5 +1,6 @@
 package com.elearn.trainor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,9 +73,10 @@ public class ForgetPassword extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "ForgetPassword", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "ForgetPassword", this.getClass().getSimpleName());
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         forgot_pwd_header_text = getResources().getString(R.string.forgot_pwd_header_text);

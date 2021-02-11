@@ -292,16 +292,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                 }
                 //commonIntentMethod(StartCheckInFacility.class);
                 break;
-           /* case R.id.rl_notify_exit:
-                commonIntentMethod(NotifyExit.class);
-                break;*/
-          /*  case R.id.rl_extend_time:
-                updateHourVisibility = "visibleUpdateHour";
-                rl_checked_in_facility.setVisibility(View.GONE);
-                rl_enter_new_facility.setVisibility(View.GONE);
-                rl_update_hours_des.setVisibility(View.VISIBLE);
-                rl_update_work_hr.setVisibility(View.VISIBLE);
-                break;*/
+
             case R.id.rl_update_work_hr:
                 commonIntentMethod(CheckedInFacility.class);
                 break;
@@ -619,7 +610,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
     public void downloadPDF_File() {
         if (connectionDetector.isConnectingToInternet()) {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
             String filePath = root.getAbsolutePath();
             File file = new File(filePath);
             if (file.exists()) {
@@ -629,7 +620,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                 downloadSafetCardFromServer(safetyCardProperty.card_url, safetycardPDF_FileName);
             }
         } else {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDiplomaPDF_File(file);
@@ -653,7 +644,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                     HttpRequest request = HttpRequest.get(u);
                     request.accept("application/pdf");
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -668,7 +659,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                     dismissWaitDialog();
                 } catch (Exception ex) {
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName + ".pdf");
@@ -681,7 +672,7 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + fileName + ".pdf");
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + fileName + ".pdf");
                 if (file.exists()) {
                     dismissWaitDialog();
                     Intent intent = new Intent(CheckedInFacility.this, SafetyCardsDetails.class);

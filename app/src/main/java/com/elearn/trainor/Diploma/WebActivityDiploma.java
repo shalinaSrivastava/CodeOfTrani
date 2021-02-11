@@ -1,5 +1,6 @@
 package com.elearn.trainor.Diploma;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class WebActivityDiploma extends Activity {
         getControl();
     }
 
+    @SuppressLint("MissingPermission")
     public void getControl() {
         analytics = FirebaseAnalytics.getInstance(this);
         progressDialog = new ProgressDialog(WebActivityDiploma.this);
@@ -93,18 +95,6 @@ public class WebActivityDiploma extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "NoDiploma", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "NoDiploma", this.getClass().getSimpleName());
     }
-
-    /* public void setLocale(String language) {
-        Locale myLocale = new Locale(language);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refreshIntent = new Intent(this, WebActivityDiploma.class);
-        refreshIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(refreshIntent);
-    }*/
 }

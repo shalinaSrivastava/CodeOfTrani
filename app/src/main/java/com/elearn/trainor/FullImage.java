@@ -50,7 +50,7 @@ public class FullImage extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "ProfileImage", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "ProfileImage", this.getClass().getSimpleName());
     }
 
     public void getControls() {

@@ -82,7 +82,7 @@ public class ToolsRecyclerViewAdapter extends RecyclerView.Adapter<ToolsRecycler
                 ToolsProperty property = (ToolsProperty) rl.getTag();
                 String fileDownloded = dbSelect.getFileDownloadedFromToolTable(property.id);
                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                 String filePath = root.getAbsolutePath() + "/" + property.name;
                 File file = new File(filePath);
                 if (file.exists() && (fileDownloded != null && fileDownloded.equals("Yes"))) {

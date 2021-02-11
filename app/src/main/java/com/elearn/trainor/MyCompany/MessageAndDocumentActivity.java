@@ -4,6 +4,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -121,7 +122,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "CompanyBasedDocuments", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "CompanyBasedDocuments", this.getClass().getSimpleName());
     }
 
     public static MessageAndDocumentActivity getInstance() {
@@ -131,6 +132,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         CustomerID = getIntent().getStringExtra("CustomerID");
         analytics = FirebaseAnalytics.getInstance(this);
@@ -400,7 +402,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
                     String token = spManager.getToken();
                     request.authorization("Bearer " + token);
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -416,7 +418,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
                 } catch (Exception ex) {
                     dismissWaitDialog();
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName);
@@ -475,7 +477,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
                         showBadFormatDialog = false;
                         AlertDialogManager.showDialog(MessageAndDocumentActivity.this, getResources().getString(R.string.server_error_title), getResources().getString(R.string.server_not_responding), false, null);
                     } else {
-                        File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + fileName);
+                        File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + fileName);
                         showDocumentPDF_File(file, fileName);
                     }
                 }
@@ -485,7 +487,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
 
     public void downloadPDF_File(boolean shoDialog) {
         if (connectionDetector.isConnectingToInternet()) {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + documentPDF_FileName);
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + documentPDF_FileName);
             if (file.exists()) {
                 dismissWaitDialog();
                 showDocumentPDF_File(file, documentPDF_FileName);
@@ -493,7 +495,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
                 downloadPDFFromServer(documentPDF_URL, documentPDF_FileName, shoDialog);
             }
         } else {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + documentPDF_FileName);
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + documentPDF_FileName);
             if (file.exists()) {
                 dismissWaitDialog();
                 showDocumentPDF_File(file, documentPDF_FileName);
@@ -584,7 +586,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
                                     if (!DbLastModified.equals(myCompanyProperty.lastModified)) {
                                         dbUpdate.updateLastModifiedDocumentData(userID, myCompanyProperty);
                                         File rootDir = android.os.Environment.getExternalStorageDirectory();
-                                        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
+                                        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
                                         String filePath = root.getAbsolutePath();
                                         File dir = new File(filePath);
                                         File file = new File(dir, myCompanyProperty.fileName);
@@ -651,7 +653,7 @@ public class MessageAndDocumentActivity extends AppCompatActivity implements Vie
     public void only_downloadFile() {
         if (connectionDetector.isConnectingToInternet()) {
             if (downloadDocumentUrlList != null && downloadDocumentUrlList.size() > 0) {
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + downloadDocumentUrlList.get(0).safetyCard_cardID);
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/" + downloadDocumentUrlList.get(0).safetyCard_cardID);
                 if (!file.exists()) {
                     if (50 <= freeSpaceMB) {
                         downloadPDFFromServer(downloadDocumentUrlList.get(0).downloadURL, downloadDocumentUrlList.get(0).safetyCard_cardID, showBadFormatDialog);

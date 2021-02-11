@@ -164,11 +164,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "Login", this.getClass().getSimpleName());
     }
 
     public void getControls() {
-        analytics = FirebaseAnalytics.getInstance(this);
         spManager = new SharedPreferenceManager(Login.this);
         /*Button crashButton = new Button(this);
         crashButton.setText("Crash!");
@@ -199,7 +197,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         pos = 0;
         username = (TextInputEditText) findViewById(R.id.login_username);
         user_password = (TextInputEditText) findViewById(R.id.user_password);
-
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_forget_pwd = (Button) findViewById(R.id.btn_forget_pwd);
         btn_register = (Button) findViewById(R.id.btn_register);

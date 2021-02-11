@@ -3,6 +3,7 @@ package com.elearn.trainor.SafetyCards;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,6 +79,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
         getControls();
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(ProcessVerifyInfo.this);
         myTrace = FirebasePerformance.getInstance().newTrace("Register_SafetyCard_trace");
@@ -395,62 +397,6 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
         requestQueue11.add(stringRequest);
     }
 
-    public void saveCustomerDetails(final String userID) {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.CUSTOMERS_DETAIL_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    if (jsonArray != null && jsonArray.length() > 0) {
-                        dataBaseHandlerDelete.deleteTableByName("CustomerDetails", userID);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            CustomerDetailsProperty info = new CustomerDetailsProperty();
-                            info.customer_id = jsonObject.getString("customerId") == null ? "" : jsonObject.getString("customerId").equals("") ? "" : jsonObject.getString("customerId");
-                            info.customerName = jsonObject.getString("customerName") == null ? "" : jsonObject.getString("customerName").equals("") ? "" : jsonObject.getString("customerName");
-                            info.workEmailAddress = jsonObject.getString("workEmailAddress") == null ? "" : jsonObject.getString("workEmailAddress").equals("") ? "" : jsonObject.getString("workEmailAddress");
-                            info.departmentName = jsonObject.getString("departmentName") == null ? "" : jsonObject.getString("departmentName").equals("") ? "" : jsonObject.getString("departmentName");
-                            info.employeeNumber = jsonObject.getString("employeeNumber") == null ? "" : jsonObject.getString("employeeNumber").equals("") ? "" : jsonObject.getString("employeeNumber");
-                            info.title = jsonObject.getString("title") == null ? "" : jsonObject.getString("title").equals("") ? "" : jsonObject.getString("title");
-                            info.workPhone = jsonObject.getString("workPhone") == null ? "" : jsonObject.getString("workPhone").equals("") ? "" : jsonObject.getString("workPhone");
-                            info.hasCopAccess = jsonObject.getString("hasCopAccess") == null ? "" : jsonObject.getString("hasCopAccess").equals("") ? "" : jsonObject.getString("hasCopAccess");
-                            //added 3 field 03-09-2020
-                            info.emailVerified = jsonObject.getString("emailVerified") == null ? "" : jsonObject.getString("emailVerified").equals("") ? "" : jsonObject.getString("emailVerified");
-                            info.phoneVerified = jsonObject.getString("phoneVerified") == null ? "" : jsonObject.getString("phoneVerified").equals("") ? "" : jsonObject.getString("phoneVerified");
-                            info.isPrivate = jsonObject.getString("isPrivate") == null ? "" : jsonObject.getString("isPrivate").equals("") ? "" : jsonObject.getString("isPrivate");
-
-                            dataBaseHandlerInsert.addDataIntoCustomerDetailsTable(info);
-                        }
-                    }
-                } catch (Exception ex) {
-                    dismissWaitDialog();
-                } finally {
-                    commonIntentMethod(VerifyInfo.class);
-                    //dismissWaitDialog();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissWaitDialog();
-                String errorMsg = error.getMessage().toString();
-                if (errorMsg.equals("com.android.volley.AuthFailureError")) {
-                    AlertDialogManager.showCustomDialog(ProcessVerifyInfo.this, "Error", "Authicatiion Error.", false, null, null, "Ok", "", null);
-                }
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("Authorization", "Bearer " + spManager.getToken());
-                return params;
-            }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue11 = Volley.newRequestQueue(ProcessVerifyInfo.this);
-        requestQueue11.add(stringRequest);
-    }
-
     @Override
     public void onBackPressed() {
        /* if (connectionDetector.isConnectingToInternet()) {
@@ -481,7 +427,7 @@ public class ProcessVerifyInfo extends AppCompatActivity implements View.OnClick
     protected void onResume() {
         isActivityLive = true;
         super.onResume();
-        analytics.setCurrentScreen(this, "RegisterSafetyCard", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "RegisterSafetyCard", this.getClass().getSimpleName());
     }
 
     @Override

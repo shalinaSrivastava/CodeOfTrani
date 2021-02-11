@@ -1,5 +1,6 @@
 package com.elearn.trainor.DashboardClasses;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -140,7 +141,7 @@ public class LoadingPageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        firebaseAnalytics.setCurrentScreen(LoadingPageActivity.this, "LoadingPage", this.getClass().getSimpleName());
+        //firebaseAnalytics.setCurrentScreen(LoadingPageActivity.this, "LoadingPage", this.getClass().getSimpleName());
 
     }
 
@@ -171,6 +172,7 @@ public class LoadingPageActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(LoadingPageActivity.this);
         connectionDetector = new ConnectionDetector(LoadingPageActivity.this);
@@ -357,7 +359,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                         }
                     } finally {
                         if (safetyCradSwitch_status.equals("ON") && downloadUrlList != null && downloadUrlList.size() > 0) {
-                            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
                             DeleteFile(file);
                             totalURLIndex = downloadUrlList.size();
                             downloadFile("/.SafetyCards/", downloadUrlList.get(0).safetyCard_cardID);
@@ -669,11 +671,11 @@ public class LoadingPageActivity extends AppCompatActivity {
 
                 File file;
                 if (module.equals("/.MyCompany/")) {
-                    file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + module + fileName);
+                    file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + module + fileName);
                 } else if (module.equals("/.tools/")) {
-                    file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/.tools/" + fileName);
+                    file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + fileName);
                 } else {
-                    file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + module + fileName + ".pdf");
+                    file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + module + fileName + ".pdf");
                 }
 
                 if (!file.exists()) {
@@ -779,9 +781,9 @@ public class LoadingPageActivity extends AppCompatActivity {
                     }
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
                     if (module.equals("/.SafetyCards/") || module.equals("/.MyCompany/") || module.equals("/.Diplomas/")) {
-                        root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + module);
+                        root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + module);
                     } else {
-                        root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                        root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                     }
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
@@ -805,9 +807,9 @@ public class LoadingPageActivity extends AppCompatActivity {
                     File root;
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
                     if (module.equals("/.tools/")) {
-                        root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                        root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                     } else {
-                        root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + module);
+                        root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + module);
                     }
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
@@ -1075,6 +1077,13 @@ public class LoadingPageActivity extends AppCompatActivity {
                 firebaseAnalytics.setUserProperty("user_id", UserID);
                 firebaseAnalytics.setUserProperty("language", language);
                 firebaseAnalytics.setUserId(UserID);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", UserID);
+                bundle.putString("language", language);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, UserID);
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "LoadingPage");
+                firebaseAnalytics.setDefaultEventParameters(bundle);
             }
             spManager.removeSharedPreference();
             SharedPreferences.Editor editor = spManager.getProfileInfoSharedPreference();
@@ -1123,6 +1132,13 @@ public class LoadingPageActivity extends AppCompatActivity {
                 firebaseAnalytics.setUserProperty("user_id", UserID);
                 firebaseAnalytics.setUserProperty("language", language);
                 firebaseAnalytics.setUserId(UserID);
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", UserID);
+                bundle.putString("language", language);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, UserID);
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "LoadingPage");
+
+                firebaseAnalytics.setDefaultEventParameters(bundle);
             }
         }
         String totalNotification = spManager.getTotalNotificationCount();
@@ -1143,7 +1159,7 @@ public class LoadingPageActivity extends AppCompatActivity {
 
     public void getUpcomingCourse() {
         txtMessage.setText(getResources().getString(R.string.sync_courses));
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.Upcoming_Course_URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.New_Active_Upcoming_Course_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -1465,7 +1481,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                                 if (!DbLastModified.equals(myCompanyProperty.lastModified)) {
                                     dbUpdate.updateLastModifiedDocumentData(userID, myCompanyProperty);
                                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
+                                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
                                     String filePath = root.getAbsolutePath();
                                     File dir = new File(filePath);
                                     File file = new File(dir, myCompanyProperty.fileName);
@@ -1600,15 +1616,15 @@ public class LoadingPageActivity extends AppCompatActivity {
                             if (last_modified.equals("")) {
                                 dataBaseHandlerInsert.addDataIntoToolBoxTable(info);
                                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                                File rootZipped = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/" + info.name);
+                                File rootZipped = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + info.name);
                                 if (rootZipped.exists()) {
                                     dbUpdate.updateToolBoxDetails(info, "FileDownloaded");
                                 }
                             } else if (!last_modified.equals(info.last_modified)) {
                                 dbUpdate.updateToolBoxDetails(info, "ToolBoxUpdated");
                                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                                File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/UnZipped/" + info.name);
-                                File rootZipped = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/" + info.name);
+                                File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/UnZipped/" + info.name);
+                                File rootZipped = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + info.name);
                                 if (root.exists()) {
                                     DeleteFile(root);
                                 }
@@ -1617,7 +1633,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                                 }
                             } else {
                                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                                File rootZipped = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/" + info.name);
+                                File rootZipped = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + info.name);
                                 if (rootZipped.exists()) {
                                     dbUpdate.updateToolBoxDetails(info, "FileDownloaded");
                                 } else {

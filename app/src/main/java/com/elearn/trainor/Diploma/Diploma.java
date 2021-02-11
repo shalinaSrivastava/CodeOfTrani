@@ -17,6 +17,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,14 +25,18 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.StrictMode;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -124,6 +129,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
     Dialog syncIncompleteDialog;
     FirebaseAnalytics analytics;
     Trace myTrace;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +153,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "Diploma", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "Diploma", this.getClass().getSimpleName());
     }
 
     @Override
@@ -174,9 +180,10 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
-        analytics.setCurrentScreen(this, "Diploma Page", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "Diploma Page", this.getClass().getSimpleName());
         dataBaseHandlerInsert = new DataBaseHandlerInsert(Diploma.this);
         dataBaseHandlerDelete = new DataBaseHandlerDelete(Diploma.this);
         dataBaseHandlerUpdate = new DataBaseHandlerUpdate(Diploma.this);
@@ -680,7 +687,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
                     }
                     File file = new File(Environment.getExternalStorageDirectory().getPath() + "/MyTrainor/"+ spManager.getUserID() + "/.Diplomas/", fileName + ".pdf");*/
                     File rootDir = Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getPath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+                    File root = new File(rootDir.getPath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
                     String filePath = root.getPath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -696,7 +703,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
                     //dismissWaitDialog();
                 } catch (Exception ex) {
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName + ".pdf");
@@ -709,7 +716,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + fileName + ".pdf");
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + fileName + ".pdf");
                 if (file.exists()) {
                     showDownloadedPDFFile(file);
                 }
@@ -720,7 +727,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
     public void downloadPDF_File() {
         writeNoMediaFile();
         if (connectionDetector.isConnectingToInternet()) {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDiplomaPDF_File(file);
@@ -737,7 +744,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         } else {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDiplomaPDF_File(file);
@@ -756,7 +763,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
     public void writeNoMediaFile() {
         try {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
             if (!root.exists()) {
                 root.mkdirs();
             }
@@ -808,7 +815,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
     public void only_downloadPDF_File() {
         if (connectionDetector.isConnectingToInternet()) {
             if (downloadDiplomaUrlList != null && downloadDiplomaUrlList.size() > 0) {
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + downloadDiplomaUrlList.get(0).licenseId + ".pdf");
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + downloadDiplomaUrlList.get(0).licenseId + ".pdf");
                 if (!file.exists()) {
                     if (50 <= freeSpaceMB) {
                         downloadFileFromServer(downloadDiplomaUrlList.get(0).downloadURL, downloadDiplomaUrlList.get(0).licenseId);
@@ -850,7 +857,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
                     request.contentType("application/pdf");
                     request.authorization("Bearer " + spManager.getToken());
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -864,7 +871,7 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
                     }
                 } catch (Exception ex) {
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName + ".pdf");
@@ -901,6 +908,38 @@ public class Diploma extends AppCompatActivity implements View.OnClickListener {
             }
         }.execute();
     }
+
+
+   /* public static boolean isNetworkAvailable(Context context) {
+        if(context == null)  return false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+                if (capabilities != null) {
+                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        return true;
+                    }  else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)){
+                        return true;
+                    }
+                }
+            } else {
+                try {
+                    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                        Log.i("update_statut", "Network is available : true");
+                        return true;
+                    }
+                } catch (Exception e) {
+                    Log.i("update_statut", "" + e.getMessage());
+                }
+            }
+        }
+        Log.i("update_statut","Network is available : FALSE ");
+        return false;
+    }*/
 
     private BroadcastReceiver internetInfoReceiver = new BroadcastReceiver() {
         @Override

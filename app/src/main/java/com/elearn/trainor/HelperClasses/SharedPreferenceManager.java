@@ -248,7 +248,7 @@ public class SharedPreferenceManager {
     public void removeSharedPreferenceByName(String Type) {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences(Type, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear().commit();
+        editor.clear().apply();
     }
 
     public static void insertValuesIntoSharedPreference(SharedPreferences.Editor editor, SharedPreferenceInfo info) {

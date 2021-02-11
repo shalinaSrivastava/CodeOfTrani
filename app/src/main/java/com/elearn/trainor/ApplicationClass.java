@@ -34,7 +34,6 @@ public class ApplicationClass extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        //Fabric.with(this, new Crashlytics());
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         dbSelect = new DataBaseHandlerSelect(ApplicationClass.this);
         spManager = new SharedPreferenceManager(ApplicationClass.this);

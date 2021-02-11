@@ -1,5 +1,6 @@
 package com.elearn.trainor.CourseModule;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -140,7 +141,7 @@ OrderCourses extends AppCompatActivity implements View.OnClickListener, Purchase
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(OrderCourses.this, "BuyCourse", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(OrderCourses.this, "BuyCourse", this.getClass().getSimpleName());
     }
 
     public static OrderCourses getInstance() {
@@ -150,6 +151,7 @@ OrderCourses extends AppCompatActivity implements View.OnClickListener, Purchase
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         connectionDetector = new ConnectionDetector(OrderCourses.this);

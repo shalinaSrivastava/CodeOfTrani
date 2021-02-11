@@ -1,5 +1,6 @@
 package com.elearn.trainor.MyCompany;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -110,7 +111,7 @@ public class CompanyList extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(CompanyList.this, "CompanyList", "Company Page");
+       // analytics.setCurrentScreen(CompanyList.this, "CompanyList", "Company Page");
     }
 /*
     @Override
@@ -135,6 +136,7 @@ public class CompanyList extends AppCompatActivity implements View.OnClickListen
         isWindowActive = false;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         connectionDetector = new ConnectionDetector(CompanyList.this);
@@ -357,10 +359,13 @@ public class CompanyList extends AppCompatActivity implements View.OnClickListen
             public void onErrorResponse(VolleyError error) {
                 swipelayout.setRefreshing(false);
                 dismissWaitDialog();
-                String errorMsg = error.getMessage().toString();
-                if (errorMsg.equals("com.android.volley.AuthFailureError")) {
-                    AlertDialogManager.showCustomDialog(CompanyList.this, "Error", "Authicatiion Error.", false, null, null, "Ok", "", null);
-                }
+               // String errorMsg = error.getMessage();
+              /*  if (errorMsg.equals("com.android.volley.AuthFailureError")) {
+                    AlertDialogManager.showCustomDialog(CompanyList.this, "Error", "Authentication Error.", false, null, null, "Ok", "", null);
+                }*/
+                // chnages done on 15-01-2021
+                AlertDialogManager.showCustomDialog(CompanyList.this, "Error", "Authentication Error.", false, null, null, "Ok", "", "");
+
             }
         }) {
             @Override
@@ -430,7 +435,7 @@ public class CompanyList extends AppCompatActivity implements View.OnClickListen
                                     if (!DbLastModified.equals(myCompanyProperty.lastModified)) {
                                         dbUpdate.updateLastModifiedDocumentData(userID, myCompanyProperty);
                                         File rootDir = android.os.Environment.getExternalStorageDirectory();
-                                        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
+                                        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.MyCompany/");
                                         String filePath = root.getAbsolutePath();
                                         File dir = new File(filePath);
                                         File file = new File(dir, myCompanyProperty.fileName);

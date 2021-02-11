@@ -2,6 +2,7 @@ package com.elearn.trainor.CourseModule;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -85,6 +86,7 @@ public class GetMoreCourses extends AppCompatActivity implements View.OnClickLis
         getControls();
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         dbDelete = new DataBaseHandlerDelete(GetMoreCourses.this);
@@ -319,7 +321,7 @@ public class GetMoreCourses extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(GetMoreCourses.this, "CourseList", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(GetMoreCourses.this, "CourseList", this.getClass().getSimpleName());
     }
 
     @Override

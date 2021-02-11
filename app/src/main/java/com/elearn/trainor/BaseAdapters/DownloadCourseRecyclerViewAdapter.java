@@ -63,7 +63,7 @@ public class DownloadCourseRecyclerViewAdapter extends RecyclerView.Adapter<Down
                     @Override
                     public void onClick() {
                         File rootDir = android.os.Environment.getExternalStorageDirectory();
-                        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + courseInfo.licenseId);
+                        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + courseInfo.licenseId);
                         String filePath = root.getAbsolutePath();
                         File dir = new File(filePath);
                         DeleteCoursesFile(dir);

@@ -1,9 +1,12 @@
 package com.elearn.trainor.SafetyCards;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -15,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 
@@ -29,6 +33,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -75,6 +80,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -163,7 +169,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "SafetyCards", null);
+        //analytics.setCurrentScreen(this, "SafetyCards", null);
     }
 
     @Override
@@ -189,6 +195,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(SafetyCards.this);
 
@@ -418,6 +425,12 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     dismissWaitDialog();
                     swipelayout.setRefreshing(false);
                     Log.d("Error", ex.getMessage());
+                    AlertDialogManager.showDialog(SafetyCards.this, getResources().getString(R.string.server_error_title), getString(R.string.server_error_msg), false, new IClickListener() {
+                        @Override
+                        public void onClick() {
+                            commonIntentMethod(HomePage.class);
+                        }
+                    });
                 } finally {
                     dismissWaitDialog();
                     swipelayout.setRefreshing(false);
@@ -430,8 +443,12 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                 dismissWaitDialog();
                 swipelayout.setRefreshing(false);
                 getReportEntryButtonStatus();
-                AlertDialogManager.showDialog(SafetyCards.this, getResources().getString(R.string.internetErrorTitle), VolleyErrorHandler.getErrorMessage(SafetyCards.this, error), false, null);
-
+                AlertDialogManager.showDialog(SafetyCards.this, getResources().getString(R.string.server_error_title), VolleyErrorHandler.getErrorMessage(SafetyCards.this, error), false, new IClickListener() {
+                    @Override
+                    public void onClick() {
+                        commonIntentMethod(HomePage.class);
+                    }
+                });
             }
         }) {
             @Override
@@ -598,8 +615,10 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
             Bundle bundle = new Bundle();
             bundle.putString("SafetyCardView", "Yes");
             analytics.logEvent("SafetyCardView", bundle);
-            //End DOwnload And VIew Safety Card Analytics
 
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "SafetyCards View");
+            analytics.setDefaultEventParameters(bundle);
+            //End DOwnload And VIew Safety Card Analytics
             Intent intent = new Intent(SafetyCards.this, SafetyCardsDetails.class);
             intent.putExtra("FileName", file.toString());
             intent.putExtra("pdfFileURL", safetyCardProperty.card_url);
@@ -619,8 +638,32 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     URL u = new URL(fileURL);
                     HttpRequest request = HttpRequest.get(u);
                     request.accept("application/pdf");
+                  /*  if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
+                        OutputStream fos;
+                        ContentResolver resolver = getContentResolver();
+                        ContentValues contentValues =  new ContentValues();
+                        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName +".pdf");
+                        contentValues.put(MediaStore.MediaColumns.MIME_TYPE,"application/pdf");
+                        //contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.getExternalStorageState());
+                        resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
+                    }else{
+                        File rootDir = android.os.Environment.getExternalStorageDirectory();
+                        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                        String filePath = root.getAbsolutePath();
+                        File dir = new File(filePath);
+                        if (dir.exists() == false) {
+                            dir.mkdirs();
+                        }
+                        File file = new File(dir, fileName + ".pdf");
+                        if (request.ok()) {
+                            request.receive(file);
+                        } else {
+                            DeleteFile(file);
+                        }
+                    }*/
+
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -633,9 +676,10 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                         DeleteFile(file);
                     }
                     dismissWaitDialog();
+
                 } catch (Exception ex) {
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName + ".pdf");
@@ -648,7 +692,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + fileName + ".pdf");
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + fileName + ".pdf");
                 if (file.exists()) {
                     dismissWaitDialog();
                     Intent intent = new Intent(SafetyCards.this, SafetyCardsDetails.class);
@@ -671,7 +715,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
         writeNoMediaFile();
         if (connectionDetector.isConnectingToInternet()) {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
             String filePath = root.getAbsolutePath();
             File file = new File(filePath);
             if (file.exists()) {
@@ -681,7 +725,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                 downloadSafetCardFromServer(safetyCardProperty.card_url, safetycardPDF_FileName);
             }
         } else {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + safetycardPDF_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDiplomaPDF_File(file);
@@ -699,7 +743,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
     public void writeNoMediaFile() {
         try {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
             if (!root.exists()) {
                 root.mkdirs();
             }
@@ -734,7 +778,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
     public void only_downloadPDF_File() {
         if (connectionDetector.isConnectingToInternet()) {
             if (downloadSafetyCardUrlList != null && downloadSafetyCardUrlList.size() > 0) {
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + downloadSafetyCardUrlList.get(0).safetyCard_cardID + ".pdf");
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/" + downloadSafetyCardUrlList.get(0).safetyCard_cardID + ".pdf");
                 if (!file.exists()) {
                     if (50 <= freeSpaceMB) {
                         downloadFileFromServer(downloadSafetyCardUrlList.get(0).downloadURL, downloadSafetyCardUrlList.get(0).safetyCard_cardID);
@@ -781,7 +825,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     HttpRequest request = HttpRequest.get(u);
                     request.accept("application/pdf");
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -796,7 +840,7 @@ public class SafetyCards extends AppCompatActivity implements View.OnClickListen
                     //dismissWaitDialog();
                 } catch (Exception ex) {
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.SafetyCards/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName + ".pdf");

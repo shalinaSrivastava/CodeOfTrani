@@ -1,5 +1,6 @@
 package com.elearn.trainor.ToolBoxModule;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -70,7 +71,7 @@ public class Tools_Content_Activity extends AppCompatActivity implements View.On
     protected void onResume() {
         isActivityLive = true;
         super.onResume();
-        analytics.setCurrentScreen(this, "ToolsDisplay", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "ToolsDisplay", this.getClass().getSimpleName());
     }
 
     @Override
@@ -80,6 +81,7 @@ public class Tools_Content_Activity extends AppCompatActivity implements View.On
         super.onStop();
     }
 
+    @SuppressLint("MissingPermission")
     public void GetControls() {
         analytics = FirebaseAnalytics.getInstance(Tools_Content_Activity.this);
         dbUpdate = new DataBaseHandlerUpdate(Tools_Content_Activity.this);
@@ -186,7 +188,7 @@ public class Tools_Content_Activity extends AppCompatActivity implements View.On
 
     public void unzipMethod() {
         File rootDir = android.os.Environment.getExternalStorageDirectory();
-        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
         String filePath = root.getAbsolutePath() + "/" + getIntent().getStringExtra("ZipFile");
         File file = new File(filePath);
         if (file.exists()) {

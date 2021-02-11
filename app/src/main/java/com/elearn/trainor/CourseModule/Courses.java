@@ -141,7 +141,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
     protected void onResume() {
         isActivityLive = true;
         super.onResume();
-        analytics.setCurrentScreen(Courses.this, "CourseModule", this.getClass().getSimpleName());
+       // analytics.setCurrentScreen(Courses.this, "CourseModule", this.getClass().getSimpleName());
     }
 
     public static Courses getInstance() {
@@ -169,6 +169,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         notificationCountList = new ArrayList<>();
@@ -209,7 +210,8 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
         //Select Courses From SCORM  Table
         completedCoursesList = dbSelect.getCoursesFromSCORM(spManager.getUserID(), "", "");
         completedCoursesIntoDiplomaList = dbSelect.getCoursesFromSCORM(spManager.getUserID(), "InsertCompletedCourseIntoDiploma", "");
-        coursesToBeDeleted = dbSelect.getCoursesFromSCORM(spManager.getUserID(), "DeleteInternalCourseFiles", "");
+
+         coursesToBeDeleted = dbSelect.getCoursesFromSCORM(spManager.getUserID(), "DeleteInternalCourseFiles", "");
         connectionDetector = new ConnectionDetector(Courses.this);
         deviceId = connectionDetector.getAndroid_ID(Courses.this);
 
@@ -347,7 +349,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void getCourse() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.Upcoming_Course_URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.New_Active_Upcoming_Course_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -361,6 +363,9 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
                             dbDelete.deleteCoursesFromTable("offline");
                             dbDelete.deleteCoursesFromTable("CourseDownload");
                             //dbDelete.deleteCoursesFromTable("CoursesTable");
+                            /*//added on 05-02-2021
+                            dbDelete.deleteCoursesFromTable("CoursesTable");
+                            // end*/
                             dbDelete.deleteCoursesFromTable("CompletionDateSCORMTable");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 eLearningCourseList.clear();
@@ -476,7 +481,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
                                     } else {
                                         courseProperty.courseType = "Classroom";
                                     }
-                                    if (dbSelect.getDataFromCoursesTable("*", spManager.getUserID(), courseProperty.licenseId.toString().trim()).equals("")) {
+                                    if (dbSelect.getDataFromCoursesTable("*", spManager.getUserID(), courseProperty.licenseId.trim()).equals("")) {
                                         courseProperty.userID = spManager.getUserID();
                                         if (jsonObject.has("isEpkg")) {
                                             if (jsonObject.getString("isEpkg").equals("true")) {
@@ -493,6 +498,8 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
                                             courseProperty.timeStamp = String.valueOf(timeStamp);
                                             dbInsert.addDataIntoCoursesTable(courseProperty);
                                         }
+                                    }else{ // added on 05-02-2021, else part because course status not updating
+                                        dbUpdate.updateTable("CoursesTable", spManager.getUserID(), courseProperty.licenseId.trim(), "status", courseProperty.status);
                                     }
 
                                     //Get Course Image URL and update into Courses Table 14_Mar_2019
@@ -998,7 +1005,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
                     request.contentType("application/pdf");
                     request.authorization("Bearer " + spManager.getToken());
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -1012,7 +1019,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
                     }
                 } catch (Exception ex) {
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName + ".pdf");
@@ -1025,7 +1032,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + fileName + ".pdf");
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + fileName + ".pdf");
                 if (file.exists()) {
                     showDownloadedPDFFile(file);
                 }
@@ -1039,7 +1046,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
             Bundle bundle = new Bundle();
             bundle.putString("CourseDiplomaView", "Yes");
             analytics.logEvent("CourseDiplomaView", bundle);
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDiplomaPDF_File(file);
@@ -1058,7 +1065,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         } else {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/" + diplomaPDF_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDiplomaPDF_File(file);
@@ -1074,54 +1081,6 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
             }
         }
     }
-
-   /* public void getCourseImageURL(final String courseID) {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebServicesURL.Course_image_URL + courseID, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    requestQueue.getCache().clear();
-                    JSONObject jsonObject1 = new JSONObject(response);
-                    String image_URL = jsonObject1.getString("image") == null ? "" : (jsonObject1.getString("image").equals("null") ? "" : jsonObject1.getString("image"));
-                    long result = dbUpdate.updateImageURLInCourseTable(courseID, image_URL);
-                    if (courseIDList.contains(courseID)) {
-                        courseIDList.remove(courseIDList.indexOf(courseID));
-                    }
-                } catch (Exception ex) {
-                } finally {
-                    if (courseIDList != null && courseIDList.size() > 0) {
-                        getCourseImageURL(courseIDList.get(0));
-                    } else {
-                        completedCoursesList.clear();
-                        completedCoursesList = dbSelect.getCoursesFromSCORM(spManager.getUserID(), "", "");
-                        showListOnCourse();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                requestQueue.getCache().clear();
-                dbUpdate.updateImageURLInCourseTable(courseID, "");
-                if (courseIDList.contains(courseID)) {
-                    courseIDList.remove(courseIDList.indexOf(courseID));
-                }
-                if (courseIDList != null && courseIDList.size() > 0) {
-                    getCourseImageURL(courseIDList.get(0));
-                } else {
-                    completedCoursesList.clear();
-                    completedCoursesList = dbSelect.getCoursesFromSCORM(spManager.getUserID(), "", "");
-                    showListOnCourse();
-                }
-            }
-        });
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(Courses.this);
-        }
-        stringRequest.setShouldCache(false);
-        requestQueue.add(stringRequest);
-    }*/
 
     public String getSecretKey(final String Salt_lisencID) {
         try {
@@ -1219,10 +1178,12 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
                                         } else {
                                             LicenseID_SCORM_Post += "," + "'" + licenseId + "'";
                                         }
-                                    } else if ((Double.valueOf(cmiProgress_Local)) == (Double.valueOf(cmi_progress))) {
-                                        if ((Double.valueOf(cmiProgress_Local) == 1.0) && (Double.valueOf(cmi_progress) == 1.0)) {
+                                    } else if (Double.parseDouble(cmiProgress_Local)==(Double.parseDouble(cmi_progress))) {
+                                        if ((Double.parseDouble(cmiProgress_Local) == 1.0) && (Double.parseDouble(cmi_progress) == 1.0)) {
                                             dbUpdate.updateSCORMTable(spManager.getUserID(), licenseId, "StatusCompletedOnLive", "Yes");
                                             dbUpdate.updateNewlyCompletedStatus("SyncedForDiploma", spManager.getUserID());
+                                        }else if((Double.parseDouble(cmiProgress_Local) == 0.0) && (Double.parseDouble(cmi_progress) == 0.0)){ // newly added else if condition 10-02-2021
+                                            dbUpdate.updateSCORMTable(spManager.getUserID(), licenseId, "cmiProgressMeasure", cmi_progress);
                                         }
                                     }
                                 }
@@ -1438,7 +1399,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = conMan.getActiveNetworkInfo();
+            @SuppressLint("MissingPermission") NetworkInfo netInfo = conMan.getActiveNetworkInfo();
             NotificationProperty notificationData = dbSelect.notificationDataToBeUpdated("NotificationCountTable", spManager.getUserID(), "Course");
             if (netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 if (!syncApiCalled) {
@@ -1519,7 +1480,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
     public void deleteCourseFileFromInternalStorage(String licenseID) {
         try {
             File rootDir = Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + licenseID);
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + licenseID);
             String filePath = root.getAbsolutePath();
             File file = new File(filePath);
             if (file.exists()) {
@@ -1551,7 +1512,7 @@ public class Courses extends AppCompatActivity implements View.OnClickListener {
     public void writeNoMediaFile() {
         try {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
             if (!root.exists()) {
                 root.mkdirs();
             }

@@ -111,9 +111,10 @@ public class DSBActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "DSBDocuments", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "DSBDocuments", this.getClass().getSimpleName());
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(this);
         DSBList = new ArrayList<>();
@@ -363,7 +364,7 @@ public class DSBActivity extends AppCompatActivity implements View.OnClickListen
                     request.accept("application/pdf");
                     request.contentType("application/pdf");
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor" + "/.DSB/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor" + "/.DSB/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     if (dir.exists() == false) {
@@ -377,7 +378,7 @@ public class DSBActivity extends AppCompatActivity implements View.OnClickListen
                     }
                 } catch (Exception ex) {
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor" + "/.DSB/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor" + "/.DSB/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     File file = new File(dir, fileName + ".pdf");
@@ -390,7 +391,7 @@ public class DSBActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor" + "/.DSB/" + fileName + ".pdf");
+                File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor" + "/.DSB/" + fileName + ".pdf");
                 if (file.exists()) {
                     showDownloadedPDFFile(file);
                 }
@@ -401,7 +402,7 @@ public class DSBActivity extends AppCompatActivity implements View.OnClickListen
     public void downloadPDF_File() {
         writeNoMediaFile();
         if (connectionDetector.isConnectingToInternet()) {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor" + "/.DSB/" + DSB_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor" + "/.DSB/" + DSB_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDSB_File(file);
@@ -409,7 +410,7 @@ public class DSBActivity extends AppCompatActivity implements View.OnClickListen
                 downloadDSBFromServer(URL, DSB_FileName);
             }
         } else {
-            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyTrainor" + "/.DSB/" + DSB_FileName + ".pdf");
+            File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor" + "/.DSB/" + DSB_FileName + ".pdf");
             if (file.exists()) {
                 dismissWaitDialog();
                 showDSB_File(file);
@@ -427,7 +428,7 @@ public class DSBActivity extends AppCompatActivity implements View.OnClickListen
     public void writeNoMediaFile() {
         try {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor" + "/.DSB/");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor" + "/.DSB/");
             if (!root.exists()) {
                 root.mkdirs();
             }

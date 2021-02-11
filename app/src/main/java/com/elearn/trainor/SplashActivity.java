@@ -153,13 +153,6 @@ public class SplashActivity extends AppCompatActivity {
                                         });
                                     }
                                 }
-
-
-//                                Intent intent = new Intent(SplashActivity.this, Login.class);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                startActivity(intent);
-//                                finish();
-//                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                             }
                         }, 3000);
                     }

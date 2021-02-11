@@ -4,6 +4,7 @@ import com.elearn.trainor.Diploma.Diploma;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.Trace;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -61,7 +62,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.fabric.sdk.android.services.network.HttpRequest;
@@ -74,7 +77,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
     TextView txtCourseName, loadingTxt;
     CircleImageView courseImage;
     long fileSize = 0;
-    String fileSizeInMB = "", CourseId = "", fileName = "", LicenceID = "";
+    String fileSizeInMB = "", CourseId = "", fileName = "", LicenceID = "", downloadFailedMessage = "";
     DownloadManager.Query q;
     private long downloadReference;
     boolean downloading = false;
@@ -87,15 +90,13 @@ public class CourseDownloadingActivity extends AppCompatActivity {
     IntentFilter internet_intent_filter;
     boolean isActivityLive = false, isDownloadFailed = false;
     FirebaseAnalytics analytics;
-    Trace myTrace;
+    //Trace myTrace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_course_loading);
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         isActivityLive = true;
         GetControls();
@@ -113,8 +114,6 @@ public class CourseDownloadingActivity extends AppCompatActivity {
     protected void onResume() {
         isActivityLive = true;
         super.onResume();
-        analytics.setCurrentScreen(this, "CourseDownloadPage", this.getClass().getSimpleName());
-
     }
 
     @Override
@@ -124,10 +123,6 @@ public class CourseDownloadingActivity extends AppCompatActivity {
     }
 
     public void GetControls() {
-        analytics = FirebaseAnalytics.getInstance(this);
-        myTrace = FirebasePerformance.getInstance().newTrace("Course_Downloading_trace");
-        myTrace.start();
-
         internet_intent_filter = new IntentFilter();
         internet_intent_filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         this.registerReceiver(this.internetInfoReceiver, internet_intent_filter);
@@ -194,7 +189,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                     request.contentType("application/zip");
                     request.authorization("Bearer " + spManager.getToken());
                     File rootDir = Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID + "/");
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID + "/");
                     String filePath = root.getAbsolutePath();
                     File dir = new File(filePath);
                     request.connectTimeout(10000);
@@ -230,7 +225,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
 
     public void unzipMethod(final long downloaded_data_size) {
         File rootDir = android.os.Environment.getExternalStorageDirectory();
-        File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID);
+        File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID);
         String filePath = root.getAbsolutePath() + "/" + LicenceID + ".zip";
         File file = new File(filePath);
         if (file.exists()) {
@@ -307,7 +302,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
     public void readPropertiesFile(final long downloaded_data_size) {
         try {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/");
             String filePath = root.getAbsolutePath() + "/" + LicenceID + "/UnZipped/" + "__download.properties";
             File file = new File(filePath);
             if (file.exists()) {
@@ -347,10 +342,10 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                             spManager.removeSharedPreferenceByName("DownloadCourse");
                             String extension = courseVideoURL.substring(courseVideoURL.lastIndexOf("."), courseVideoURL.length()).trim();
                             String dirPath = courseVideoURL.substring(courseVideoURL.lastIndexOf("=") + 1, courseVideoURL.lastIndexOf("/") + 1);
-                            File rootDir =Environment.getExternalStorageDirectory();
-                            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+                            File rootDir = android.os.Environment.getExternalStorageDirectory();
+                            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/");
                             String fileToHide = root.getAbsolutePath() + "/" + LicenceID + "/UnZipped/" + dirPath;
-                            writeNoMediaFile(fileToHide);
+                            //writeNoMediaFile(fileToHide);
                             String filePath = root.getAbsolutePath() + "/" + LicenceID + "/UnZipped/" + dirPath + video_name + extension;
                             File file = new File(filePath);
                             if (!file.exists()) {
@@ -372,13 +367,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                                 editor.putString("CourseURL", courseVideoURL);
                                 editor.putString("ReferenceID", downloadReference + "");
                                 editor.commit();
-
-                                //experiment
-                                File newroot = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID+ "/UnZipped/" + dirPath + "/"+ video_name + extension);
-                                String newfilePath = newroot.getAbsolutePath();
-
-                                updateDownloadingProgress(downloaded_data_size, downloadReference, newfilePath,filePath);
-
+                                updateDownloadingProgress(downloaded_data_size, downloadReference);
                             } else {
                                 removeDuplicateURL(courseVideoURL); //Same URL Problem
                             }
@@ -398,8 +387,8 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                     spManager.removeSharedPreferenceByName("DownloadCourse");
                     String extension = courseVideoURL.substring(courseVideoURL.lastIndexOf("."), courseVideoURL.length()).trim();
                     String dirPath = courseVideoURL.substring(courseVideoURL.lastIndexOf("=") + 1, courseVideoURL.lastIndexOf("/") + 1);
-                    File rootDir = Environment.getExternalStorageDirectory();
-                    File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+                    File rootDir = android.os.Environment.getExternalStorageDirectory();
+                    File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/");
                     String fileToHide = root.getAbsolutePath() + "/" + LicenceID + "/UnZipped/" + dirPath;
                     writeNoMediaFile(fileToHide);
                     String filePath = root.getAbsolutePath() + "/" + LicenceID + "/UnZipped/" + dirPath + video_name + extension;
@@ -413,9 +402,8 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                         request.setAllowedOverRoaming(true);
                         request.setVisibleInDownloadsUi(false);
                         request.setMimeType("application/octet-stream");
+                        request.setDestinationInExternalFilesDir(this,"/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID + "/UnZipped/" + dirPath + "/" ,  video_name+extension );
 
-
-                        request.setDestinationInExternalFilesDir(this,"/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID + "/UnZipped/" + dirPath + "/",  video_name+extension );
                         //request.setDestinationUri(Uri.parse("file://" + android.os.Environment.getExternalStorageDirectory() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID + "/UnZipped/" + dirPath + "/" + video_name + extension));
                         //request.setDestinationInExternalPublicDir("/MyTrainor/Course/" + LicenceID + "/UnZipped/" + dirPath, video_name + extension);
                         downloadReference = downloadManager.enqueue(request);
@@ -424,50 +412,13 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                         editor.putString("CourseURL", courseVideoURL);
                         editor.putString("ReferenceID", downloadReference + "");
                         editor.commit();
-
-                        //experiment
-                        File newroot = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID+ "/UnZipped/" + dirPath + "/"+ video_name + extension);
-                        String newfilePath = newroot.getAbsolutePath();
-
-                        updateDownloadingProgress(downloaded_data_size, downloadReference,  newfilePath,filePath);
-
+                        updateDownloadingProgress(downloaded_data_size, downloadReference);
                     }
                 }
             } catch (Exception ex) {
                 Log.d("", ex.getMessage());
             }
         }
-    }
-
-    public static boolean moveFile(File source, String destPath){
-        if( new File(source.getAbsolutePath()).exists()){
-            File dest = new File(destPath);
-            //checkMakeDirs(dest.getParent());
-            try (FileInputStream fis = new FileInputStream(source);
-                 FileOutputStream fos = new FileOutputStream(dest)){
-                if(!dest.exists()){
-                    dest.createNewFile();
-                }
-                writeToOutputStream(fis, fos);
-                source.delete();
-                return true;
-            } catch (IOException ioE){
-                Log.d("Exception",ioE.getMessage() );
-                //EMaxLogger.onException(TAG, ioE);
-            }
-        }
-        return false;
-    }
-
-    private static void writeToOutputStream(InputStream is, OutputStream os) throws IOException {
-        byte[] buffer = new byte[1024];
-        int length;
-        if (is != null) {
-            while ((length = is.read(buffer)) > 0x0) {
-                os.write(buffer, 0x0, length);
-            }
-        }
-        os.flush();
     }
 
     void DeleteRecursive(File fileOrDirectory) {
@@ -478,7 +429,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
         fileOrDirectory.delete();
     }
 
-    public void updateDownloadingProgress(final long totalDownloadedSize, final long downloadReferenceID, String filePath, String destinationPath) {
+    public void updateDownloadingProgress(final long totalDownloadedSize, final long downloadReferenceID) {
         Handler progressHandler = new Handler();
         final DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         progressHandler.postDelayed(new Runnable() {
@@ -560,27 +511,8 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                         final int percentage = progress[0];
                     }
 
-                    @RequiresApi(api = Build.VERSION_CODES.Q)
                     @Override
                     protected void onPostExecute(String s) {
-                        File sourceFile = new File(filePath);
-                        File destinationFile = new File(destinationPath);
-                        //File file = new File(filePath);
-                        if(sourceFile.exists()){
-                            File parentDir = destinationFile.getParentFile();
-                            if (!parentDir.exists()) {
-                                parentDir.mkdirs();
-                            }
-                            System.out.println("moved");
-                            if(moveFile(sourceFile, destinationPath)) {
-                                System.out.println("moved");
-                            }else{
-                                System.out.println("not moved");
-                            }
-
-                        }else{
-                            System.out.println("not moved");
-                        }
                         super.onPostExecute(s);
                     }
                 }.execute();
@@ -604,10 +536,18 @@ public class CourseDownloadingActivity extends AppCompatActivity {
             spManager.removeSharedPreferenceByName("DownloadCourse");
             dbDelete.deleteValueFromTable("CourseDownload", "licenseId", LicenceID);
             File rootDir = android.os.Environment.getExternalStorageDirectory();
-            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID);
+            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + LicenceID);
             String filePath = root.getAbsolutePath();
             File dir = new File(filePath);
             DeleteRecursive(dir);
+            try {
+                if (downloadReceiver != null) {
+                    unregisterReceiver(downloadReceiver);
+                }
+            } catch (Exception ex) {
+                String reciverException = ex.getMessage();
+                Log.d("downloadReceiver",reciverException);
+            }
             Intent intent = new Intent(CourseDownloadingActivity.this, Courses.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -616,7 +556,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
         }
     }
 
-    private BroadcastReceiver internetInfoReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver internetInfoReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -656,13 +596,6 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                         spManager.removeValueByKeyNameFromDownloadCoursePage("CourseURL"); //13-Mar-2019 Same URL problem
                         showDownloadProgress(total, video_file_name, videoUrl);
                     } else {
-                        myTrace.stop();
-                        //Start event Analytics
-                        Bundle bundle = new Bundle();
-                        bundle.putString("CourseDownload", "Yes");
-                        analytics.logEvent("CourseDownload", bundle);
-                        //End event Analytics
-
                         loadingTxt.setText(getResources().getString(R.string.downloads_completed));
                         spManager.removeSharedPreferenceByName("DownloadCourse");
                         dbUpdate.updateTable("CourseDownload", spManager.getUserID(), LicenceID, "DownloadTime", System.currentTimeMillis() + "");
@@ -673,7 +606,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                         }
                         if (!connectionDetector.isConnectingToInternet()) {
                             File rootDir = Environment.getExternalStorageDirectory();
-                            File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course");
+                            File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course");
                             String filePath = root.getAbsolutePath();
                             File dir = new File(filePath);
                             DeleteRecursive(dir);
@@ -683,6 +616,16 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                                 unregisterReceiver(internetInfoReceiver);
                             }
                         } catch (Exception ex) {
+                            String reciverException = ex.getMessage();
+                            Log.d("internetInfoReceiver",reciverException);
+                        }
+                        try {
+                            if (downloadReceiver != null) {
+                                unregisterReceiver(downloadReceiver);
+                            }
+                        } catch (Exception ex) {
+                            String reciverException = ex.getMessage();
+                            Log.d("downloadReceiver",reciverException);
                         }
                         Intent goto_intent = new Intent(CourseDownloadingActivity.this, Courses.class);
                         goto_intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -697,7 +640,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
         try {
             File rootDir = android.os.Environment.getExternalStorageDirectory();
             if (path.equals("")) {
-                File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/");
+                File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/");
                 if (!root.exists()) {
                     root.mkdirs();
                 }
@@ -755,13 +698,6 @@ public class CourseDownloadingActivity extends AppCompatActivity {
             spManager.removeValueByKeyNameFromDownloadCoursePage("CourseURL"); //13-Mar-2019 Same URL problem
             showDownloadProgress(total, video_file_name, videoUrl);
         } else {
-            myTrace.stop();
-            //Start event Analytics
-            Bundle bundle = new Bundle();
-            bundle.putString("CourseDownload", "Yes");
-            analytics.logEvent("CourseDownload", bundle);
-            //End event Analytics
-
             loadingTxt.setText(getResources().getString(R.string.downloads_completed));
             spManager.removeSharedPreferenceByName("DownloadCourse");
             dbUpdate.updateTable("CourseDownload", spManager.getUserID(), LicenceID, "DownloadTime", System.currentTimeMillis() + "");
@@ -772,7 +708,7 @@ public class CourseDownloadingActivity extends AppCompatActivity {
             }
             if (!connectionDetector.isConnectingToInternet()) {
                 File rootDir = Environment.getExternalStorageDirectory();
-                File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course");
+                File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course");
                 String filePath = root.getAbsolutePath();
                 File dir = new File(filePath);
                 DeleteRecursive(dir);
@@ -783,9 +719,30 @@ public class CourseDownloadingActivity extends AppCompatActivity {
                 }
             } catch (Exception ex) {
             }
+            try {
+                if (downloadReceiver != null) {
+                    unregisterReceiver(downloadReceiver);
+                }
+            } catch (Exception ex) {
+                String reciverException = ex.getMessage();
+                Log.d("downloadReceiver",reciverException);
+            }
             Intent goto_intent = new Intent(CourseDownloadingActivity.this, Courses.class);
             goto_intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(goto_intent);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            if (downloadReceiver != null) {
+                unregisterReceiver(downloadReceiver);
+            }
+        } catch (Exception ex) {
+            String reciverException = ex.getMessage();
+            Log.d("downloadReceiver",reciverException);
+        }
+        super.onDestroy();
     }
 }

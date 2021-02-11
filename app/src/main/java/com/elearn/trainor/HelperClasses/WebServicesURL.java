@@ -7,8 +7,8 @@ public class WebServicesURL {
     public static String Login_URL = Base_URL + "login";
     public static String FetchDetail_URL = Base_URL + "profile";
     public static String Forget_Password_URL = Base_URL + "login/forgotpassword";
-    public static String Upcoming_Course_URL = Base_URL + "coursecompletion/upcoming";
-    //public static String New_Active_Upcoming_Course_URL = Base_URL + "coursecompletion/active";//new
+    //public static String Upcoming_Course_URL = Base_URL + "coursecompletion/upcoming";
+    public static String New_Active_Upcoming_Course_URL = Base_URL + "coursecompletion/active";//new
 
     public static String Approve_Course_URL = Base_URL + "coursecompletion/approve/";
     public static String Diploma_URL = Base_URL + "coursecompletion/completed";

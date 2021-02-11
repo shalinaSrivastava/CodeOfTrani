@@ -1,5 +1,6 @@
 package com.elearn.trainor.HelperClasses;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -61,7 +62,7 @@ public class ConnectionDetector {
     }*/
 
     public String getAndroid_ID(Context context) {
-        String device_unique_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds") String device_unique_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         return device_unique_id;
     }
 }

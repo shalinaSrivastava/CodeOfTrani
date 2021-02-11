@@ -108,7 +108,7 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
             if (homelocation != null) {
                 currentLocation = homelocation;
                 SupportMapFragment map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_facility));
-                map.getMapAsync(this);
+                Objects.requireNonNull(map).getMapAsync(this);
 
             }
 
@@ -117,19 +117,19 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onMapReady(GoogleMap homeMap) {
-       /* homeMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        homeMap.clear();
-        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-        homeMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        homeMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
-        homeMap.addMarker(markerOptions);*/
-        LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(facilityName);
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
-        homeMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+
+        MarkerOptions markerOptions = null;
+        try {
+            LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            markerOptions = new MarkerOptions().position(latLng).title(facilityName);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
+            homeMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
         homeMap.setBuildingsEnabled(true);
-        homeMap.setIndoorEnabled(true);
+       // homeMap.setIndoorEnabled(true);
         homeMap.addMarker(markerOptions);
     }
 

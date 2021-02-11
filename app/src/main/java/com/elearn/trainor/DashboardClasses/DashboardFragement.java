@@ -1,5 +1,6 @@
 package com.elearn.trainor.DashboardClasses;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -120,6 +121,7 @@ public class DashboardFragement extends Fragment implements View.OnClickListener
 
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

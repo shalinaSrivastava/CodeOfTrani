@@ -50,7 +50,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
     List<CustomerDetailsProperty> customerIDList;
     SharedPreferenceManager spManager;
     String diplomaSwitch_status, safetyCardSwitch_Status, toolsSwitch_Status, documentsSwitch_Status;
-    FirebaseAnalytics analytics;
+    //FirebaseAnalytics analytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        analytics.setCurrentScreen(this, "DownloadedCourses&Tools", this.getClass().getSimpleName());
+        //analytics.setCurrentScreen(this, "DownloadedCourses&Tools", this.getClass().getSimpleName());
     }
 
     public static Downloads getInstance() {
@@ -79,7 +79,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
     }
 
     public void getControls() {
-        analytics = FirebaseAnalytics.getInstance(Downloads.this);
+        //analytics = FirebaseAnalytics.getInstance(Downloads.this);
         spManager = new SharedPreferenceManager(Downloads.this);
         dbSelect = new DataBaseHandlerSelect(Downloads.this);
         dbInsert = new DataBaseHandlerInsert(Downloads.this);
@@ -123,7 +123,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
         if (toolsPropertyList.size() > 0) {
             for (ToolsProperty info : toolsPropertyList) {
                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                File toolFile = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/" + info.name);
+                File toolFile = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/" + info.name);
                 if (!toolFile.exists()) {
                     dbUpdate.updateToolBoxDetails(info, "FileDownloadedUpdate");
                 } else {
@@ -212,7 +212,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
             List<DiplomaProperty> dwStatusList = dbSelect.getDownloadedCourseFilesFromCourseDownloadTable("IfNull(Status,'No')as dwStatus, licenseId, IfNull(CompletionDate,'') as completedDate ", spManager.getUserID(), "", "");
             for (DiplomaProperty info : dwStatusList) {
                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course/" + info.licenseId);
+                File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course/" + info.licenseId);
                 String filePath = root.getAbsolutePath();
                 File file = new File(filePath);
                 if (file.exists() && info.downloadedStatus.equals("Yes")) {
@@ -291,8 +291,8 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
                 for (int i = 0; i < toolsPropertyList.size(); i++) {
                     ToolsProperty info = toolsPropertyList.get(i);
                     File rootDir = android.os.Environment.getExternalStorageDirectory();
-                    File rootDiploma = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
-                    File rootTools = new File(rootDir.getAbsolutePath() + "/MyTrainor/.tools/");
+                    File rootDiploma = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Diplomas/");
+                    File rootTools = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/.tools/");
                     File downloadToolsDir = new File(rootTools.getAbsolutePath());
                     File downloadDiplomasDir = new File(rootDiploma.getAbsolutePath());
                     File downloadUnzippedDir = new File(rootTools.getAbsolutePath() + "/UnZipped/");
@@ -303,7 +303,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
                 }
                 offlineVideoList.clear();
                 File rootDir = android.os.Environment.getExternalStorageDirectory();
-                File root = new File(rootDir.getAbsolutePath() + "/MyTrainor/" + spManager.getUserID() + "/.Course");
+                File root = new File(rootDir.getAbsolutePath() + "/Android/data/com.elearn.trainor/files/MyTrainor/" + spManager.getUserID() + "/.Course");
                 String filePath = root.getAbsolutePath();
                 File dir = new File(filePath);
                 DeleteRecursive(dir);
@@ -320,7 +320,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
                 }
                 Bundle bundle = new Bundle();
                 bundle.putString("Diploma_Sync", diplomaSwitch_status);
-                analytics.logEvent("Diploma_Sync", bundle);
+                //analytics.logEvent("Diploma_Sync", bundle);
                 break;
             case R.id.syncSafetyCard:
                 if (syncSafetyCard.isChecked()) {
@@ -332,7 +332,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
                 }
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("SafetyCard_Sync", safetyCardSwitch_Status);
-                analytics.logEvent("SafetyCard_Sync", bundle2);
+                //analytics.logEvent("SafetyCard_Sync", bundle2);
                 break;
             case R.id.syncTools:
                 if (syncTools.isChecked()) {
@@ -344,7 +344,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
                 }
                 Bundle bundle3 = new Bundle();
                 bundle3.putString("Tools_Sync", toolsSwitch_Status);
-                analytics.logEvent("Tools_Sync", bundle3);
+                //analytics.logEvent("Tools_Sync", bundle3);
                 break;
             case R.id.syncDocument:
                 if (syncDocument.isChecked()) {
@@ -358,7 +358,7 @@ public class Downloads extends AppCompatActivity implements View.OnClickListener
                 }
                 Bundle bundle4 = new Bundle();
                 bundle4.putString("Document_Sync", documentsSwitch_Status);
-                analytics.logEvent("Document_Sync", bundle4);
+                //analytics.logEvent("Document_Sync", bundle4);
                 break;
         }
     }

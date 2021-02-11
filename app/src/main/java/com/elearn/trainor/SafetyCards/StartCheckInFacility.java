@@ -1,15 +1,18 @@
 package com.elearn.trainor.SafetyCards;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +48,8 @@ import com.elearn.trainor.Login;
 import com.elearn.trainor.PropertyClasses.FacilityProperty;
 import com.elearn.trainor.PropertyClasses.ReportEntryProperty;
 import com.elearn.trainor.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -52,6 +57,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -93,6 +99,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
     int checkedInFacilityCount = 0;
     List<ReportEntryProperty> checkedInFacilityList;
     int mapi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +135,21 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         btn_search.setOnClickListener(this);
 
         fetchLocation();
+/*
+        switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
+            case ConnectionResult.SUCCESS:
+                fetchLocation();
+                break;
+            case ConnectionResult.SERVICE_MISSING:
+                Toast.makeText(this, "Google Play Services Missing", Toast.LENGTH_SHORT).show();
+                break;
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                //The user has to update play services
+                Toast.makeText(this, "Update Google Play Services", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this, GooglePlayServicesUtil.isGooglePlayServicesAvailable(this), Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     @SuppressLint("MissingPermission")
@@ -175,9 +197,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
         try {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-            map.setBuildingsEnabled(true);
-            map.setIndoorEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             map.addMarker(markerOptions);
         } catch (Exception e) {
             e.printStackTrace();
@@ -347,8 +367,10 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
             public byte[] getBody() throws AuthFailureError {
                 JSONObject jsonBody = new JSONObject();
                 try {
-                    jsonBody.put("lat", "59.266832");
-                    jsonBody.put("long", "10.409415");
+                    /*jsonBody.put("lat", "59.266832");
+                    jsonBody.put("long", "10.409415");*/
+                    jsonBody.put("lat",String.valueOf( currentLocation.getLatitude()));
+                    jsonBody.put("long",String.valueOf(currentLocation.getLongitude()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -367,6 +389,10 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
             MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(facility.name);
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon));
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+            //map.animateCamera(CameraUpdateFactory.newLatLng(latLng)); // for testing only
+            //map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15)); // for testing only
+
             map.setBuildingsEnabled(true);
             map.setIndoorEnabled(true);
             map.addMarker(markerOptions);

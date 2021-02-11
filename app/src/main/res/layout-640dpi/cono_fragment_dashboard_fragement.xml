@@ -14,7 +14,6 @@
         android:orientation="vertical">
 
         <ScrollView
-            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_trainor_popup">
@@ -101,8 +100,8 @@
 
                         <ImageView
                             android:id="@+id/imageView8"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
+                            android:layout_width="37dp"
+                            android:layout_height="51dp"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:clickable="false"

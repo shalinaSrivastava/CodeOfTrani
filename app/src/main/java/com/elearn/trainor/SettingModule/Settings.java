@@ -5,12 +5,14 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -22,6 +24,7 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,6 +73,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -117,6 +121,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     boolean isWindowActiviated = false;
     String isFromRefresh, FromPage = "";
     FirebaseAnalytics analytics;
+    String currentPhotoPath;
+    Uri photoURI;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -156,7 +162,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     protected void onResume() {
         isWindowActiviated = true;
         super.onResume();
-        analytics.setCurrentScreen(Settings.this, "SettingsPage", null);
+       // analytics.setCurrentScreen(Settings.this, "SettingsPage", null);
     }
 
     @Override
@@ -166,6 +172,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         super.onStop();
     }
 
+    @SuppressLint("MissingPermission")
     public void getControls() {
         analytics = FirebaseAnalytics.getInstance(Settings.this);
         spManager = new SharedPreferenceManager(Settings.this);
@@ -884,10 +891,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             if (selectedImage != null && !selectedImage.toString().isEmpty()) {
-                if (Build.VERSION.SDK_INT >= 19) {
-                    final int takeFlags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
-                    getContentResolver().takePersistableUriPermission(selectedImage, takeFlags);
-                }
+                final int takeFlags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                getContentResolver().takePersistableUriPermission(selectedImage, takeFlags);
                 String filePath = FilePickUtils.getSmartFilePath(Settings.this, selectedImage);
                 final File imageFile = new File(filePath);
                 if (imageFile.exists()) {
@@ -903,15 +908,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
             }
         } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Intent intent = new Intent(Settings.this, ImageCropActivity.class);
-            String filePath = FilePickUtils.getSmartFilePath(Settings.this, fileUri);
-            intent.putExtra("ImageURI", fileUri);
-            intent.putExtra("ImagePath", filePath);
+            //String filePath = FilePickUtils.getSmartFilePath(Settings.this, fileUri);
+            intent.putExtra("ImageURI", photoURI);
+            intent.putExtra("ImagePath", currentPhotoPath);
             intent.putExtra("From", "Camera");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
             if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, getResources().getString(R.string.picture_not_taken), Toast.LENGTH_SHORT);
+                Toast.makeText(this, getResources().getString(R.string.picture_not_taken), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -919,30 +924,67 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     @NeedsPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void browsePic() {
         Intent browseDoc;
-        if (Build.VERSION.SDK_INT >= 19) {
-            browseDoc = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            browseDoc.addCategory(Intent.CATEGORY_OPENABLE);
-            browseDoc.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
-            browseDoc.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        } else {
-            browseDoc = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        }
+        browseDoc = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        browseDoc.addCategory(Intent.CATEGORY_OPENABLE);
+        browseDoc.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        browseDoc.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         browseDoc.setType("image/*");
         startActivityForResult(browseDoc, RESULT_LOAD_IMAGE);
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     @NeedsPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void capturePic() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Trainor Profile Image");
+       /* Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File mediaStorageDir = new File(Environment.getExternalStorageState(new File(Environment.DIRECTORY_PICTURES)), "Trainor Profile Image");
         if (mediaStorageDir.exists()) {
             DeleteRecursive(mediaStorageDir);
         }
         fileUri = new ImageCaptureClass().getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        startActivityForResult(intent, CAMERA_REQUEST);
+        startActivityForResult(intent, CAMERA_REQUEST);*/
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        getString(R.string.file_provider_authority),
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, CAMERA_REQUEST);
+            }
+        }
+
+    }
+
+    private File createImageFile() throws IOException {
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+
+        return image;
     }
 
     public AlertDialog profilePopUpDialog() {

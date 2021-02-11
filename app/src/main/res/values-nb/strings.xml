@@ -87,7 +87,6 @@
     <string name="notification_new_diploma">Nytt kursbevis</string>
     <string name="notification_courses_expired">Kurs utløpt</string>
     <string name="notification_safety_card">Nytt sikkerhetskort</string>
-    <string name="notification_expired_safety_card">Utgått sikkerhetskort</string>
     <!-- Downloads  -->
     <string name="text_header_download">Nedlastinger</string>
     <string name="download_over_wifi">Last kun ned over Wifi</string>
@@ -110,12 +109,6 @@
     <string name="device_not_support_call_fun">Din enhet støtter ikke denne funksjonaliteten.</string>
     <string name="call_permission_error">Feil. Vi har ikke tilgang til å ringe.</string>
     <!-- Safety Cards -->
-    <string name="card_no">Kortnummer</string>
-    <string name="card_code">Kortkode</string>
-    <string name="add_card">Legg til kort</string>
-    <string name="register_saftey_cards">Registrer sikkerhetskort</string>
-    <string name="alertMsgCardNo">Skriv inn et gyldig kortnummer</string>
-    <string name="alertMsgCardCode">Skriv inn en gyldig kortkode</string>
     <string name="safety_card_des_1">Sikkerhetskort viser hvilke arbeidstillatelser du har for spesifikke selskaper og lokasjoner.</string>
     <string name="valid_to">Gyldig til</string>
     <string name="compny_name">Bedriftsnavn</string>
@@ -124,7 +117,6 @@
     <!-- <string name="messsage">Meldinger</string>-->
     <string name="documents">Dokumenter</string>
     <!-- New added My Company -->
-    <string name="size">Størrelse:</string>
     <!-- Courses Page -->
     <string name="elearn_course_heading">E-læringskurs</string>
     <string name="classroom_course_heading">Klasseromskurs</string>
@@ -178,7 +170,6 @@
     <string name="when_no_diploma1">Her vil dine kursbevis vises når du fullfører et Trainor-kurs.</string>
     <string name="when_no_diploma2">Det ser ikke ut som du har noen aktive kursbevis akkurat nå.</string>
     <!-- New added Diploma  -->
-    <string name="expires">Utløper</string>
     <string name="active_diploma">Aktive kursbevis</string>
     <string name="expired_diploma">Kurshistorikk</string>
     <string name="get_more_at_trainor_no">Bestill flere kurs på Trainor.no</string>
@@ -203,10 +194,6 @@
     <!--
     <string name="card_added_successfully">Sikkerhetskortet ble funnet ble lagt til!</string>
     -->
-    <string name="card_added_successfully">Sikkerhetskortet er lagt til.</string>
-    <string name="invalid_card_titile">Fant ikke kortet</string>
-    <string name="invalid_card_msg">Vi kunne ikke finne noen kort med dataene du tastet inn. Se over dataene og forsøk igjen.</string>
-    <string name="already_exists">Finnes fra før</string>
     <string name="image_compression_error">Feil i bildekomprimeringen</string>
     <string name="image_not_supported">Dette bildeformatet er dessverre ikke støttet.</string>
     <!-- <string name="this_file_doesnot_exist">Denne filen eksisterer ikke.</string>-->
@@ -363,7 +350,6 @@
     <string name ="completed_date">Fullført dato</string>>
 
     <!-- New Added  11-09-2019 -->
-    <string name="conco_philips_header">ConocoPhilips</string>
     <string name="register_psi">Registrer PSI</string>
     <string name="psi_card_not_uploaded"> kort ble ikke lastet opp. Koble til internett for å laste opp.</string>
     <string name="psi_cards_not_uploaded"> kort ble ikke lastet opp. Koble til internett for å laste opp.</string>
@@ -398,8 +384,6 @@
     <string name="not_assocaiated_dept">Sted/plattform har ingen avdelinger.</string>
     <string name="select_place_platform_first">Vennligst velg sted/plattform først.</string>
     <string name="registered_successfully">Din samtale er lagret. Takk for ditt bidrag til økt sikkerhet!</string>
-    <string name="course_sync_error">Koble til internett for å synkronisere kurset mot server.</string>
-    <string name="resume_courses">Fortsett kurs</string>
     <string name="select_valid_regd_date">Vennligst velg en gyldig registreringsdato.</string>
     <string name="blank_topic_discussed">Vennligst fyll ut hvilke emner som er diskutert.</string>
 
@@ -415,7 +399,6 @@
     <string name="register_card">Bekreft e-post eller telefonnummer</string>
     <string name="verify_info_des1">Har du sikkerhetskort fra Sikkerhetskort.no? Legg det til i appen ved å bekrefte e-posten eller telefonnummeret ditt.</string>
     <string name="verify_info_des2">Klikk på e-posten eller telefonnummeret du vil bekrefte.</string>
-    <string name="planned_work_in_hours">Planlagt arbeidstid i timer</string>
     <string name="remember_n_check"><html><font color="#333333" size="18">Har du husket?</font></html>
         \n<html> <font color="#333333" size="18">\t&#9679;  Å ta med deg alle tingene dine?</font></html>
         \n<html> <font color="#333333" size="18">\t&#9679;  Å rydde etter deg?</font></html>

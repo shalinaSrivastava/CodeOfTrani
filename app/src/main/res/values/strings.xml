@@ -95,7 +95,6 @@
     <string name="notification_new_diploma">New diploma</string>
     <string name="notification_courses_expired">Course expired</string>
     <string name="notification_safety_card">New safety card</string>
-    <string name="notification_expired_safety_card">Safety card expired</string>
 
     <!--Downloads -->
     <string name="text_header_download">Downloads</string>
@@ -122,12 +121,6 @@
     <string name="call_permission_error">Call permission error</string>
 
     <!--Safety Cards-->
-    <string name="card_no">Card number</string>
-    <string name="card_code">Card code</string>
-    <string name="add_card">Add card</string>
-    <string name="register_saftey_cards">Register safety card</string>
-    <string name="alertMsgCardNo">Please enter a valid card number</string>
-    <string name="alertMsgCardCode">Please enter a valid card code</string>
     <string name="safety_card_des_1">Safety cards show what work approvals you have for specific companies and installations</string>
     <string name="valid_to">Valid to</string>
     <string name="compny_name">Company name</string>
@@ -136,7 +129,6 @@
     <!--My Company-->
     <string name="documents">Documents</string>
     <!--New added My Company-->
-    <string name="size">Size: </string>
 
     <!--Courses Page-->
     <string name="elearn_course_heading">E-learning courses</string>
@@ -182,7 +174,6 @@
     <string name="not_enough_space">Not enough space on device</string>
 
     <!--New added Diploma -->
-    <string name="expires">Expires</string>
     <string name="active_diploma">Active diplomas</string>
     <string name="expired_diploma">History</string>
     <string name="get_more_at_trainor_no">Get more courses at Trainor.no</string>
@@ -205,10 +196,6 @@
     <string name="wifi_not_not_ebabled_tools">Wifi is not enabled. Tools files can not be downloaded over Wifi, Please enable connection and try again.</string>
     <string name="safety_card_exception">Safety card exception</string>
     <string name="try_after_some_time">Please try again later.</string>
-    <string name="card_added_successfully">Card added successfully</string>
-    <string name="invalid_card_titile">Invalid card</string>
-    <string name="invalid_card_msg">The card details you entered are not valid. Please enter a valid card.</string>
-    <string name="already_exists">Already exists.</string>
     <string name="image_compression_error">Image compression error</string>
     <string name="image_not_supported">Image format not supported</string>
     <string name="image_crop_exception">Image crop exception</string>
@@ -228,8 +215,7 @@
     <string name="server_error_msg">Server error, please try again later</string>
 
     <!--Map-->
-    <!--<string name="google_maps_key">AIzaSyDEz3g76J6TE1RXS5OqEaxwiysThPE9yV0</string>-->
-    <string name="google_maps_key">AIzaSyBtI3avY8gxHkxLA6JNwlBCnpsEt8ZzFzA</string>
+    <!--<string name="google_maps_key">AIzaSyBtI3avY8gxHkxLA6JNwlBCnpsEt8ZzFzA</string>-->
     <string name="title_activity_google_map">Map</string>
 
     <!-- Alert Dialog -->
@@ -368,7 +354,6 @@
     <string name="tool_delete_des"> Are you sure you want Delete this tool? </string>
 
     <!-- New Added  11-09-2019 -->
-    <string name="conco_philips_header">ConocoPhilips</string>
     <string name="register_psi">Register PSI</string>
     <string name="psi_card_not_uploaded"> card not uploaded. Connect to the internet to upload.</string>
     <string name="psi_cards_not_uploaded"> cards not uploaded. Connect to the internet to upload.</string>
@@ -377,7 +362,6 @@
     <string name="start_psi_course">Start PSI course</string>
 
     <string name="file_provider_authority" translatable="false">com.elearn.trainor.provider</string>
-    <string name="asset_statements" translatable="false">[{ \"include\": \"https://www.trainor.no/.well-known/assetlinks.json\" }]</string>
 
     <string name="risk_been_identified">Have new hazards / risks been identified during the conversation?</string>
     <string name="planned_follow_up">Planned follow-up</string>
@@ -410,8 +394,6 @@
     <string name="not_assocaiated_dept">No department is associated with above platfom.</string>
     <string name="select_place_platform_first">Please select Place/Platform first</string>
     <string name="registered_successfully">Your conversations has been saved. Thank you for your contribution to increased security!</string>
-    <string name="course_sync_error">Please connect to internet for course syncing.</string>
-    <string name="resume_courses">Resume Course</string>
     <string name="select_valid_regd_date">Please select valid registration date.</string>
     <string name="blank_topic_discussed">Topic discussed cannot be blank.</string>
 
@@ -422,23 +404,77 @@
     <string name="no_place_platform_associated">No place/platform is associated with this user.</string>
 
     <!--new added for Facility safetycard-->
-    <string name="safety_card_des_2">If the company you work for use sikkerhetskort.no you can add your card here by confirming your contact details and it will stay up to date</string>
+    <string name="safety_card_des_2">If the company you work for use sikkerhetskort.no you can add your card here by confirming your contact details, and they will always be here, up to date</string>
     <string name="register_card">Verify phone or e-mail</string>
-    <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to app by validating your e-mail or phone number</string>
+    <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to the app by validating your e-mail or phone number</string>
     <string name="verify_info_des2">Click the e-mail or phone number you would like to verify.</string>
-    <string name="planned_work_in_hours">Planned work in hours</string>
-    <string name="remember_n_check"><html><font color="black" size="18">Did you remember?</font></html>
-        \n<html> <font color="black" size="18">\t&#9679;  To bring all your things?</font></html>
-        \n<html> <font color="black" size="18">\t&#9679;  To clean up after yourself?</font></html>
-        \n<html> <font color="black" size="18">\t&#9679;  To lock all doors?</font></html></string>
+    <string name="remember_n_check"><html><font color="#333333" size="18">Did you remember?</font></html>
+        \n<html> <font color="#333333" size="18">\t&#9679;  To bring all your things?</font></html>
+        \n<html> <font color="#333333" size="18">\t&#9679;  To clean up after yourself?</font></html>
+        \n<html> <font color="#333333" size="18">\t&#9679;  To lock all doors?</font></html></string>
     <string name="frequently_asked_questions" translatable="false"><html><font color="black" size="18">Frequently asked questions</font></html>
-       <html> <font size="15"> \n\nThe e-mail or phone number has to be registered on your card on sikkerhetskort.no By verifying the cards connected to the contact point will automatically be syncronized to your Trainor account. In addition your competence will be syncronized to sikkerhetskort.no</font></html>
-        <html> <font color="black" size="16">\n\nI have verified all my e-mails and phone numbers but am still missing one or more safety cards.</font></html>
-       <html> <font size="15"> \nAsk your closest leader or responsible for safety cards in your company what e-mail address or phone number you are registered with on Sikkerhetskort.no. This information needs to be filled in and correct before you can syncronize your safety cards.</font></html>
-        <html> <font color="black" size="16">\n\nWhy do I have to confirm my e-mail or phone number to see my safety card?</font></html>
+       <html> <font size="15"> \n\nThe e-mail or phone number has to be registered to your card on sikkerhetskort.no. By verifying the cards connected to the contact point, they will automatically be syncronized to your Trainor account. In addition your competence will be syncronized to sikkerhetskort.no</font></html>
+        <html> <font color="#333333" size="16">\n\nI have verified all my e-mails and phone numbers but am still missing one or more safety cards.</font></html>
+       <html> <font size="15"> \nAsk your closest leader, or responsible for safety cards in your company what e-mail address or phone number you are registered with on Sikkerhetskort.no. This information needs to be filled in and correct before you can syncronize your safety cards.</font></html>
+        <html> <font color="#333333" size="16">\n\nWhy do I have to confirm my e-mail or phone number to see my safety cards?</font></html>
         <html> <font size="15">\nTo be sure that no one is pretending to be you when you enter a facility, we must confirm that the card issued is intended for you.</font></html>
         <html> <font size="15">\nBecause we do not know which email is connected to a security card, you may want to confirm everyone.</font></html>
     </string>
+    <string name="select_a_facility_nearby">Select a facility nearby</string>
+    <string name="or_enter_facility_number">Or enter facility number:</string>
+    <string name="klikk_for_a_skrive">Click to write</string>
+    <string name="phone_number_security">Phone no security: \</string>
+    <string name="since_entry">\ since entry</string>
+    <string name="waiting_for_response">Waiting for response</string>
+    <string name="venter_p_godkjenning_fra_driftssentral">Awaiting approval from the operation center</string>
+    <string name="checked_in_to_facility">Checked in to facility</string>
+    <string name="your_safety_cards">Your safety cards</string>
+    <string name="register_entrance_to_new_facility">Register entrance to new facility</string>
+    <string name="notify_exit_header">Notify exit of facility</string>
+    <string name="confirm_exit">Confirm exit</string>
+    <string name="enter_code_below">Please enter the code from the text in the box below</string>
+    <string name="submit_code">Submit code</string>
+    <string name="verify_more_contacts">Verify more contacts</string>
+    <string name="sync_safety_cards">Any safety cards connected to the e-mail should be syncronized within a few minutes.</string>
+    <string name="verify_info_header">Verify info</string>
+    <string name="reporting_entry_into">Reporting entry into \</string>
+    <string name="guest_bringing_to_facility">How many guests are you bringing into the facility?</string>
+    <string name="hours_planning_to_work">How many hours are you planning to work in the facility?</string>
+    <string name="operation_reminder">This gives you and the operations center a reminder when the time is up.</string>
+    <string name="report_entry">Report entry</string>
+    <string name="checkin_facility">Check in to facility</string>
+    <string name="add_more_hours">If you want you can add more hours.</string>
+    <string name="hrs_planning_to_work">How many hours are you planning to work in the facility?</string>
+    <string name="update_work_hours">Update work hours</string>
+    <string name="unverified_contact_info">Unverified contact info</string>
+    <string name="frequently_asked_question">Frequently asked questions</string>
+    <string name="verified_contact_info">Verified contact info</string>
+    <string name="extend_stay">Extend stay</string>
+    <string name="report_entry_to_new_facility">Report entry to new facility</string>
 
+    <string name="approval_issue">Approval issue</string>
+    <string name="contact_customer_care">Please contact administrator / support.</string>
+    <string name="sucessfully_checked_out">\ is successfully checked out.</string>
+    <string name="email_sent_to">An e-mail has been sent to \ </string>
+    <string name="verify_ur_email">. Please check your e-mail for a code.</string>
+    <string name="msg_sent_to">A text message has been sent to \</string>
+    <string name="not_having_valid_email_phone">You do not have a valid email address/phone associated with your account.</string>
+    <string name="input_valid_code">Please input valid code.</string>
+    <string name="verified">Verified</string>
+    <string name="not_verified_try_again">Not verified. Try again later.</string>
+    <string name="request_id_code_invalid">Request id or code is invalid. Please try again!</string>
+    <string name="went_wrng_contact_admin">Safety card not confirmed.</string>
+    <string name="select_valid_hour">Please select valid hours.</string>
+    <string name="input_valid_text">Please input valid text</string>
+    <string name="have_been_facility_for">You have been in the facility for \</string>
+    <string name="you_have">You have \</string>
+    <string name="left_before_being_notified_exit">\ left before being notified of exit.</string>
+    <string name="new_time_left">New time left is \</string>
+    <string name="confirm_all_your_e_mails_and_phone_numbers_to_make_sure">Confirm all your e-mails and phone numbers to make sure you have all your safety cards syncronized.</string>
+    <string name="missing_cards">Missing cards?</string>
+    <string name="add_more_cards">Add more cards</string>
+    <string name="no_facility_found">No facility found!</string>
+    <string name="notify_exit_from_facility">Notify exit from facility</string>
+    <string name="facility_rejected">You have been denied access. Please contact the operations center.</string>
 
 </resources>

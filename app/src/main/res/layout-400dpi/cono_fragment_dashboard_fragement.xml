@@ -14,7 +14,6 @@
         android:orientation="vertical">
 
         <ScrollView
-            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_trainor_popup">
@@ -95,7 +94,7 @@
                             android:layout_centerHorizontal="true"
                             android:clickable="false"
                             android:gravity="center"
-                            android:text="ConnocoPhillips"
+                            android:text="@string/conocophillips"
                             android:textColor="@android:color/black"
                             android:textSize="8.5pt" />
 

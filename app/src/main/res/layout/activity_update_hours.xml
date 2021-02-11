@@ -10,7 +10,6 @@
         layout="@layout/custom_page_header" />
 
     <RelativeLayout
-        android:id="@+id/rl_update_hours_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tool_bar"
@@ -137,7 +136,6 @@
         android:backgroundTint="#27ae60">
 
         <TextView
-            android:id="@+id/txt_update_work_hr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

@@ -79,7 +79,6 @@
             android:orientation="horizontal"
             android:weightSum="1">
             <TextView
-                android:id="@+id/tv_register_psi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -113,7 +112,6 @@
             android:orientation="horizontal"
             android:weightSum="1">
             <TextView
-                android:id="@+id/tv_start_psi_course"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -175,7 +173,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/ll_trainor_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

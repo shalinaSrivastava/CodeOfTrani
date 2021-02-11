@@ -34,7 +34,6 @@
                 android:text="@string/remember_n_check" />
 
             <RelativeLayout
-                android:id="@+id/rl_facility_des"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_checks"
@@ -92,7 +91,6 @@
                             android:visibility="gone"/>
 
                         <TextView
-                            android:id="@+id/txt_report_entery"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"

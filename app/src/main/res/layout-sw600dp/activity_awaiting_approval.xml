@@ -41,7 +41,6 @@
             android:layout_marginStart="-30dp"
             android:src="@drawable/loading" />
         <ImageView
-            android:id="@+id/iv_company"
             android:layout_toRightOf="@+id/gifview_loading"
             android:layout_width="150dp"
             android:layout_height="150dp"

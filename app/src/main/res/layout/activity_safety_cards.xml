@@ -152,7 +152,6 @@
                             android:background="@drawable/rounded_search">
 
                             <TextView
-                                android:id="@+id/txt_add_more_cards"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
@@ -201,7 +200,6 @@
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/txt_report_entery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

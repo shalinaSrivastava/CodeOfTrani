@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.elearn.trainor">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -13,21 +11,28 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission
         android:name="android.permission.MANAGE_DOCUMENTS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.ACCESS_WIFI_STATE"
         tools:ignore="UniquePermission" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission
         android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
@@ -49,7 +54,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
     <application
         android:name=".ApplicationClass"
         android:allowBackup="false"
@@ -61,14 +70,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup">
-        <activity android:screenOrientation="portrait" android:name=".SafetyCards.UpdateHours" />
-        <activity android:screenOrientation="portrait" android:name=".SafetyCards.ProcessVerifyInfo" />
-        <activity android:screenOrientation="portrait" android:name=".SafetyCards.NotifyExit" />
-        <activity android:screenOrientation="portrait" android:name=".SafetyCards.CheckedInFacility" />
-        <activity android:screenOrientation="portrait" android:name=".SafetyCards.AwaitingApproval" />
-        <activity android:screenOrientation="portrait" android:name=".SafetyCards.ReportEntry" />
-        <activity android:screenOrientation="portrait" android:name=".SafetyCards.StartCheckInFacility" />
+        tools:replace="android:allowBackup"
+        tools:ignore="UnusedAttribute">
+        <activity
+            android:name=".SafetyCards.UpdateHours"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SafetyCards.ProcessVerifyInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SafetyCards.NotifyExit"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SafetyCards.CheckedInFacility"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SafetyCards.AwaitingApproval"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SafetyCards.ReportEntry"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SafetyCards.StartCheckInFacility"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -85,11 +109,11 @@
             android:configChanges="locale|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.elearn.trainor.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -135,9 +159,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
-       <!-- <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="60b5d446101383221df5ef5952813cbe864d25c5" />-->
+        <!-- <meta-data
+             android:name="io.fabric.ApiKey"
+             android:value="60b5d446101383221df5ef5952813cbe864d25c5" />-->
 
         <activity
             android:name=".NeedSupport"
@@ -214,7 +238,7 @@
             android:name=".SafetyCards.VerifyInfo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Diploma.Diploma"
+            android:name="com.elearn.trainor.Diploma.Diploma"
             android:screenOrientation="portrait">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
@@ -251,7 +275,7 @@
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".CourseModule.CourseDownloadingActivity"
+            android:name="com.elearn.trainor.CourseModule.CourseDownloadingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".OfflineDownload"
@@ -277,6 +301,7 @@
         <meta-data
             android:name="android.content.APP_RESTRICTIONS"
             android:resource="@xml/app_restrictions" />
+
     </application>
 
 </manifest>

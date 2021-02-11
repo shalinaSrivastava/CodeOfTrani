@@ -95,7 +95,6 @@
     <string name="notification_new_diploma">New diploma</string>
     <string name="notification_courses_expired">Course expired</string>
     <string name="notification_safety_card">New safety card</string>
-    <string name="notification_expired_safety_card">Safety card expired</string>
 
     <!--Downloads -->
     <string name="text_header_download">Downloads</string>
@@ -122,12 +121,6 @@
     <string name="call_permission_error">Call permission error</string>
 
     <!--Safety Cards-->
-    <string name="card_no">Card number</string>
-    <string name="card_code">Card code</string>
-    <string name="add_card">Add card</string>
-    <string name="register_saftey_cards">Register safety card</string>
-    <string name="alertMsgCardNo">Please enter a valid card number</string>
-    <string name="alertMsgCardCode">Please enter a valid card code</string>
     <string name="safety_card_des_1">Safety cards show what work approvals you have for specific companies and installations</string>
     <string name="valid_to">Valid to</string>
     <string name="compny_name">Company name</string>
@@ -136,7 +129,6 @@
     <!--My Company-->
     <string name="documents">Documents</string>
     <!--New added My Company-->
-    <string name="size">Size: </string>
 
     <!--Courses Page-->
     <string name="elearn_course_heading">E-learning courses</string>
@@ -182,7 +174,6 @@
     <string name="not_enough_space">Not enough space on device</string>
 
     <!--New added Diploma -->
-    <string name="expires">Expires</string>
     <string name="active_diploma">Active diplomas</string>
     <string name="expired_diploma">History</string>
     <string name="get_more_at_trainor_no">Get more courses at Trainor.no</string>
@@ -205,10 +196,6 @@
     <string name="wifi_not_not_ebabled_tools">Wifi is not enabled. Tools files can not be downloaded over Wifi, Please enable connection and try again.</string>
     <string name="safety_card_exception">Safety card exception</string>
     <string name="try_after_some_time">Please try again later.</string>
-    <string name="card_added_successfully">Card added successfully</string>
-    <string name="invalid_card_titile">Invalid card</string>
-    <string name="invalid_card_msg">The card details you entered are not valid. Please enter a valid card.</string>
-    <string name="already_exists">Already exists.</string>
     <string name="image_compression_error">Image compression error</string>
     <string name="image_not_supported">Image format not supported</string>
     <string name="image_crop_exception">Image erop exception</string>
@@ -367,7 +354,6 @@
     <string name ="completed_date">Completed date</string>
 
     <!-- New Added  11-09-2019 -->
-    <string name="conco_philips_header">ConocoPhilips</string>
     <string name="register_psi">Register PSI</string>
     <string name="psi_card_not_uploaded"> cards not uploaded. Connect to the internet to upload.</string>
     <string name="psi_cards_not_uploaded"> cards not uploaded. Connect to the internet to upload.</string>
@@ -403,8 +389,6 @@
     <string name="not_assocaiated_dept">No department is associated with above platfom.</string>
     <string name="select_place_platform_first">Please select Place/Platform first</string>
     <string name="registered_successfully">Your conversations has been saved. Thank you for your contribution to increased security!</string>
-    <string name="course_sync_error">Please connect to internet for course syncing.</string>
-    <string name="resume_courses">Resume Course</string>
     <string name="select_valid_regd_date">Please select valid registration date.</string>
     <string name="blank_topic_discussed">Topic discussed cannot be blank.</string>
 
@@ -420,7 +404,6 @@
     <string name="register_card">Verify phone or e-mail</string>
     <string name="verify_info_des1">Have a safety card from sikkerhetskort.no? Add it to the app by validating your e-mail or phone number</string>
     <string name="verify_info_des2">Click the e-mail or phone number you would like to verify.</string>
-    <string name="planned_work_in_hours">Planned work in hours</string>
     <string name="remember_n_check"><html><font color="#333333" size="18">Did you remember?</font></html>
         \n<html> <font color="#333333" size="18">\t&#9679;  To bring all your things?</font></html>
         \n<html> <font color="#333333" size="18">\t&#9679;  To clean up after yourself?</font></html>

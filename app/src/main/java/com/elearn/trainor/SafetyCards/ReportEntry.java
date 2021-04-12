@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,13 +50,14 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
     TextView text_header, txt_hour_count, txt_guest_count, txt_company_name, txt_guest_numb;
     private ProgressDialog pDialog;
     SharedPreferenceManager spManager;
-    String companyName, facilityName, facilityId,customerId, facilityStatus, entryId, allowGuest;
-    RelativeLayout rl_remove_guest, rl_add_guest, rl_minus_hour, rl_add_hour, rl_report_entery,rl_guest_count;
+    String companyName, facilityName, facilityId,customerId, facilityStatus, entryId, allowGuest, requireProjectNum;
+    RelativeLayout rl_remove_guest, rl_add_guest, rl_minus_hour, rl_add_hour, rl_report_entery,rl_guest_count,rl_project_num;
     int guestCount = 0, hourCount = 1;
     int workSeconds;
     ConnectionDetector connectionDetector;
     DataBaseHandlerSelect dbSelect;
     DataBaseHandlerInsert dbInsert;
+    EditText edit_project_num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,9 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
         }
         if (getIntent().getStringExtra("AllowGuest") != null && !Objects.equals(getIntent().getStringExtra("AllowGuest"), "")) {
             allowGuest = getIntent().getStringExtra("AllowGuest");
+        }
+        if (getIntent().getStringExtra("RequireProjectNum") != null && !Objects.equals(getIntent().getStringExtra("RequireProjectNum"), "")) {
+            requireProjectNum = getIntent().getStringExtra("RequireProjectNum");
         }
         getControls();
     }
@@ -100,6 +105,8 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
         rl_report_entery = findViewById(R.id.rl_report_entery);
         txt_guest_numb = findViewById(R.id.txt_guest_numb);
         rl_guest_count = findViewById(R.id.rl_guest_count);
+        edit_project_num = findViewById(R.id.edit_project_num);
+        rl_project_num = findViewById(R.id.rl_project_num);
 
         ll_back.setOnClickListener(this);
         llhome.setOnClickListener(this);
@@ -115,6 +122,14 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
         }else{
             txt_guest_numb.setVisibility(View.GONE);
             rl_guest_count.setVisibility(View.GONE);
+        }
+
+        if(requireProjectNum.equals("true")){
+            rl_project_num.setVisibility(View.VISIBLE);
+        }else if(requireProjectNum.equals("false")){
+            rl_project_num.setVisibility(View.GONE);
+        }else{
+            rl_project_num.setVisibility(View.GONE);
         }
 
     }
@@ -256,6 +271,11 @@ public class ReportEntry extends AppCompatActivity implements View.OnClickListen
             public byte[] getBody() throws AuthFailureError {
                 JSONObject jsonBody = new JSONObject();
                 try {
+                    String projectNum = edit_project_num.getText().toString().trim();
+                    if(projectNum.equals("")){
+                        projectNum = null;
+                    }
+                    jsonBody.put("projectNumber",projectNum);
                     jsonBody.put("facilityId", facilityId);
                     jsonBody.put("safetycardId", safetycardId);
                     jsonBody.put("numberOfGuests", gusests);

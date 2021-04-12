@@ -1490,7 +1490,7 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
     public List<FacilityProperty> getFacilityListFromFacilityTable(String facilityState) {
         List<FacilityProperty> facilityPropertyList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String Query = "Select id,name,customerId,customerName,employeeCheckinState,imageUrl,distanceInKm,allowGuests,latitude,longitude from FacilityTable  where employeeCheckinState <> '" +facilityState+ "' ";
+        String Query = "Select id,name,customerId,customerName,employeeCheckinState,imageUrl,distanceInKm,allowGuests,latitude,longitude,requireProjectNumber from FacilityTable  where employeeCheckinState <> '" +facilityState+ "' ";
 
         synchronized ("dbLock") {
             try {
@@ -1510,6 +1510,7 @@ public class DataBaseHandlerSelect extends DataBaseHandler {
                             info.allowGuests = cursor.getString(7);
                             info.latitude = cursor.getString(8);
                             info.longitude = cursor.getString(9);
+                            info.requireProjectNumber = cursor.getString(10); // added on 02-03-2021
 
                             facilityPropertyList.add(info);
                         } while (cursor.moveToNext());

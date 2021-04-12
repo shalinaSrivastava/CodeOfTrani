@@ -316,7 +316,14 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                             facility.allowGuests = jsonObject.getString("allowGuests") == null ? "" : jsonObject.getString("allowGuests").equals("") ? "" : jsonObject.getString("allowGuests");
                             facility.latitude = jsonObject.getString("latitude") == null ? "" : jsonObject.getString("latitude").equals("") ? "" : jsonObject.getString("latitude");
                             facility.longitude = jsonObject.getString("longitude") == null ? "" : jsonObject.getString("longitude").equals("") ? "" : jsonObject.getString("longitude");
-
+                            //added on 02-03-2021
+                            //facility.requireProjectNumber = jsonObject.getString("requireProjectNumber") == null ? "" : jsonObject.getString("requireProjectNumber").equals("") ? "" : jsonObject.getString("requireProjectNumber");
+                            //facility.requireProjectNumber = "true"; // for testing only
+                            if (jsonObject.has("requireProjectNumber")) {
+                                facility.requireProjectNumber = jsonObject.getString("requireProjectNumber") == null ? "" : jsonObject.getString("requireProjectNumber").equals("") ? "" : jsonObject.getString("requireProjectNumber");
+                            } else {
+                                facility.requireProjectNumber ="false";
+                            }
                             dbInsert.addDataIntoFacilityTable(facility);
                             String checkedInStatus = dbSelect.getCheckedInStatusFromEntryTable(spManager.getUserID(), facility.id);
                             if (!checkedInStatus.equals("checked_in")) {
@@ -367,8 +374,8 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
             public byte[] getBody() throws AuthFailureError {
                 JSONObject jsonBody = new JSONObject();
                 try {
-                    /*jsonBody.put("lat", "59.266832");
-                    jsonBody.put("long", "10.409415");*/
+                    //jsonBody.put("lat", "59.266832");
+                    //jsonBody.put("long", "10.409415");
                     jsonBody.put("lat",String.valueOf( currentLocation.getLatitude()));
                     jsonBody.put("long",String.valueOf(currentLocation.getLongitude()));
                 } catch (JSONException e) {
@@ -424,6 +431,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                         intent.putExtra("FacilityId", property.id);
                         intent.putExtra("FacilityCustomerId", property.customerId);
                         intent.putExtra("AllowGuest", property.allowGuests);
+                        intent.putExtra("RequireProjectNum", property.requireProjectNumber); //added on 02-03-2021
                         startActivity(intent);
 
                     }else{
@@ -434,6 +442,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                         intent.putExtra("FacilityId", property.id);
                         intent.putExtra("FacilityCustomerId", property.customerId);
                         intent.putExtra("AllowGuest", property.allowGuests);
+                        intent.putExtra("RequireProjectNum", property.requireProjectNumber); //added on 02-03-2021
                         startActivity(intent);
                     }
                 } catch (Exception e) {
@@ -469,6 +478,14 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                             facility.latitude = jsonObject.getString("latitude") == null ? "" : jsonObject.getString("latitude").equals("") ? "" : jsonObject.getString("latitude");
                             facility.longitude = jsonObject.getString("longitude") == null ? "" : jsonObject.getString("longitude").equals("") ? "" : jsonObject.getString("longitude");
 
+                            //added on 02-03-2021
+                            //facility.requireProjectNumber = jsonObject.getString("requireProjectNumber") == null ? "" : jsonObject.getString("requireProjectNumber").equals("") ? "" : jsonObject.getString("requireProjectNumber");
+                            //facility.requireProjectNumber = "true"; // for testing only
+                            if (jsonObject.has("requireProjectNumber")) {
+                                facility.requireProjectNumber = jsonObject.getString("requireProjectNumber") == null ? "" : jsonObject.getString("requireProjectNumber").equals("") ? "" : jsonObject.getString("requireProjectNumber");
+                            } else {
+                                facility.requireProjectNumber ="false";
+                            }
                             searchFacilityList.add(facility);
                         }
                     }
@@ -500,6 +517,7 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                            intent.putExtra("FacilityId", searchFacilityList.get(0).id);
                            intent.putExtra("FacilityCustomerId", searchFacilityList.get(0).customerId);
                            intent.putExtra("AllowGuest", searchFacilityList.get(0).allowGuests);
+                           intent.putExtra("RequireProjectNum", searchFacilityList.get(0).requireProjectNumber); // added on 02-03-2021
                            startActivity(intent);
                        }
                     } else {
@@ -552,8 +570,8 @@ public class StartCheckInFacility extends AppCompatActivity implements View.OnCl
                 try {
                     if (response != null && !response.equals("")) {
                         JSONArray jsonArray = new JSONArray(response);
+                        dbDelete.deleteTableByName("ReportEntry", "");
                         if (jsonArray != null && jsonArray.length() > 0) {
-                            dbDelete.deleteTableByName("ReportEntry", "");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 ReportEntryProperty property = new ReportEntryProperty();

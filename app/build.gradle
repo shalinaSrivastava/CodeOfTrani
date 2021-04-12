@@ -13,13 +13,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.elearn.trainor"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 22
-        versionName "4.2"
+        targetSdkVersion 30
+        versionCode 24
+        versionName "4.4"
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -103,11 +103,18 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
-    implementation 'com.google.firebase:firebase-core:18.0.0'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
-    implementation 'com.google.firebase:firebase-perf:19.0.11'
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
-    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-core'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-perf'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    //implementation 'com.google.firebase:firebase-core:18.0.0'
+    //implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    //implementation 'com.google.firebase:firebase-perf:19.0.11'
+    //implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
+    //implementation 'com.google.firebase:firebase-analytics:18.0.0'
 
     implementation 'com.nex3z:notification-badge:0.2.0'
     implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'

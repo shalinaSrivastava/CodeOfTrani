@@ -73,6 +73,7 @@ public class NearByFacilityAdapter extends RecyclerView.Adapter<NearByFacilityAd
                     intent.putExtra("FacilityId", property.id);
                     intent.putExtra("FacilityCustomerId", property.customerId);
                     intent.putExtra("AllowGuest", property.allowGuests);
+                    intent.putExtra("RequireProjectNum", property.requireProjectNumber); //added on 02-03-2021
                     context.startActivity(intent);
                 }
             }

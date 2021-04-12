@@ -326,8 +326,9 @@ public class DashboardFragement extends Fragment implements View.OnClickListener
                 try {
                     if (response != null && !response.equals("")) {
                         JSONArray jsonArray = new JSONArray(response);
+                        dbDelete.deleteTableByName("ReportEntry", "");
                         if (jsonArray != null && jsonArray.length() > 0) {
-                            dbDelete.deleteTableByName("ReportEntry", "");
+
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 ReportEntryProperty property = new ReportEntryProperty();

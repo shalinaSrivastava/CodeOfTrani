@@ -335,9 +335,10 @@ public class CheckedInFacility extends AppCompatActivity implements View.OnClick
                 try {
                     if (response != null && !response.equals("")) {
                         JSONArray jsonArray = new JSONArray(response);
+                        dbDelete.deleteTableByName("ReportEntry", "");
                         if (jsonArray != null && jsonArray.length() > 0) {
                             checkedInFacilityList.clear();
-                            dbDelete.deleteTableByName("ReportEntry", "");
+                            //dbDelete.deleteTableByName("ReportEntry", "");
                             //dbDelete.deleteTableByName("CheckedInFacility","");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);

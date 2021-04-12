@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
-    protected static final int DATABASE_VERSION = 40;
+    protected static final int DATABASE_VERSION = 42;
     protected static final String DATABASE_NAME = "TrainorDB.db";
 
     protected static String Table_Profile = "ProfileDetail";
@@ -248,6 +248,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     protected static String FACILITY_AllowGuests = "allowGuests";
     protected static String FACILITY_Latitude = "latitude";
     protected static String FACILITY_Longitude = "longitude";
+    protected static String FACILITY_Require_Project_num = "requireProjectNumber"; // new field added on 02-03-2021
 
     protected String CREATE_REPORTENTRY_TABLE;// new table created 28-09-2020
     protected static String Table_ReportEntry = "ReportEntry";
@@ -509,7 +510,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + FACILITY_DistanceInKm + " TEXT, "
                     + FACILITY_AllowGuests + " TEXT, "
                     + FACILITY_Latitude + " TEXT, "
-                    + FACILITY_Longitude + " TEXT ) ";
+                    + FACILITY_Longitude + " TEXT, "
+                    + FACILITY_Require_Project_num + " TEXT ) ";
 
             CREATE_REPORTENTRY_TABLE = "CREATE TABLE IF NOT EXISTS "
                     + Table_ReportEntry + " ( " + REPORTENTRY_userId + " Text, "
@@ -793,6 +795,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 db.execSQL("Alter Table CustomerDetails add COLUMN isPrivate Text");
                 db.execSQL("Alter Table SafetyCards add COLUMN customerId Text");
                 db.execSQL("Alter Table SafetyCards add COLUMN confirmed Text");
+
+                //added on 02-03-2021
+                db.execSQL("Alter Table FacilityTable add COLUMN requireProjectNumber Text");
 
             } catch (Exception ex) {
                 Log.d("Error", ex.getMessage());

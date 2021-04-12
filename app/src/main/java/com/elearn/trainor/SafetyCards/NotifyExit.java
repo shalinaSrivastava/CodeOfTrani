@@ -130,7 +130,10 @@ public class NotifyExit extends AppCompatActivity implements View.OnClickListene
 
         homeMap.setBuildingsEnabled(true);
        // homeMap.setIndoorEnabled(true);
-        homeMap.addMarker(markerOptions);
+        if(!latitude.equals("null") || !longitude.equals("null")){
+            homeMap.addMarker(markerOptions);
+        }
+
     }
 
     @Override

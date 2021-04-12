@@ -535,6 +535,7 @@ public class DataBaseHandlerInsert extends DataBaseHandler {
                 values.put(FACILITY_AllowGuests, facilityInfo.allowGuests);
                 values.put(FACILITY_Latitude, facilityInfo.latitude);
                 values.put(FACILITY_Longitude, facilityInfo.longitude);
+                values.put(FACILITY_Require_Project_num, facilityInfo.requireProjectNumber);
                 Result = db.insert(Table_Facility, null, values);
                 db.setTransactionSuccessful();
             } catch (Exception ex) {

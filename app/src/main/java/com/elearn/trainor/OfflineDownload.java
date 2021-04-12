@@ -62,6 +62,7 @@ public class OfflineDownload extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_offline_download);
         getControls();
     }
+    
 
 
     @SuppressLint("MissingPermission")
